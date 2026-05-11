@@ -349,6 +349,7 @@ li {
 <a class="toc-h3" href="#s114">11.4 State Resistance</a>
 <a class="toc-h2" href="#s13">12. Conclusion</a>
 <a class="toc-h2" href="#sparams">Appendix A — Parameters</a>
+<a class="toc-h2" href="#stheory">Appendix B — Theory</a>
 <a class="toc-h2" href="#refs">References</a>
 
   <div style="
@@ -379,6 +380,19 @@ li {
     onmouseover="this.style.color='#1a1a18'; this.style.borderLeftColor='#8b0000';"
     onmouseout="this.style.color='#5a5a56'; this.style.borderLeftColor='transparent';"
     >↗ Threat Vector Map</a>
+    <a href="#stheory" style="
+      display: block;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 0.58rem;
+      color: #5a5a56;
+      text-decoration: none;
+      padding: 0.06rem 0 0.06rem 0.5rem;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+    "
+    onmouseover="this.style.color='#1a1a18'; this.style.borderLeftColor='#8b0000';"
+    onmouseout="this.style.color='#5a5a56'; this.style.borderLeftColor='transparent';"
+    >↓ Theoretical Foundations</a>
   </div>
 </nav>
 
@@ -1135,6 +1149,54 @@ On price-out:
 <tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Bounty floor split</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">70 / 30</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">% guaranteed / variable</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">§4.2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">70% on attendance; 30% by peer rating and footage score</td></tr>
 </tbody>
 </table>
+<h2 id="stheory">Appendix B &mdash; Theoretical Foundations</h2>
+<p>The Austrian School described this problem a century before the tools existed to solve it.</p>
+<p>Bitaid&rsquo;s design converges with propositions developed by the Austrian School of Economics regarding spontaneous order, the knowledge problem, entrepreneurial coordination, and market-based provision of security services. The convergence is more structural than deliberate: protocol mechanism design and Austrian institutional analysis appear to track the same underlying economic logic from different directions. What follows maps the convergence rather than claiming derivation.</p>
+
+<h3>B.1 The Economic Calculation Problem in Public Safety</h3>
+<p>Without prices, no system can determine what anything is worth.</p>
+<p>Ludwig von Mises demonstrated in <em>Socialism</em> (1922)<sup class="cite"><a href="#ref-r32">[32]</a></sup> and <em>Human Action</em> (1949)<sup class="cite"><a href="#ref-r33">[33]</a></sup> that rational economic calculation is impossible without market prices. Applied to public safety: how many officers should patrol a given block? Bureaucratic allocation cannot answer this &mdash; no price mechanism communicates the relevant information, resulting in systematic misallocation toward politically visible rather than genuinely needed resources. Bitaid resolves this by introducing three price signals that emerge from voluntary interaction: the incident deposit (good-faith signal expressing caller credibility), the bounty (urgency signal expressing the caller&rsquo;s valuation of presence and documentation), and the outcome reward (the largest signal, expressing the caller&rsquo;s valuation of actual intervention and outcome). Together they constitute a nascent price system for emergency response services &mdash; the first in which demand is expressed through voluntary capital commitment rather than bureaucratic allocation.</p>
+
+<h3>B.2 The Knowledge Problem and Decentralised Coordination</h3>
+<p>The information needed to respond is local, ephemeral, and unavailable to any central authority.</p>
+<p>Friedrich A. Hayek&rsquo;s 1945 essay &ldquo;The Use of Knowledge in Society&rdquo;<sup class="cite"><a href="#ref-r12">[12]</a></sup> established that information required for economic coordination is dispersed, local, and tacit. A crime in progress is precisely this kind of knowledge: known immediately and with certainty by the victim, becoming stale within minutes. Centralised emergency dispatch introduces a communication bottleneck that destroys the time-value of this information. Bitaid is a decentralised telecommunications protocol for local, ephemeral knowledge &mdash; the alert reaches nearest available responders directly, without routing through a dispatch centre that cannot hold all the relevant contextual knowledge. The same principle governs the per-node acceptance threshold mechanism (&sect;2.4.1): each operator&rsquo;s threshold encodes local information about what constitutes meaningful skin-in-the-game in their economic context, information no central parameter setter could hold.</p>
+
+<h3>B.3 Entrepreneurial Alertness and the Responder Function</h3>
+<p>The market discovers who can best serve a need. No bureaucracy can do this in advance.</p>
+<p>Israel M. Kirzner&rsquo;s <em>Competition and Entrepreneurship</em> (1973)<sup class="cite"><a href="#ref-r15">[15]</a></sup> defines the entrepreneur as an agent alert to unexploited profit opportunities. The responder in the Bitaid network functions as a Kirznerian entrepreneur: they observe a local alert with a bounty, assess their proximity and capability, and act to close the gap between unserved demand for safety and available supply of response capacity. Jes&uacute;s Huerta de Soto&rsquo;s work on dynamic efficiency<sup class="cite"><a href="#ref-r38">[38]</a></sup> extends this to tacit knowledge &mdash; the kind that cannot be centralised or priced by a bureaucratic system. A veteran who knows how to de-escalate a knife confrontation without force, a former paramedic who carries a trauma kit, a trained martial artist who can restrain an aggressor proportionately &mdash; these are capabilities the formal system cannot route demand to because it has no price mechanism for doing so. Bitaid transforms this distributed, tacit capability into productive action through the bounty mechanism: the market routes demand to whoever can best serve it, not to whoever the dispatch algorithm assigns.</p>
+
+<h3>B.4 Private Defense and the Market for Security</h3>
+<p>The monopoly on security is not a feature of civilisation. It is a contingent historical arrangement.</p>
+<p>Murray N. Rothbard&rsquo;s analysis in <em>For a New Liberty</em> (1973)<sup class="cite"><a href="#ref-r34">[34]</a></sup> describes how private defense arrangements could function through voluntary contractual relationships rather than coercive monopoly. Bitaid is the protocol layer on which such arrangements can emerge.</p>
+<p>Hans-Hermann Hoppe&rsquo;s &ldquo;The Private Production of Defense&rdquo; (1998/2003)<sup class="cite"><a href="#ref-r35">[35]</a></sup> develops the architecture in more detail: competing insurance companies as the natural providers of security services, with actuarial incentives to genuinely prevent harm rather than benefit from its recurrence. The insurer&rsquo;s profit is maximised precisely when its subscriber base experiences minimal loss events &mdash; the inverse of monopoly public safety provision, where budget growth tracks failure rather than success. Bitaid&rsquo;s insurance flywheel (&sect;4.4) is a direct on-chain implementation of this architecture: insurers competing on premium pricing and on the bounty and outcome reward levels they fund, with the prevention of incidents reducing the claims they would otherwise pay against life and property policies.</p>
+<p>Hoppe&rsquo;s <em>Democracy: The God That Failed</em> (2001)<sup class="cite"><a href="#ref-r36">[36]</a></sup> identifies two further structural problems addressed by the protocol. First, a bias in democratic public safety: politicians optimise for metrics measurable before the next election, producing systematic over-enforcement of victimless offences and under-response to victim crimes. Bitaid&rsquo;s incident deposit mechanism corrects this at the demand side &mdash; caller capital, not electoral calendar, determines what receives response. Second, a time-preference argument: institutions that reward long horizons and impose real cost on rapid exit produce better outcomes than those that allow instant entry and instant liquidation of accumulated standing. The protocol&rsquo;s temporal seasoning requirement and jury bond withdrawal delay (&sect;7.5.7) encode this institutional logic in mechanism rather than in cultural norm.</p>
+<p>The polycentric-law tradition &mdash; David Friedman&rsquo;s <em>The Machinery of Freedom</em> (1973)<sup class="cite"><a href="#ref-r22">[22]</a></sup> on competing legal systems &mdash; frames Bitaid&rsquo;s two-tier arbitration design (&sect;7, &sect;7.6): on-chain attending vote and independent jury for default cases, with an opt-in formal arbitration path for parties in pre-existing commercial relationships. No single adjudicatory monopoly is assumed; the market determines which mechanism resolves which class of dispute.</p>
+<p>If a state moves to prohibit Bitaid, it demonstrates that it regards itself as a market competitor rather than a neutral provider of justice &mdash; the prohibition is evidence of the monopoly&rsquo;s defensive interest.</p>
+
+<h3>B.5 The Juridical Distinction Between Deposit and Insurance</h3>
+<p>Sound insurance is not fractional-reserve banking. The juridical distinction is the whole argument.</p>
+<p>Jes&uacute;s Huerta de Soto&rsquo;s <em>Money, Bank Credit, and Economic Cycles</em> (1998/2006)<sup class="cite"><a href="#ref-r37">[37]</a></sup> develops the juridical foundations distinguishing deposit contracts (irregular deposits requiring 100% availability) from loan contracts and from insurance contracts (where actuarial pooling against contingent events is the contract&rsquo;s defining feature, not a violation of it). His critique of fractional-reserve banking targets the specific case where a deposit contract is performed as a loan contract &mdash; a juridical category error that manufactures phantom money substitutes. Insurance contracts fall outside this critique entirely.</p>
+<p>Bitaid&rsquo;s bond architecture (&sect;2.1, &sect;2.5) maintains this juridical separation at the protocol level. Every personally posted bond is fully reserved on-chain &mdash; caller, responder, jury, and archival bonds each lock a UTXO that cannot be lent out, rehypothecated, or partially backed. Insurer buffers are categorically distinct: explicitly disclosed, posted as a separate UTXO inside the same escrow, seized first on any forfeiture event via script-level output ordering, and carrying zero protocol weight in scoring. The actuarial pool exists at the insurer level, not at the deposit level. The protocol enforces cryptographically what the juridical tradition requires philosophically.</p>
+
+<h3>B.6 The Monetary Foundation of the Stake</h3>
+<p>Sound collateral requires sound money. No other asset qualifies.</p>
+<p>Carl Menger&rsquo;s analysis of the origin of money (1871,<sup class="cite"><a href="#ref-r39">[39]</a></sup> 1892<sup class="cite"><a href="#ref-r40">[40]</a></sup>) established that money emerges spontaneously as the most saleable good. Saifedean Ammous, applying this tradition directly to Bitcoin in <em>The Bitcoin Standard</em> (2018)<sup class="cite"><a href="#ref-r42">[42]</a></sup>, states the principle plainly: &ldquo;For something to assume a monetary role, it has to be costly to produce, otherwise the temptation to make money on the cheap will destroy the wealth of the savers.&rdquo; Bitcoin&rsquo;s proof-of-work mechanism makes its production provably costly and its supply schedule provably fixed.</p>
+<p>For Bitaid&rsquo;s bond mechanism, this matters precisely. A bond denominated in an inflatable currency is a bond whose deterrent value can be silently eroded by whoever controls that currency&rsquo;s supply. A bond denominated in Bitcoin cannot be debased by any institution, any government, or any protocol change. The bond works as a commitment device because Bitcoin works as sound money. One property depends on the other.</p>
+<p>Eugen von B&ouml;hm-Bawerk&rsquo;s theory of capital and interest (1884)<sup class="cite"><a href="#ref-r41">[41]</a></sup> frames the bond in terms of time preference. The caller who locks capital in escrow demonstrates a low time preference: willingness to forgo immediate use of that capital to secure the future benefit of a credible commitment. Responders who invest time building reputation through the rating system demonstrate the same. The protocol rewards low time preference and filters out high-time-preference actors.</p>
+
+<h3>B.7 Robust Institutions and Spontaneous Order</h3>
+<p>The best institutions do not require good actors. They produce good outcomes regardless.</p>
+<p>Peter Boettke&rsquo;s work on robust political economy<sup class="cite"><a href="#ref-r43">[43]</a></sup> analyses institutions that function well not because they assume benevolent actors, but because they align individual incentives with socially beneficial outcomes regardless of actor motivation. Bitaid is a robust institution: it does not require responders to be altruistic, callers to be honest, or arbitrators to be wise. F.A. Hayek&rsquo;s concept of spontaneous order (<em>Law, Legislation and Liberty</em>, 1973)<sup class="cite"><a href="#ref-r13">[13]</a></sup> describes the emergence of complex, beneficial social arrangements from local actions of individuals following simple rules, without central design. Bitaid&rsquo;s network is a spontaneous order: no authority decides which responders attend which incidents. These outcomes emerge from voluntary interactions of staked participants following the protocol&rsquo;s incentive rules. The order is not designed. It arises.</p>
+
+<h3>B.8 The Roundabout Continuation</h3>
+<p>If money can be taken from the state, so can the rest.</p>
+<p>In a 1984 interview with the Cato Institute,<sup class="cite"><a href="#ref-r45">[45]</a></sup> Friedrich Hayek offered what has become the most cited remark in the Bitcoin tradition:</p>
+<blockquote style="margin: 1rem 2rem; padding: 0.8rem 1.2rem; border-left: 3px solid #8b0000; font-style: italic; color: #3a3a36;">&ldquo;I don&rsquo;t believe we shall ever have a good money again before we take the thing out of the hands of government. That is, we can&rsquo;t take them violently out of the hands of government. All we can do is by some sly roundabout way introduce something that they can&rsquo;t stop.&rdquo;</blockquote>
+<p>The intuition is strategic, not theoretical: state monopolies are not undone by argument or by direct contest; they are undone by quietly building an alternative that is sufficiently better and sufficiently distributed that suppression becomes either technically impossible or politically too costly to attempt. Hayek had imagined this for money, anticipating denationalised currency in <em>Denationalisation of Money</em> (1976)<sup class="cite"><a href="#ref-r44">[44]</a></sup> while doubting the political path remained open. The cypherpunk movement &mdash; Tim May&rsquo;s <em>Crypto Anarchist Manifesto</em> (1988)<sup class="cite"><a href="#ref-r46">[46]</a></sup>, Eric Hughes&rsquo;s <em>A Cypherpunk&rsquo;s Manifesto</em> (1993)<sup class="cite"><a href="#ref-r47">[47]</a></sup> with its operative thesis &ldquo;cypherpunks write code&rdquo; &mdash; formalised the missing tactic: cryptography as the substrate on which the roundabout could actually be built. Bitcoin made the strategy real.</p>
+<p>What was true of money is structurally true of every domain where the state operates as a monopoly provider. Money is one such monopoly; security is another; adjudication a third; archival evidence a fourth; identity a fifth. The Hayekian strategy generalises: where a state monopoly delivers a service the market would deliver better, the path forward is neither armed contest nor political persuasion but the construction of a permissionless protocol that performs the service so credibly that ordinary people prefer it. The state retains nominal jurisdiction; the actual coordination migrates elsewhere. The monopoly is not abolished &mdash; it is rendered marginal.</p>
+<p>Bitaid is the continuation of this strategy applied to public safety. The protocol does not lobby for police reform, propose a constitutional amendment, or contest the state&rsquo;s claim to a monopoly on the legitimate use of force. It builds an alternative coordination layer for emergency response &mdash; denominated in money the state cannot debase, settled through escrows the state cannot freeze, witnessed by evidence the state cannot suppress, and adjudicated by mechanisms the state cannot capture. If it works, it works regardless of whether any state recognises it. If it does not work, no state had to be persuaded of anything. The roundabout is the whole strategy.</p>
+<p>This is the cypherpunk thesis at full extension: the role of technology in a world of state monopolies is not to argue against the monopolies but to render them irrelevant by competing with them at the protocol layer. Bitcoin removed the monetary monopoly from the conversation. Bitaid attempts the same removal for the public-safety monopoly. The pattern is general; the targets are many; the method is the same.</p>
+
 <h2 id="refs">References</h2>
 <div class="references">
 <p id="ref-r1"><span class="ref-num">[1]</span> Nakamoto, S. (2008). <em>Bitcoin: A Peer-to-Peer Electronic Cash System</em>. bitcoin.org.</p>
@@ -1168,6 +1230,22 @@ On price-out:
 <p id="ref-r29"><span class="ref-num">[29]</span> Narayanan, A., Bonneau, J., Felten, E., Miller, A., &amp; Goldfeder, S. (2016). <em>Bitcoin and Cryptocurrency Technologies</em>. Princeton University Press.</p>
 <p id="ref-r30"><span class="ref-num">[30]</span> Dai, W. (1998). <em>b-money</em>. weidai.com/bmoney.txt.</p><p id="ref-r31"><span class="ref-num">[31]</span> I2P Project. (2003&ndash;). <em>Invisible Internet Project: Anonymous Network Layer</em>. geti2p.net. Cited as the preferred high-bandwidth anonymous transport for BCAEN uploads and retrievals.</p>
 <p id="ref-r31"><span class="ref-num">[31]</span> I2P Project. (2003&ndash;). <em>Invisible Internet Project: Anonymous Network Layer</em>. geti2p.net. Cited as the preferred high-bandwidth anonymous transport for BCAEN uploads and retrievals.</p>
+<p id="ref-r32">[32] Mises, L. von (1922). <em>Socialism: An Economic and Sociological Analysis</em>. Mises Institute (English translation, 1981).</p>
+<p id="ref-r33">[33] Mises, L. von (1949). <em>Human Action: A Treatise on Economics</em>. Yale University Press.</p>
+<p id="ref-r34">[34] Rothbard, M. N. (1973). <em>For a New Liberty: The Libertarian Manifesto</em>. Macmillan.</p>
+<p id="ref-r35">[35] Hoppe, H.-H. (2003). The private production of defense. In <em>The Myth of National Defense: Essays on the Theory and History of Security Production</em>. Mises Institute. (Original essay 1998.)</p>
+<p id="ref-r36">[36] Hoppe, H.-H. (2001). <em>Democracy: The God That Failed: The Economics and Politics of Monarchy, Democracy, and Natural Order</em>. Transaction Publishers.</p>
+<p id="ref-r37">[37] Huerta de Soto, J. (2006). <em>Money, Bank Credit, and Economic Cycles</em>. Mises Institute. (Original Spanish edition 1998.)</p>
+<p id="ref-r38">[38] Huerta de Soto, J. (1992). <em>Socialismo, c&aacute;lculo econ&oacute;mico y funci&oacute;n empresarial</em>. Uni&oacute;n Editorial. Cited for the treatment of dynamic efficiency and entrepreneurial discovery.</p>
+<p id="ref-r39">[39] Menger, C. (2007). <em>Principles of Economics</em>. Ludwig von Mises Institute. (Original German edition: <em>Grunds&auml;tze der Volkswirtschaftslehre</em>, 1871.)</p>
+<p id="ref-r40">[40] Menger, C. (1892). On the origins of money. <em>Economic Journal</em>, 2(6), 239&ndash;255.</p>
+<p id="ref-r41">[41] B&ouml;hm-Bawerk, E. von (1959). <em>Capital and Interest</em>, 3 vols. Libertarian Press. (Original German edition: <em>Kapital und Kapitalzins</em>, 1884&ndash;1912.)</p>
+<p id="ref-r42">[42] Ammous, S. (2018). <em>The Bitcoin Standard: The Decentralized Alternative to Central Banking</em>. Wiley.</p>
+<p id="ref-r43">[43] Boettke, P. J. (2012). <em>Living Economics: Yesterday, Today, and Tomorrow</em>. Independent Institute. Cited for the framework of robust political economy.</p>
+<p id="ref-r44">[44] Hayek, F. A. (1976). <em>Denationalisation of Money: The Argument Refined</em>. Institute of Economic Affairs.</p>
+<p id="ref-r45">[45] Hayek, F. A. (1984). Interview with James U. Blanchard III. Cato Institute. Cited for the &ldquo;sly roundabout way&rdquo; remark on denationalisation of money.</p>
+<p id="ref-r46">[46] May, T. C. (1988). <em>The Crypto Anarchist Manifesto</em>. Distributed at the Crypto &rsquo;88 conference. cypherpunks.to/tim.may/cypherpunk-manifesto/</p>
+<p id="ref-r47">[47] Hughes, E. (1993). <em>A Cypherpunk&rsquo;s Manifesto</em>. cypherpunks.to/eric.hughes/cypherpunk-manifesto.html. Cited for the operative thesis &ldquo;cypherpunks write code.&rdquo;</p>
 </div>
 
 <div class="colophon">
