@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitaid — A Palatable Guide</title>
+<style>
+:root {
+  --bg: #faf9f6;
+  --text: #1a1a18;
+  --muted: #5a5a56;
+  --accent: #8b0000;
+  --rule: #d8d6ce;
+  --paper: #ffffff;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --serif: "EB Garamond", Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 18px; background: var(--bg); color: var(--text); }
+
+body {
+  font-family: var(--sans);
+  line-height: 1.7;
+  padding: 0;
+}
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+  background: var(--paper);
+  box-shadow: 0 0 0 1px var(--rule), 0 4px 40px rgba(0,0,0,0.06);
+  min-height: 100vh;
+}
+
+.title-block {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 2px solid var(--text);
+  margin-bottom: 2.5rem;
+}
+
+.title-block h1 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.title-block .subtitle {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.title-block .tagline {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.lede {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  color: #2a2a28;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 2.5rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  line-height: 1.3;
+}
+
+h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.8rem 0 0.6rem;
+  color: var(--text);
+}
+
+p {
+  margin-bottom: 1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.visual-box {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.5rem;
+  background: #f5f4f0;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+
+.visual-box .label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.visual-box p {
+  font-style: italic;
+  color: #3a3a36;
+  text-align: left;
+  hyphens: none;
+  margin-bottom: 0;
+}
+
+.cta {
+  text-align: center;
+  margin: 3rem 0 2rem;
+  padding: 2rem;
+  background: #f5f4f0;
+  border-radius: 8px;
+}
+
+.cta a {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--text);
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.cta a:hover {
+  background: var(--accent);
+}
+
+.cta .note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+}
+
+.colophon {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 600px) {
+  .page { padding: 1.5rem 1rem 4rem; }
+  html { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+<div class="title-block">
+<h1>Bitaid</h1>
+<p class="subtitle">A Palatable, Linear Guide</p>
+<p class="tagline">If you couldn't trust any central authority, how could you build a reliable emergency response system using only Bitcoin and cryptography?</p>
+</div>
+
+<div class="lede">
+<p>The protocol answers this question through a single mechanism: <strong>Proof of ₿ond with Reputation</strong> — a way to make trustless coordination work by making bad faith expensive and honest participation profitable.</p>
+</div>
+
+<h2>The Engine: Proof of ₿ond with Reputation</h2>
+
+<p>Every trust relationship in Bitaid is built on two things you bring to the table:</p>
+
+<h3>The ₿ond (Your Security Deposit)</h3>
+<p>This is Bitcoin you lock in escrow. It's fully refundable if you act honestly. It's a financial commitment that says, <em>"You can trust me because it would cost me real money to betray you."</em></p>
+
+<h3>The Reputation (Your Earned Track Record)</h3>
+<p>This is a score you can't buy. It grows slowly with a history of correct, well-calibrated decisions. It's "time-salted," meaning you need at least 90 days of real participation for it to count fully, and your votes are weighted by how well they've matched the consensus over time. It's a verifiable history, not an opinion.</p>
+
+<p>Together, they form a <strong>"human proof of work."</strong> An attacker can't flood the system with money because they'd also need a lengthy, high-reputation history that money alone can't produce.</p>
+
+<h2>Problem 1: How to Call for Help and Prove It's Real</h2>
+
+<p>In a trustless network, a prank call is an attack vector. Bitaid makes false alerts economically irrational.</p>
+
+<p><strong>The problem:</strong> A genuine emergency needs to be distinguishable from noise without a central dispatcher.</p>
+
+<p><strong>The solution:</strong> A three-tiered economic offer that acts as a credibility filter. When you need help, you put up three separate pots of money:</p>
+
+<ul style="margin: 0.8rem 0 1rem 1.5rem; line-height: 1.7;">
+<li><strong>Deposit:</strong> A small, refundable stake that screams <em>"I'm serious."</em> If the alert is a hoax, you lose it.</li>
+<li><strong>Bounty:</strong> An immediate payment for any responder who shows up and documents the scene, regardless of outcome. It covers their presence.</li>
+<li><strong>Outcome Reward:</strong> A larger sum held in escrow, released only by a jury if the problem is actually resolved.</li>
+</ul>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>It's like a reverse auction for safety. Your deposit is the entrance fee to a secure bidding floor. The bounty is the minimum bid that gets someone to come to your location. The outcome reward is the full contract payment, paid only upon proven delivery of the result.</p>
+</div>
+
+<h2>Problem 2: How Responders Find You, Privately</h2>
+
+<p>Broadcasting an emergency publicly is a privacy and security disaster.</p>
+
+<p><strong>The problem:</strong> Real-time, geofenced peer discovery without a central server that can log, censor, or be shut down.</p>
+
+<p><strong>The solution:</strong> Encrypted, low-bandwidth gossip routed over anonymity networks like Tor. Your call for help doesn't go to a dispatcher; it whispers through nearby peers. Only responders within your physical radius see it, and no central node knows who asked for help.</p>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>This is a short-range, encrypted whisper network in a crowded stadium. Your message hops from person to person, readable only by those who are both nearby and holding the right cryptographic key ring. A shout on the public PA system (a central server) is impossible; only the local, encrypted huddle hears it.</p>
+</div>
+
+<h2>Problem 3: How Roles Emerge and Stay Honest</h2>
+
+<p>In a chaotic scene, someone needs to intervene, someone needs to record, and someone needs to judge. But there's no boss to appoint these people.</p>
+
+<p><strong>The problem:</strong> Self-selected, permissionless roles with asymmetric responsibility, all kept accountable by economics.</p>
+
+<p><strong>The solution:</strong> A tiered system of bonded professional licenses. Each role requires you to lock up a bond of a different size, proportionate to the responsibility you hold. Your reputation then qualifies you for influence.</p>
+
+<ul style="margin: 0.8rem 0 1rem 1.5rem; line-height: 1.7;">
+<li><strong>Caller:</strong> Posts the smallest bond (~$0.50). This is just enough to deter spam. It's like a refundable ID check to enter the system.</li>
+<li><strong>Responder:</strong> Posts a substantial bond (~$1,000). This person physically shows up, so they have serious skin in the game. Their bond is at risk if they use excessive force or act in bad faith.</li>
+<li><strong>Juror:</strong> Posts the largest bond (~$10,000). They decide outcomes. The accountability is two-layered: isolated dissent incurs a per-case penalty (2× to 4× the typical reward) deducted from their bond. Full bond seizure is reserved for confirmed collusion or fraud, proven by a massive independent panel reviewing the evidence.</li>
+<li><strong>Archivist:</strong> Posts a moderate bond. They are custodians of evidence, penalized if they lose or corrupt the data.</li>
+</ul>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>Think of this as a tiered insurance and licensing system. You don't apply for a job. You obtain a license by putting up the required security deposit — a performance bond. A caller has a minimal license like a library card; a responder has a heavy license like a commercial driver's insurance policy. A juror has the highest liability insurance: honest mistakes cost a fraction, but a proven fraud record revokes the license entirely and burns the whole bond. It's self-policing professional certification.</p>
+</div>
+
+<h2>Problem 4: How to Resolve Disputes Without a Court</h2>
+
+<p>Who judges the judges? The jury system itself must be immune to manipulation.</p>
+
+<p><strong>The problem:</strong> A fair, Sybil-resistant jury selection that can't be bought or gamed.</p>
+
+<p><strong>The solution:</strong> A closed, merit-based jury pool with a competitive, backtesting-driven entry process. You can't simply buy a seat. When a juror slot opens, candidates compete by retroactively judging a set of old, resolved cases. The candidate whose "shadow verdicts" most closely match the known correct outcomes wins the seat. Two-thirds of every active jury must come from this rep-qualified pool, making it staggeringly expensive to infiltrate with coordinated bad actors.</p>
+
+<p>Once seated, jurors are not locked in forever. They serve ongoing cases but face a 90-day exit hold if they choose to leave, and they can be ejected for inactivity. Their ongoing votes are constantly monitored: if 40% of later reviewers disagree with their original verdict, the case is flagged for urgent re-review by a massive panel (100× the bond mass). Only an 80% supermajority can confirm fraud and trigger seizure.</p>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>It's a blind, competitive civil service exam for a supreme court seat. A vacancy appears only when there's real caseload demand. Aspiring judges don't campaign; they pay a non-refundable fee to take a brutal test grading historical cases without knowing the official verdicts. Only the candidate with the highest score gets the seat. Buying hundreds of fake test-takers would cost a fortune and still can't beat a single honest expert who consistently scores perfectly. And once seated, a judge can't just vanish after a bad ruling — their bond is held for months, and any suspicious verdict can be reviewed by an enormous, randomly-selected panel of their peers.</p>
+</div>
+
+<h2>Problem 5: Evidence That Can't Be Destroyed</h2>
+
+<p>Footage of an incident is the ultimate truth, and the first thing a bad actor will try to suppress.</p>
+
+<p><strong>The problem:</strong> Tamper-proof, immutable evidence commitment before anyone can censor the footage.</p>
+
+<p><strong>The solution:</strong> The Bitaid Content-Addressed Evidence Network (BCAEN). Responders livestream footage directly to incentivized archival nodes. Crucially, the unique cryptographic fingerprint (hash) of the video is broadcast over the gossip network <em>before</em> the upload completes. This means the "existence proof" is irrevocably public before any censor can act. The archivists have a financial duty to retrieve and store every chunk of data for which they have a hash.</p>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>Picture an unsealable public vault with a time-stamped receipt. The responder starts shoving a long film reel into a pneumatic tube. The moment the first frame enters, a machine instantly notarizes the film's unique molecular signature and projects that receipt onto a massive, public, indestructible screen. Even if someone blows up the tube, the receipt is forever proof that the evidence existed, and the paid archivists at the other end are obligated to recover and store every single frame that corresponds to that signature.</p>
+</div>
+
+<h2>Problem 6: How the System Keeps Score Without a Central Ledger</h2>
+
+<p>All the bonds, verdicts, and reputation updates constitute a complex global state. Someone needs to track it.</p>
+
+<p><strong>The problem:</strong> A globally consistent, tamper-proof state machine without launching a new blockchain.</p>
+
+<p><strong>The solution:</strong> Bitcoin-anchored state. Every significant event — a verdict, a bond adjustment, a reputation update — is cryptographically committed to a specific Bitcoin transaction or block. To know the current state, any node simply replays this log of anchor proofs from the Bitcoin chain. Bitaid inherits Bitcoin's security and finality for free; it's a meta-protocol living atop the world's most secure ledger.</p>
+
+<div class="visual-box">
+<div class="label">Visual Metaphor</div>
+<p>This is like a pyramid where every new block is a stone layer laid on top of all the previous ones. Each layer is mortared in place by an enormous expenditure of energy — proof-of-work. To change a single entry in an old layer, you would have to tear down and rebuild every layer above it, redoing all that energy expenditure. As the pyramid grows, this becomes physically and economically impossible. Bitaid simply carves its own small notations into the side of each new layer — inheriting the pyramid's immutability without having to quarry a single stone itself.</p>
+</div>
+
+<h2>The Final Picture</h2>
+
+<p>All these pieces snap together to form the world's first decentralized, real-time spot market for emergency response. The caller's three-tiered offer broadcasts a real-time price signal. Responders, rationally weighing the bounty and outcome reward against their own bond and risk, self-select to accept the mission. The market clears in seconds, with no central dispatcher, no 911 operator, and no institution that can be coerced or corrupted.</p>
+
+<p>It's a protocol that doesn't ask for permission. It simply provides a coordination fabric for the ancient human instinct to help — turning good intentions into a verifiable, economically sound, and entirely trustless reality.</p>
+
+<div class="cta">
+<a href="https://bitaid-whitepaper.pages.dev/">Read the Full Whitepaper</a>
+<p class="note">For protocol engineers, economists, and cryptographers.<br>Technical specification — v4.1</p>
+</div>
+
+<div class="colophon">
+<p>Bitaid — A Peer-to-Peer Private Civil First Responder Protocol</p>
+<p>Open protocol. No rights reserved.</p>
+</div>
+
+</main>
+</body>
+</html>
