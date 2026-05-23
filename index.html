@@ -401,7 +401,7 @@ li {
 
 <div class="title-block">
 <h1>Bitaid: A Peer-to-Peer Private Civil First Responder Protocol</h1>
-<p class="subtitle">Whitepaper v4.2 Draft &middot; 2026</p>
+<p class="subtitle">Whitepaper v4.3 Draft &middot; 2026</p>
 <p style="font-size:0.78rem; margin-top:0.5rem; font-family: var(--sans);"><a href="https://bitaid-whitepaper.pages.dev/BitaidGuide/" style="color:#8b0000; text-decoration:none; border-bottom:1px dotted #8b0000;">A Palatable, Linear Guide &rarr;</a> &mdash; plain-language overview for new readers</p>
 </div>
 <div class="abstract">
@@ -802,6 +802,8 @@ li {
 <p>Arbitration triggers automatically when: the caller disputes the outcome assessment submitted by attending responders; an attending responder disputes the caller\'s incident close; or the outcome reward escrow is ready for release and requires jury sign-off. Arbitration may also be triggered manually by any bonded party within a defined post-incident window.</p>
 <h3 id="s72">7.2 Attending-Only Voting</h3>
 <p>The first arbitration tier involves only parties who were physically present at the incident. Each attendee submits a signed outcome assessment. Assessments are weighted by the merit formula. The weighted majority governs. This tier is fast and cheap &mdash; no external jury selection, no delay. It handles the majority of disputes: caller-responder disagreements about whether an outcome was achieved. Critically, this tier also prevents non-cooperation from becoming a zero-cost exit for callers. Without it, a caller could refuse to cooperate and wait for the CLTV timelock to reclaim their deposit, obtaining response services for free. The attending-only vote is what closes that vector: responders who attended, documented, and acted can collectively assert the outcome regardless of whether the caller cooperates, and the merit-weighted verdict governs bounty and reward release. When the attending-only verdict confirms caller misuse &mdash; a troll alert, a fabricated incident, or bad-faith non-cooperation &mdash; the incident deposit is seized and distributed to attending responders as compensation for their wasted time and presence, pro-rata by their merit weight. The responders showed up, documented, and acted on false pretences; the stake that induced them to do so becomes their payment.</p>
+<h4>Sybil Fast-Track via Responder Report</h4>
+<p><em>Legitimate responders are the first line of fraud detection.</em> If responders accept an alert, attend the scene, and find no real incident &mdash; reporting it as fake through the attending vote &mdash; the case is flagged <code>SYBIL_SUSPECT</code> and bypasses the standard fee queue for <strong>priority review within 24 blocks</strong>. A lightweight 3-juror panel examines the BCAEN evidence: was there a real incident? Did responders show up to an empty location? If confirmed fake, the caller deposit is seized immediately, the caller identity is banned, and all other cases from the same caller pattern (same UTXO cluster, same GPS spoofing signature) are auto-flagged for batch review. The people with the most skin in the game &mdash; responders who wasted time and fuel on false pretences &mdash; are the ones who trigger the alarm. This is <strong>responder-driven Sybil detection</strong>, not protocol-administrative detection.</p>ayment.</p>
 <h3 id="s73">7.3 Merit Weighting Among Attendees</h3>
 <p>weight = sqrt(stake_ratio) × (0.1 + rep_factor × bounty_factor). stake_ratio is derived from the juror's directly posted personal bond only &mdash; the insurer buffer is excluded from this figure regardless of what the total on-chain escrow shows. The square root compression prevents capital dominance while preserving meaningful stake differentiation. The 0.1 floor ensures new responders with no history are not silenced. The reputation and bounty factors reward proven track records.</p>
 <h4 id="s731">7.3.1 Voting Threshold and Majority Structure</h4>
@@ -909,6 +911,7 @@ On price-out:
         case falls to CLTV timelock path
 </pre>
 <p>This gives the queue depth signal a guarantee: every case in the queue at block height H is fundable at fee(H). The 432-block slot-opening trigger fires only on genuine unresolvable demand. A Sybil attacker manufacturing queue depth must continuously top up their deposits as fees rise over 72 hours &mdash; by hour 72 at 4&times; base fee, each case must carry 4&times; its original deposit or it was ejected. The attack costs real capital proportional to duration and fee level rather than being free to sustain. A caller who values resolution tops up their deposit; a caller whose case was not worth the prevailing fee receives their deposit back and resolves via timelock. Both outcomes are correct market behaviour.</p>
+<p><strong>Responder legitimacy as queue weight.</strong> A case's position in the jury queue is weighted not only by fee level but by the <strong>aggregate responder legitimacy</strong> of those who accepted and attended. <code>responder_legitimacy = sum(responder_reputation &times; responder_stake) / count</code>. Cases with high-legitimacy responder attendance &mdash; bonded professionals with proven track records &mdash; receive priority review. Cases with no responder acceptance, or only low-stake unknown responders, are deprioritized. The market sorts serious incidents above suspected noise without administrative judgment. This creates a <strong>two-dimensional queue</strong>: fee level signals caller commitment; responder legitimacy signals incident reality.</p>
 <p>The 432-block slot-opening trigger fires only after price-out ejection has removed all underfunded cases at each 18-block evaluation interval. The queue depth that triggers slot opening is composed exclusively of cases whose deposits can fund jury panels at the prevailing elevated fee. A Sybil attacker cannot manufacture queue depth with minimum-stake ghost cases; they are ejected as fees rise, and the slot opens only on genuine, funded demand. On a well-functioning network the queue should clear same-session for most cases &mdash; jury review of a well-documented incident is a verification task, not a deliberative one. Panel assembly, review, and verdict typically resolve in minutes to hours.</p>
 
 <p><strong><em>Unified forfeiture destinations.</em></strong> All protocol forfeiture events route through a consistent framework. Trial costs &mdash; the review or jury panel fees, always at the normal per-case rate &mdash; are paid first from the seized capital. What remains follows rules specific to each forfeiture type:</p>
@@ -1178,7 +1181,7 @@ On price-out:
 </div>
 
 <div class="colophon">
-<p>Bitaid &mdash; A Peer-to-Peer Private Civil First Responder Protocol &middot; Whitepaper v4.2 &middot; 2026</p>
+<p>Bitaid &mdash; A Peer-to-Peer Private Civil First Responder Protocol &middot; Whitepaper v4.3 &middot; 2026</p>
 <p>Open protocol. No rights reserved.</p>
 </div>
 
@@ -2523,7 +2526,7 @@ On price-out:
 <rect x="20" y="5325" width="1440" height="2" fill="#d8d6ce"/>
 <text x="740" y="5350" text-anchor="middle" class="tm">Bitaid — Threat Vector Map · 29 vectors across 8 categories · Each defence layer closes a gap the previous layer left open.</text>
 <text x="740" y="5368" text-anchor="middle" class="tm">Residual risks noted explicitly. Nation-state threats require formal arbitration escalation. Protocol is not a magic box.</text>
-<text x="740" y="5390" text-anchor="middle" class="tm">Whitepaper v4.2 Draft · 2026</text>
+<text x="740" y="5390" text-anchor="middle" class="tm">Whitepaper v4.3 Draft · 2026</text>
 
 </svg>
   </div>
