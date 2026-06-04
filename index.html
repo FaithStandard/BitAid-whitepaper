@@ -323,7 +323,7 @@ li {
 <div class="how-to-read">
 <p><strong>How to read this document.</strong> Three tracks are provided, clearly signaled throughout:</p>
 <p><strong>Track 1: The Argument</strong> (sections <a href="#s1">1</a>&ndash;<a href="#s8">8</a>) &mdash; Why this works and why it matters. Read straight through for the protocol's logic without implementation detail. The <strong>skeptic</strong> seeking assurance that this is not a scam, does not require a new blockchain, and cannot be captured by capital should read sections <a href="#s1">1</a> (the gap), <a href="#s2">2</a> (the core insight &mdash; PoB+L as human proof of work), <a href="#s4">4</a> (the trust model &mdash; anti-fragility, economic exhaustion, fee market robustness), and <a href="#s6">6</a> (the promise &mdash; inherited Nakamoto consensus, permissionless design, state resistance). The <strong>economist</strong> interested in the fee market, insurance flywheel, and equilibrium analysis should read sections <a href="#s3">3</a> (the market &mdash; three-tier offer, flywheel, pseudo-default), <a href="#s4">4</a> (the trust model &mdash; fee market, priority fee, chessboard dynamics), and <a href="#s5">5</a> (the bootstrapping &mdash; insurers as VCs, cold-start economics). The <strong>investor or operator</strong> evaluating market opportunity should read sections <a href="#s3">3</a> (flywheel, security firms, alarm systems), <a href="#s4">4</a> (premium arbitration market, cost structure), and <a href="#s5">5</a> (cold-start, genesis deployment).</p>
-<p><strong>Track 2: The Specification</strong> (sections <a href="#s9">9</a>&ndash;<a href="#s18">18</a>) &mdash; Precisely how it works, for implementers and auditors. Each section opens with an explicit mode signal. <strong>Engineers</strong> should read sections <a href="#s10">10</a>&ndash;<a href="#s16">16</a> (bond system, network architecture, evidence layer, arbitration mechanism, payment protocol, privacy &amp; security). The <strong>skeptic</strong> who wants technical depth on capture resistance should also read section <a href="#s14">14</a> (arbitration mechanism &mdash; closed pool, coherence competition, asymmetric penalty) and section <a href="#s16">16</a> (privacy &amp; state resistance). A <a href="#s-arch"><strong>Protocol Architecture Overview</strong></a> diagram precedes this track, showing the full system at a glance. A <strong>Threat Vector Map</strong> dialog enumerating all identified attack surfaces and their mitigations is available throughout the specification; relevant sections link to it.</p>
+<p><strong>Track 2: The Specification</strong> (sections <a href="#s9">9</a>&ndash;<a href="#s18">18</a>) &mdash; Precisely how it works, for implementers and auditors. Each section opens with an explicit mode signal. <strong>Engineers</strong> should read sections <a href="#s10">10</a>&ndash;<a href="#s16">16</a> (bond system, network architecture, evidence layer, arbitration mechanism, payment protocol, privacy &amp; security). The <strong>skeptic</strong> who wants technical depth on capture resistance should also read section <a href="#s14">14</a> (arbitration mechanism &mdash; closed pool, coherence competition, asymmetric penalty) and section <a href="#s16">16</a> (privacy &amp; state resistance). A <a href="#s-arch"><strong>Protocol Architecture Overview</strong></a> diagram precedes this track, showing the full system at a glance. A <a onclick="document.getElementById('threat-dialog').showModal(); return false;" href="#" style="color:inherit; text-decoration:underline; text-decoration-style:dotted; cursor:pointer;">Threat Vector Map</a> dialog enumerating all identified attack surfaces and their mitigations is available throughout the specification; relevant sections link to it.</p>
 <p><strong>Track 3: The Foundations</strong> (<a href="#s17">section 17</a>) &mdash; The philosophical and economic underpinnings: Austrian monetary theory, time preference, the calculation problem applied to emergency services, and why full-reserve deposit insurance is the only honest structure.</p>
 <p>All readers should read the Abstract and the Conclusion (<a href="#s8">section 8</a>). The Conclusion may be read first; it states the entire argument in compressed form. Visual readers should examine the Protocol Architecture Overview before entering the specification.</p>
 </div>
@@ -448,6 +448,114 @@ li {
 <p><strong>Fee market robustness.</strong> Three properties make the fee market structurally resistant to manipulation. First, the fee market affects <em>only the arbitration tier</em> &mdash; emergency coordination continues regardless of arbitration fee levels. A caller in physical danger still receives responders; only the dispute-resolution path experiences delay. Second, sustained fee manipulation requires <em>exponential capital burn</em>: the dual-trigger compounding (+12.5% per close, +6.25% every 18 blocks) produces fee growth that dwarfs any plausible strategic benefit within days. The cost resembles the chessboard rice problem: one grain on the first square, doubled on each subsequent square; by the eighteenth square the pile already exceeds the entire harvest. Third, even at peak congestion &mdash; fees at 4&times; base, queue backed up for 72 hours &mdash; the protocol still resolves disputes in <em>days</em>, not the months or years of conventional civil or criminal proceedings. The natural floor is arbitrator opportunity cost; the effective ceiling is attacker willingness to fund compounding waste against a system that remains faster than the state alternative even when delayed.</p>
 
 <p><strong>Priority fee.</strong> Any party to a dispute may attach an optional priority fee to their case in the arbitration queue, paid from the operational reserve to the reviewing arbitrators upon resolution. The fee does not affect arbitrator selection, panel composition, or verdict weighting; it affects only the order in which cases are assigned to available arbitrators. A Sybil caller who tips a fake case pays more to attract <em>additional</em> judicial attention to a case that will be reviewed anyway &mdash; the priority fee raises rather than lowers the cost of attack. For legitimate parties, the priority fee functions as express review: faster resolution of the same quality adjudication. Arbitrators earn more for reviewing tipped cases, creating stronger incentive to clear the queue when priority fees are active.</p>
+
+<h3>4.6 The Annihilation Walkthrough</h3>
+
+<p><em>What follows is a linear walkthrough of an all-out attack intended to destroy the protocol &mdash; not merely disrupt it, but acquire majority arbitrator control, seize all bonds, and collapse the system. Each step assumes the attacker succeeded at all previous steps. Costs accumulate. Impossibilities compound. By the end, the attack has spent more than the GDP of a mid-sized nation and made the protocol stronger.</em></p>
+
+<style>
+.gauntlet-wrap { font-family: var(--mono); font-size: 0.78em; margin: 1.5rem 0; border: 1px solid #d5d3cc; border-radius: 6px; overflow: hidden; }
+.gauntlet-row { display: flex; border-bottom: 1px solid #e8e6df; }
+.gauntlet-row:last-child { border-bottom: none; }
+.gauntlet-step { width: 50px; background: #f0eeea; color: #8a8780; text-align: center; padding: 0.5rem 0.3rem; font-weight: 700; flex-shrink: 0; border-right: 1px solid #e8e6df; display: flex; align-items: center; justify-content: center; }
+.gauntlet-attack { flex: 1; padding: 0.5rem 0.8rem; background: #faf9f7; }
+.gauntlet-trap { flex: 1.2; padding: 0.5rem 0.8rem; background: #f5f4f0; border-left: 3px solid #1E8E50; }
+.gauntlet-row.result .gauntlet-step { background: #E74C3C; color: white; }
+.gauntlet-row.result .gauntlet-trap { border-left-color: #E74C3C; background: #faf0f0; }
+.gauntlet-row.cumulative .gauntlet-attack { font-style: italic; color: #7a7870; }
+.gauntlet-row.cumulative .gauntlet-trap { background: #fff8e8; border-left-color: #c9a030; }
+.gauntlet-row.start .gauntlet-step { background: #2C3E7A; color: white; }
+.gauntlet-label { font-size: 0.65em; text-transform: uppercase; letter-spacing: 0.08em; color: #9a9890; margin-bottom: 0.2rem; }
+.gauntlet-row .gauntlet-attack strong, .gauntlet-row .gauntlet-trap strong { color: #3a3a36; }
+</style>
+
+<div class="gauntlet-wrap">
+
+<div class="gauntlet-row start">
+  <div class="gauntlet-step">A</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Attacker's Goal</div><strong>Destroy Bitaid.</strong> Acquire &gt;80% of arbitrator seats to control all verdicts, seize bonds of honest arbitrators exiting the pool, run majority of BCAEN archival nodes to suppress evidence and harvest subsidy.</div>
+  <div class="gauntlet-trap"><div class="gauntlet-label">The Defence</div>No single point of control exists. There is no admin key, no DAO, no governance mechanism to capture. The attacker must win <strong>every layer simultaneously</strong>.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">B</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Open Pool Slots</div>The pool is closed by default. Slots open only on natural turnover or sustained 432-block queue pressure.</div>
+  <div class="gauntlet-trap"><strong>Capital alone cannot open a slot.</strong> Demand signal required. No amount of bond capital creates a queue where genuine demand does not exist.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">C</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Create Queue Pressure</div>Queue depth is weighted by aggregate responder legitimacy and stake. Low-labor cases do not count.</div>
+  <div class="gauntlet-trap"><strong>One fake responder is not enough.</strong> The queue clears as arbitrators pick up cases. Maintaining &gt;0 requires <strong>dozens</strong> of fake high-labor responders generating incidents faster than resolution &mdash; all cell-scoped, all under honest observation.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">D</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Season Each Fake Responder</div>Every fake identity needs 90 days of cell-scoped labor history before it contributes meaningful queue weight.</div>
+  <div class="gauntlet-trap"><strong>Time is the wall.</strong> No capital accelerates temporal seasoning. 90 days per identity &times; dozens of identities = <strong>years</strong> of sustained deception before the first slot opens.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">E</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Operate in Real Cells</div>Labor score is H3-cell-scoped and does not transfer. Each fake responder must operate in a real cell with real honest participants.</div>
+  <div class="gauntlet-trap"><strong>Every fake incident is performed in front of witnesses.</strong> Active-cell review catches behavioural fakes. Arbitrators selected for epistemological acuity review all cases.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">F</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Maintain Perfect Deception</div>Every fake incident is uploaded to BCAEN before any dispute arises. Hash is gossiped. Footage is permanent.</div>
+  <div class="gauntlet-trap"><strong>Every fake case is permanent evidence against the attacker.</strong> Content-addressed storage means the evidence cannot be quietly deleted. Retroactive review at 40% dissent catches any slip.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">G</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Win Coherence Competition</div>Slot opens. Attacker must now outscore honest applicants on 10 calibration cases.</div>
+  <div class="gauntlet-trap"><strong>Work determines selection, not capital.</strong> The attacker must demonstrate accurate perception on real historical cases reviewed by arbitrators specifically selected for calibration acuity.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">H</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Survive Probation</div>30-case probation period. Votes recorded but do not count toward calibration. Any 40% dissent triggers retroactive review.</div>
+  <div class="gauntlet-trap"><strong>Probationers have no safe harbour.</strong> 40% triggers review; confirmed fraud = full bond seizure. One flag = expulsion. The attacker must be perfect for 30 consecutive cases.</div>
+</div>
+
+<div class="gauntlet-row cumulative">
+  <div class="gauntlet-step">I</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Cumulative Cost So Far</div><strong>One slot secured.</strong> The attacker now holds 0.5% of the pool. Capital expended: dozens of bonded identities, 90+ days of operation, participation fees, intention bonds, BCAEN upload costs.</div>
+  <div class="gauntlet-trap"><strong>Need 100+ more slots for majority.</strong> Every slot requires repeating steps B through H simultaneously. The attacker must maintain <strong>hundreds</strong> of perfect fake identities in parallel, indefinitely.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">J</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Control BCAEN Majority</div>Must also run &gt;51% of archival nodes to suppress honest evidence and harvest the forfeiture subsidy.</div>
+  <div class="gauntlet-trap"><strong>Suppression is content-addressed.</strong> The hash was gossiped at upload. Even compromising all archival nodes does not erase the hash from gossip history. Evidence can be re-uploaded from any cached copy.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">K</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Sustain Fee Compounding</div>Every fake case that enters arbitration pays fees. The dual-trigger compounding (+12.5% per close, +6.25% every 18 blocks) activates.</div>
+  <div class="gauntlet-trap"><strong>Every satoshi flows to honest arbitrators.</strong> The attacker's own expenditure funds the honest participants who review their fake cases. The attack subsidises its own opposition.</div>
+</div>
+
+<div class="gauntlet-row">
+  <div class="gauntlet-step">L</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Seize Bonds of Exiting Honest Arbitrators</div>With majority control, attacker can issue corrupt verdicts against honest arbitrators exiting the pool.</div>
+  <div class="gauntlet-trap"><strong>Honest arbitrators appeal before exiting.</strong> The 48-hour appeal window, the attending vote, and the formal arbitration path (<a href="#s14">&sect;14.11</a>) all remain available. Arbitrators are pseudonymous &mdash; the attacker cannot distinguish who is about to exit.</div>
+</div>
+
+<div class="gauntlet-row cumulative">
+  <div class="gauntlet-step">M</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Total Running Cost</div><strong>6-month sustained all-out attack.</strong> Hundreds of bonded fake identities, 90+ day seasoning pipeline, BCAEN majority operation, exponential fee compounding, simultaneous perfect deception across all cells.</div>
+  <div class="gauntlet-trap"><strong>Cost exceeds the annual intelligence budget of most nation-states.</strong> And the attacker has made the protocol stronger: funded honest participants, expanded the calibration library, and demonstrated the defence works under maximum stress.</div>
+</div>
+
+<div class="gauntlet-row result">
+  <div class="gauntlet-step">Z</div>
+  <div class="gauntlet-attack"><div class="gauntlet-label">Result</div><strong>Protocol annihilation: structurally impossible.</strong> The attack is self-defeating by design. Every dollar spent strengthens the target. The defence does not merely resist &mdash; it <strong>weaponises the attacker's capital against them</strong>.</div>
+  <div class="gauntlet-trap"><strong>The attacker faces a dual cost problem:</strong> capital expenditure for bond acquisition AND surveillance expenditure for identity correlation AND operational expenditure for sustained deception AND fee expenditure for compounding arbitration &mdash; with none of these costs reducing any other. Each layer penetrated makes the next layer <em>more expensive</em>. The compounding traps do not add; they <em>multiply</em>.</div>
+</div>
+
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <!-- 5. THE BOOTSTRAPPING                                                  -->
@@ -773,7 +881,7 @@ li {
 <h2 id="s10">10. The Bond System</h2>
 <p class="mode-signal">Specification &mdash; bond types, entry floors, escrow scripts, spending paths, insurer buffers, forfeiture flows</p>
 
-<p><em>Attack surface codes (C2.1, C4.1, etc.) in this section refer to entries in the companion <a href="#threat-dialog" onclick="document.getElementById('threat-dialog').showModal(); return false;" href="#" style="color:inherit; text-decoration:underline; text-decoration-style:dotted; cursor:pointer;">Threat Vector Map</a>, which enumerates all identified attack surfaces across 8 categories and their protocol mitigations.</em></p>
+<p><em>Attack surface codes (C2.1, C4.1, etc.) in this section refer to entries in the companion <a href="#threat-dialog" onclick="document.getElementById('threat-dialog').showModal(); return false;" href="#" style="color:inherit; text-decoration:underline; text-decoration-style:dotted; cursor:pointer;">Threat Vector Map</a>, which enumerates all identified attack surfaces across 9 categories and their protocol mitigations.</em></p>
 
 <p><em>Without skin in the game, every alert is free to fake. Without programmable money, skin in the game cannot be enforced without trust.</em> Bitaid's bond system creates legible offer and demand signals that did not previously exist. A caller staking real capital expresses the severity of their situation. A bounty prices the value of rapid presence. An outcome reward prices the value of actual intervention. Together they constitute the first market price signals for passive emergency response &mdash; not the pre-arranged bilateral market for private guards, but a real-time spot market where strangers bid to respond to unscheduled incidents by unknown callers, conditional on attendance and outcome.</p>
 
@@ -1449,7 +1557,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
   </div>
   <div style="overflow: auto; max-height: calc(92vh - 44px); padding: 1rem; background: #f5f4f0;">
 <p style="font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:0.78rem;color:#3a3a36;margin:0 0 0.8rem;line-height:1.5;max-width:900px;"><strong>Protocol-layer outcomes.</strong> Failed commercial abuse typically forfeits bonds to honest participants and raises local acceptance thresholds. This is not chain re-org or rule change. Tail risk: insurer mispricing (off-protocol). Nation-state: formal arbitration (<a href="#s14">&sect;14.11</a>), not protocol capture alone.</p>
-<svg viewBox="0 0 1480 5425" xmlns="http://www.w3.org/2000/svg" width="100%">
+<svg viewBox="0 0 1480 5670" xmlns="http://www.w3.org/2000/svg" width="100%">
 <defs>
   <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1487,6 +1595,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
     .hbar6 { fill: #1A6B5A; } /* evidence */
     .hbar7 { fill: #3A3A8A; } /* economic/market (insurer, sponsor) */
     .hbar8 { fill: #4A1A4A; } /* state */
+    .hbar9 { fill: #2D2D2D; } /* sequential defense gauntlet */
 
     .matrix-hdr-h { fill: #EFEDE4; stroke: #bbb9af; stroke-width: 0.6; }
     .matrix-hdr-v { fill: #EFEDE4; stroke: #bbb9af; stroke-width: 0.6; }
@@ -2761,9 +2870,94 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- FOOTER -->
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <rect x="20" y="5325" width="1440" height="2" fill="#d8d6ce"/>
-<text x="740" y="5350" text-anchor="middle" class="tm">Bitaid — Threat Vector Map · 29 vectors across 8 categories · Each defence layer closes a gap the previous layer left open.</text>
-<text x="740" y="5368" text-anchor="middle" class="tm">Residual risks noted explicitly. Nation-state threats face economic exhaustion from the protocol first; formal arbitration is optional escalation. Protocol is not a magic box.</text>
-<text x="740" y="5390" text-anchor="middle" class="tm">Whitepaper v4.3 Draft · 2026</text>
+<text x="740" y="5350" text-anchor="middle" class="tm">Bitaid — Threat Vector Map · 29 vectors across 9 categories · Each defence layer closes a gap the previous layer left open.</text>
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- CATEGORY 9: THE ARBITRATOR POOL DOMINATION GAUNTLET                  -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<rect x="20" y="5050" width="1440" height="40" rx="4" class="hbar9"/>
+<text x="38" y="5075" class="cat">9. THE GAUNTLET &mdash; Sequential Attack Simulation</text>
+<text x="380" y="5075" class="subcat">Step-by-step: what an attacker must survive to place one corrupted arbitrator in the pool</text>
+
+<!-- Step 1 -->
+<rect x="20" y="5110" width="580" height="50" rx="5" class="atk-med"/>
+<text x="38" y="5130" class="th">1. Attacker wants one pool slot</text>
+<text x="38" y="5148" class="ts">The pool is closed. Slots only open on natural</text>
+<text x="38" y="5162" class="ts">turnover or sustained 432-block queue pressure.</text>
+<line x1="610" y1="5135" x2="640" y2="5135" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5110" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5130" class="tl">TRAP: Closed pool with demand-signalled entry</text>
+<text x="668" y="5148" class="tdef">Capital alone cannot open a slot. Demand signal required.</text>
+
+<!-- Step 2 -->
+<rect x="20" y="5175" width="580" height="65" rx="5" class="atk-med"/>
+<text x="38" y="5195" class="th">2. Must create queue pressure &mdash; 432 blocks</text>
+<text x="38" y="5213" class="ts">Queue depth is weighted by aggregate responder legitimacy</text>
+<text x="38" y="5227" class="ts">and stake. Low-labor cases do not count. The queue clears as</text>
+<text x="38" y="5241" class="ts">arbitrators pick up cases. Maintaining &gt;0 requires dozens of fake</text>
+<text x="38" y="5255" class="ts">high-labor responders, each 90-day seasoned, all in the same cell.</text>
+<line x1="610" y1="5218" x2="640" y2="5218" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5175" width="700" height="65" rx="5" class="def-strong"/>
+<text x="668" y="5195" class="tl">TRAP: Queue weight by responder legitimacy</text>
+<text x="668" y="5213" class="tdef">One fake responder is not enough. Need a pipeline of seasoned fakes</text>
+<text x="668" y="5227" class="tdef">generating cases faster than arbitrators resolve them &mdash; all with real</text>
+<text x="668" y="5241" class="tdef">capital at risk, all cell-scoped, all under honest observation. For one slot.</text>
+
+<!-- Step 3 -->
+<rect x="20" y="5255" width="580" height="50" rx="5" class="atk-med"/>
+<text x="38" y="5275" class="th">3. Must build cell-scoped labor &mdash; in real cells</text>
+<text x="38" y="5293" class="ts">Labor score is recorded per H3 cell and does not</text>
+<text x="38" y="5307" class="ts">transfer. Remote reputation farming is impossible.</text>
+<line x1="610" y1="5280" x2="640" y2="5280" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5255" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5275" class="tl">TRAP: Cell-scoped labour</text>
+<text x="668" y="5293" class="tdef">Must operate under honest participants' continuous observation.</text>
+
+<!-- Step 4 -->
+<rect x="20" y="5320" width="580" height="50" rx="5" class="atk-med"/>
+<text x="38" y="5340" class="th">4. Must maintain deception for 90+ days</text>
+<text x="38" y="5358" class="ts">Every fake incident is permanent BCAEN evidence.</text>
+<text x="38" y="5372" class="ts">Retroactive review at 40% dissent catches any slip.</text>
+<line x1="610" y1="5345" x2="640" y2="5345" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5320" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5340" class="tl">TRAP: Temporal seasoning + retroactive review</text>
+<text x="668" y="5358" class="tdef">90-day minimum. Every case a permanent, growing liability.</text>
+
+<!-- Step 5 -->
+<rect x="20" y="5385" width="580" height="50" rx="5" class="atk-med"/>
+<text x="38" y="5405" class="th">5. Queue triggers slot open</text>
+<text x="38" y="5423" class="ts">Attacker enters coherence competition: must pay</text>
+<text x="38" y="5437" class="ts">participation fee + intention bond + score well on 10 cases.</text>
+<line x1="610" y1="5410" x2="640" y2="5410" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5385" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5405" class="tl">TRAP: Coherence competition</text>
+<text x="668" y="5423" class="tdef">Work determines selection, not capital. Must outscore honest applicants.</text>
+
+<!-- Step 6 -->
+<rect x="20" y="5450" width="580" height="50" rx="5" class="atk-med"/>
+<text x="38" y="5470" class="th">6. Wins slot &mdash; enters 30-case probation</text>
+<text x="38" y="5488" class="ts">Votes recorded but do not count toward calibration.</text>
+<text x="38" y="5502" class="ts">Any case flagged for retroactive review (40% dissent) risks full</text>
+<text x="38" y="5516" class="ts">bond seizure on confirmation. Probationers have no safe harbour.</text>
+<line x1="610" y1="5488" x2="640" y2="5488" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5450" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5470" class="tl">TRAP: Probation with retroactive exposure</text>
+<text x="668" y="5488" class="tdef">40% triggers review; confirmed fraud = seizure. One flag = expulsion.</text>
+
+<!-- Step 7 / Result -->
+<rect x="20" y="5515" width="580" height="50" rx="5" class="atk-lo"/>
+<text x="38" y="5535" class="th">7. Survives = 1 of ~200 arbitrators</text>
+<text x="38" y="5553" class="ts">Attacker now holds 0.5% of the pool. To corrupt</text>
+<text x="38" y="5567" class="ts">a majority, repeat steps 1-6 one hundred times, simultaneously.</text>
+<line x1="610" y1="5540" x2="640" y2="5540" stroke="#E74C3C" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="650" y="5515" width="700" height="50" rx="5" class="def-strong"/>
+<text x="668" y="5535" class="tl">RESULT: Compounding traps, not independent filters</text>
+<text x="668" y="5553" class="tdef">Each "success" increases exposure. The defence accelerates.</text>
+
+<!-- Summary text -->
+<text x="740" y="5610" text-anchor="middle" class="tf">Each layer penetrated forces the attacker to maintain a larger, longer, more visible deception. Fee compounding is the gravitational sink &mdash; by week 4, a single 3-arbitrator panel costs &gt;1 BTC in fees.</text>
+
+<text x="740" y="5630" text-anchor="middle" class="tm">Residual risks noted explicitly. Nation-state threats face economic exhaustion from the protocol first; formal arbitration is optional escalation. Protocol is not a magic box.</text>
+<text x="740" y="5650" text-anchor="middle" class="tm">Whitepaper v5.0 &middot; 2026</text>
 
 </svg>
   </div>
