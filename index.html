@@ -315,6 +315,8 @@ li {
 
 <p>The protocol&rsquo;s Sybil-resistance primitive is <strong>Proof of &#8383;ond + Labor</strong>. The bond is refundable collateral &mdash; <strong>an escrow</strong> in a conditional <strong>Bitcoin script</strong> &mdash; forfeited on confirmed misuse, making bad faith costly without taxing honest participants. The labor is an <strong>earned record of demonstrated paid work</strong>, discounted by temporal seasoning and &mdash; for responders &mdash; geographically scoped to the active service area so that reputation cannot be farmed remotely, that cannot be purchased &mdash; only proven out over irreplaceable calendar time and successful service. Bonded and proven participants are preferred in routing; untested ones are filtered &mdash; relay operators discriminate subjectively without central authority. This is <strong>anti-staking</strong>: capital is put at risk as a condition of service, not delegated to earn passive yield. Commercial disputes resolve through a closed arbitrator pool with blind voting and asymmetric penalty &mdash; a self-policing calibration mechanism that reviews past verdicts, detects incoherent arbitrators, and compounds accuracy over time. Responders stream hash-before-upload video to the Bitaid Content-Addressed Evidence Network (BCAEN), making suppression structurally impossible and producing market-priced emergency response with unsuppressible video evidence as an emergent byproduct. The protocol follows a <strong>zero-cost-till-need</strong> model: no subscription, no standing retainer, no monthly fee. Costs are incurred only when an incident occurs. The bond is refundable on honest use; the only non-recoverable costs are the bounty (payment for attendance) and arbitration fees (payment for dispute resolution if needed).</p>
 
+<p><strong>Insurance buffers and the security flywheel.</strong> Insurers post collateral buffers that backstop responder bonds, enabling higher-stake participation without requiring every responder to hold the full bond in personal capital. A life or property insurer integrates the buffer into its existing policies: the policyholder pays a premium; the insurer posts a bond buffer that activates on incident; a bonded responder attends with insurer-backed capital; successful response reduces claims and losses, improving the insurer&rsquo;s loss ratio. This creates a <strong>flywheel</strong>: fewer incidents mean lower claims; lower claims mean more capital for buffers; more capital attracts better responders; better response means fewer incidents. The insurer goes further: it directly employs security personnel &mdash; guards, patrols, monitors &mdash; who participate as bonded responders in the protocol. The same personnel serve both structural security (scheduled patrols, property monitoring, deterrent presence) and emergency response (incident dispatch). The structural security retainer funds the bond and operational cost; the emergency response bounty and outcome reward provide incremental income. Bitaid is the coordination platform; the insurer is the operational backbone. This is competing private police made concrete: vertical integration of underwriting, employment, and prevention through a single protocol layer.</p>
+
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
@@ -471,88 +473,90 @@ li {
 
 <div class="gauntlet-wrap">
 
+<p style="font-size:0.7em; color:#8a8780; padding:0.4rem 0.8rem; margin:0; border-bottom:1px solid #e8e6df; background:#faf9f7;"><strong>Key:</strong> <span style="display:inline-block; width:10px; height:10px; background:#2C3E7A; border-radius:2px; vertical-align:middle;"></span> Start &middot; <span style="display:inline-block; width:10px; height:10px; background:#faf9f7; border:1px solid #d5d3cc; border-radius:2px; vertical-align:middle;"></span> Active trap &middot; <span style="display:inline-block; width:10px; height:10px; background:#fff8e8; border:1px solid #d5d3cc; border-radius:2px; vertical-align:middle;"></span> Cumulative checkpoint &middot; <span style="display:inline-block; width:10px; height:10px; background:#faf0f0; border:1px solid #d5d3cc; border-radius:2px; vertical-align:middle;"></span> Terminal result. <em>Each defence cell shows the formula that makes the trap concrete.</em></p>
+
 <div class="gauntlet-row start">
   <div class="gauntlet-step">A</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Attacker's Goal</div><strong>Destroy Bitaid.</strong> Acquire &gt;80% of arbitrator seats to control all verdicts, seize bonds of honest arbitrators exiting the pool, run majority of BCAEN archival nodes to suppress evidence and harvest subsidy.</div>
-  <div class="gauntlet-trap"><div class="gauntlet-label">The Defence</div>No single point of control exists. There is no admin key, no DAO, no governance mechanism to capture. The attacker must win <strong>every layer simultaneously</strong>.</div>
+  <div class="gauntlet-trap"><div class="gauntlet-label">The Defence</div>No single point of control exists. There is no admin key, no DAO, no governance mechanism to capture. The attacker must win <strong>every layer simultaneously</strong>. <code style="font-size:0.85em;">attack_surface = ∪(layers₁..ₙ); capture_requires_all = ∧(layers₁..ₙ)</code></div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">B</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Open Pool Slots</div>The pool is closed by default. Slots open only on natural turnover or sustained 432-block queue pressure.</div>
-  <div class="gauntlet-trap"><strong>Capital alone cannot open a slot.</strong> Demand signal required. No amount of bond capital creates a queue where genuine demand does not exist.</div>
+  <div class="gauntlet-trap"><strong>Capital alone cannot open a slot.</strong> <code style="font-size:0.85em;">slots = natural_turnover ∪ (queue₄₃₂ ∧ Q_weighted &gt; 0 ∧ all_fundable)</code>. Capital is not a variable in the slot-opening function. No amount of bond capital creates a queue where genuine demand does not exist.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">C</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Create Queue Pressure</div>Queue depth is weighted by aggregate responder legitimacy and stake. Low-labor cases do not count.</div>
-  <div class="gauntlet-trap"><strong>One fake responder is not enough.</strong> The queue clears as arbitrators pick up cases. Maintaining &gt;0 requires <strong>dozens</strong> of fake high-labor responders generating incidents faster than resolution &mdash; all cell-scoped, all under honest observation.</div>
+  <div class="gauntlet-trap"><strong>One fake responder is not enough.</strong> <code style="font-size:0.85em;">Q_weighted = Σ(responder_rep × responder_stake) / count</code>. A single fake identity contributes negligible Q. Maintaining Q &gt; 0 requires <strong>dozens</strong> of identities (n ≥ 20&ndash;50) all with labour ≥ threshold, all cell-scoped, all under honest observation.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">D</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Season Each Fake Responder</div>Every fake identity needs 90 days of cell-scoped labor history before it contributes meaningful queue weight.</div>
-  <div class="gauntlet-trap"><strong>Time is the wall.</strong> No capital accelerates temporal seasoning. 90 days per identity &times; dozens of identities = <strong>years</strong> of sustained deception before the first slot opens.</div>
+  <div class="gauntlet-trap"><strong>Time is the wall.</strong> <code style="font-size:0.85em;">t_first_slot = 90 days × n_identities / parallel_cells</code>. No capital reduces t. At n = 30 identities across 3 cells: t = 900 identity-days minimum before the first slot can open.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">E</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Operate in Real Cells</div>Labor score is H3-cell-scoped and does not transfer. Each fake responder must operate in a real cell with real honest participants.</div>
-  <div class="gauntlet-trap"><strong>Every fake incident is performed in front of witnesses.</strong> Active-cell review catches behavioural fakes. Arbitrators selected for epistemological acuity review all cases.</div>
+  <div class="gauntlet-trap"><strong>Every fake incident is performed in front of witnesses.</strong> <code style="font-size:0.85em;">labour_scoreᵢ = Σⱼ(cellⱼ_work) where cellⱼ ≠ cellₖ for all j ≠ k</code>. Non-transferable; each cell requires fresh bootstrapping. Active-cell review catches behavioural fakes.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">F</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Maintain Perfect Deception</div>Every fake incident is uploaded to BCAEN before any dispute arises. Hash is gossiped. Footage is permanent.</div>
-  <div class="gauntlet-trap"><strong>Every fake case is permanent evidence against the attacker.</strong> Content-addressed storage means the evidence cannot be quietly deleted. Retroactive review at 40% dissent catches any slip.</div>
+  <div class="gauntlet-trap"><strong>Every fake case is permanent evidence.</strong> <code style="font-size:0.85em;">evidence_permanence = hash_gossiped ∧ Bitcoin_anchor ∧ redundant_copies</code>. Erasure requires compromising all three simultaneously. Retroactive review at 40% dissent flags any slip for the 100-pool.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">G</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Win Coherence Competition</div>Slot opens. Attacker must now outscore honest applicants on 10 calibration cases.</div>
-  <div class="gauntlet-trap"><strong>Work determines selection, not capital.</strong> The attacker must demonstrate accurate perception on real historical cases reviewed by arbitrators specifically selected for calibration acuity.</div>
+  <div class="gauntlet-trap"><strong>Work determines selection, not capital.</strong> <code style="font-size:0.85em;">coherence = aligned_votes / 10 = 1 − Σ|voteᵢ − consensusᵢ| / 10</code>. Higher is better; capital does not enter the scoring function. The attacker must beat honest applicants on real historical cases reviewed by arbitrators selected for calibration acuity.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">H</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Survive Probation</div>30-case probation. Votes recorded but do not count toward calibration. Seats capped at 1/3 of any panel. 40% dissent flags an old case for review by the 100-arbitrator pool.</div>
-  <div class="gauntlet-trap"><strong>Probationers have no safe harbour.</strong> 40% flags for review; the 100-pool must confirm fraud at 80% supermajority. One confirmed fraud = seizure and expulsion. The attacker must be perfect for 30 consecutive cases while occupying a minority seat and under continuous review by the pool specifically selected for calibration acuity.</div>
+  <div class="gauntlet-trap"><strong>Probationers have no safe harbour.</strong> <code style="font-size:0.85em;">P(expulsion) = 1 − (1 − P(fraud_detected))³⁰</code>. Even a 95% "perfect" attacker faces 79% expulsion risk over 30 cases. Seats capped at ⌊panel/3⌋; 40% flags → 100-pool review → 80% confirms → seizure → 3&times; premium paid from seized bond. No seizure, no premium. Premium is backed by actual forfeiture, not debt.</div>
 </div>
 
 <div class="gauntlet-row cumulative">
   <div class="gauntlet-step">I</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Cumulative Cost So Far</div><strong>One slot secured.</strong> The attacker now holds 0.5% of the pool. Capital expended: dozens of bonded identities, 90+ days of operation, participation fees, intention bonds, BCAEN upload costs.</div>
-  <div class="gauntlet-trap"><strong>Need 100+ more slots for majority.</strong> Every slot requires repeating steps B through H simultaneously. The attacker must maintain <strong>hundreds</strong> of perfect fake identities in parallel, indefinitely.</div>
+  <div class="gauntlet-trap"><strong>Need 100+ more slots for majority.</strong> <code style="font-size:0.85em;">cost_1_slot = n·(bond + entry_fee + BCAEN_cost) + 90_day_opportunity</code>. Need 100× for majority. Every slot repeats steps B&ndash;H simultaneously; hundreds of perfect fake identities in parallel, indefinitely.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">J</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Control BCAEN Majority</div>Must also run &gt;51% of archival nodes to suppress honest evidence and harvest the forfeiture subsidy.</div>
-  <div class="gauntlet-trap"><strong>Suppression is content-addressed.</strong> The hash was gossiped at upload. Even compromising all archival nodes does not erase the hash from gossip history. Evidence can be re-uploaded from any cached copy.</div>
+  <div class="gauntlet-trap"><strong>Suppression is content-addressed.</strong> <code style="font-size:0.85em;">P(suppress) = P(compromise_all_nodes) ∧ P(rewrite_chain) ∧ P(suppress_gossip)</code>. Conjunctive, not disjunctive. The hash was gossiped at upload; even compromising all archival nodes does not erase gossip history.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">K</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Sustain Fee Compounding</div>Every fake case that enters arbitration pays fees. The dual-trigger compounding (+12.5% per close, +6.25% every 18 blocks) activates.</div>
-  <div class="gauntlet-trap"><strong>Every satoshi flows to honest arbitrators.</strong> The attacker's own expenditure funds the honest participants who review their fake cases. The attack subsidises its own opposition.</div>
+  <div class="gauntlet-trap"><strong>Every satoshi flows to honest arbitrators.</strong> <code style="font-size:0.85em;">feeₜ = fee₀ × (1.125)^{closes} × (1.0625)^{t/18}</code>. By week 4, a single 3-arbitrator panel costs &gt;1 BTC. By week 8, maintaining queue pressure costs 50&ndash;200 BTC/week. The attack subsidises its own opposition.</div>
 </div>
 
 <div class="gauntlet-row">
   <div class="gauntlet-step">L</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Seize Bonds of Exiting Honest Arbitrators</div>With majority control, attacker can issue corrupt verdicts against honest arbitrators exiting the pool.</div>
-  <div class="gauntlet-trap"><strong>Honest arbitrators appeal before exiting.</strong> The 48-hour appeal window, the attending vote, and the formal arbitration path (<a href="#s14">&sect;14.11</a>) all remain available. Arbitrators are pseudonymous &mdash; the attacker cannot distinguish who is about to exit.</div>
+  <div class="gauntlet-trap"><strong>Honest arbitrators appeal before exiting.</strong> <code style="font-size:0.85em;">P(identify_exiter) = 1 / |pseudonymous_set|</code>. The 48-hour appeal window, attending vote, and formal arbitration (<a href="#s14">&sect;14.11</a>) all remain. Arbitrators are pseudonymous over Tor; the attacker cannot distinguish who is about to exit.</div>
 </div>
 
 <div class="gauntlet-row cumulative">
   <div class="gauntlet-step">M</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Total Running Cost</div><strong>6-month sustained all-out attack.</strong> Hundreds of bonded fake identities, 90+ day seasoning pipeline, BCAEN majority operation, exponential fee compounding, simultaneous perfect deception across all cells.</div>
-  <div class="gauntlet-trap"><strong>Cost exceeds the annual intelligence budget of most nation-states.</strong> And the attacker has made the protocol stronger: funded honest participants, expanded the calibration library, and demonstrated the defence works under maximum stress.</div>
+  <div class="gauntlet-trap"><strong>Cost exceeds nation-state intelligence budgets.</strong> <code style="font-size:0.85em;">C_total = Σ(steps_B→L) × 100_slots × parallel_overhead ≫ nation_state_budget</code>. And the attacker has made the protocol stronger: funded honest participants, expanded the calibration library, demonstrated the defence works.</div>
 </div>
 
 <div class="gauntlet-row result">
   <div class="gauntlet-step">Z</div>
   <div class="gauntlet-attack"><div class="gauntlet-label">Result</div><strong>Protocol annihilation: structurally impossible.</strong> The attack is self-defeating by design. Every dollar spent strengthens the target. The defence does not merely resist &mdash; it <strong>weaponises the attacker's capital against them</strong>.</div>
-  <div class="gauntlet-trap"><strong>The attacker faces a dual cost problem:</strong> capital expenditure for bond acquisition AND surveillance expenditure for identity correlation AND operational expenditure for sustained deception AND fee expenditure for compounding arbitration &mdash; with none of these costs reducing any other. Each layer penetrated makes the next layer <em>more expensive</em>. The compounding traps do not add; they <em>multiply</em>.</div>
+  <div class="gauntlet-trap"><strong>The attacker faces a dual cost problem:</strong> capital for bonds + surveillance for identity correlation + operational for sustained deception + fee for compounding arbitration &mdash; with none reducing any other. Each layer penetrated makes the next <em>more expensive</em>. The compounding traps multiply, not add. <code style="font-size:0.85em;">C_attack = ∏(layer_costᵢ) where each success increases cost of next</code>.</div>
 </div>
 
 </div>
@@ -952,6 +956,8 @@ li {
 
 <p><strong>Bitcoin treasury companies as natural insurers.</strong> Companies with large Bitcoin treasuries &mdash; firms that have already made the strategic decision to hold BTC as a reserve asset &mdash; are the natural archetype for the Bitaid insurer market. They already hold the capital. They already accept the volatility. Deploying a portion of standing holdings as insurance buffers converts idle treasury into a revenue-generating business line through actuarial leverage rather than financial leverage. No additional BTC need be acquired; no rehypothecation risk is introduced; the bonds are returned when subscribers exit. The insurer earns premium income, builds a clean ratio reputation, and captures the early-mover advantage in an emerging market &mdash; all while the underlying BTC position appreciates through the halving cycle. It is treasury strategy with an operational cash flow attached.</p>
 
+<p><strong>Insurer as operational security provider.</strong> The insurer is not limited to passive financial backing. It can directly employ security personnel &mdash; guards, patrols, gate operators, monitoring staff &mdash; who participate as bonded responders in the Bitaid network. The same personnel, the same bonds, the same reputation system serve both structural security (scheduled patrols, property monitoring, deterrent presence) and emergency response (incident dispatch). A guard on a scheduled patrol of a gated community is a bonded responder earning labor score; when an emergency alert fires in that cell, the same guard accepts the incident and attends with pre-existing local knowledge. The insurer&rsquo;s competitive advantage is <strong>vertical integration</strong>: it underwrites risk, employs staff, funds bonds, and captures the upside of prevention. Its policyholders receive preferential service because the insurer&rsquo;s own staff know the property, the client, and the cell. Bitaid is the coordination platform; the insurer is the operational backbone. This is Hans-Hermann Hoppe&rsquo;s competing private police made concrete<sup class="cite" id="cite-r37"><a href="#ref-r37">[37]</a></sup>: not a theoretical prediction but a protocol-specified market structure.</p>
+
 <h3>10.6 Forfeiture Flows</h3>
 
 <p>All forfeiture events route through a consistent framework. Panel fees are always paid first at normal case rate. Remainder follows type-specific rules:</p>
@@ -998,6 +1004,8 @@ li {
 <p>The alert card shows the full three-tier economic offer &mdash; bond amount as credibility signal, bounty as appearance payment, outcome reward and its condition if configured &mdash; alongside pre-trigger footage if available, caller attestation status, and the count of other responders who have already accepted. The outcome reward is displayed prominently as the primary competitive signal for professionals. <strong>Passing on any alert carries no penalty.</strong></p>
 
 <p><strong>Professional security firms as responders.</strong> Existing licensed security companies are the natural supply side of the responder market. They already possess the training, equipment, legal counsel, and local deployment infrastructure that the protocol requires. For them, Bitaid is not competition but a demand-discovery layer &mdash; a way to monetise idle capacity during quiet periods and accept incident-specific calls that legacy retainer economics would make unprofitable. A security firm brings capital, professionalism, and legal infrastructure; the protocol brings trustless coordination, dispute resolution, and a spot market for emergencies. See section <a href="#s5">5</a> (The Bootstrapping) for the full cold-start analysis.</p>
+
+<p><strong>Insurer-employed guards as responders.</strong> An insurer that employs its own security staff uses the same personnel for both structural security and emergency response. A guard on a scheduled patrol of a subscriber&rsquo;s property is earning documentation labor score through normal protocol participation; when an emergency alert fires in the same cell, the guard accepts the incident and attends as an intervener, bringing pre-existing local knowledge and a direct relationship with the policyholder. The insurer does not hire emergency staff separately from its structural security staff &mdash; it hires security staff who participate in the protocol, and the protocol routes emergency demand to them based on their earned reputation. The structural security retainer funds the bond and operational cost; the emergency response bounty and outcome reward provide incremental income during incidents. This is the <strong>dual-mode responder</strong>: earning labor score and income through both scheduled patrols (documentation) and incident attendance (intervention), with the same bond, the same reputation, and the same insurer backing both roles.</p>
 
 <p>The responder&rsquo;s personal bond must be fully reserved &mdash; no fractional reserve on the base deposit. An opt-in insurer buffer may supplement it, disclosed to all parties, carrying zero weight in protocol scoring, and seized before personal capital on any forfeiture event. Recording hardware &mdash; a paired body camera or drone &mdash; connects to the companion app via Bluetooth or USB-C and streams footage directly to BCAEN on incident acceptance.</p>
 
@@ -1131,6 +1139,10 @@ li {
 
 <p><strong>False alert tolerance.</strong> A probationer who flags many legitimate old verdicts for review generates work for the 100-pool without producing value. Each flag that the 100-pool clears as legitimate (fraud not confirmed at 80%) accumulates <strong>+1 strike</strong>. Each flag that the 100-pool confirms as fraud accumulates <strong>&minus;1 strike</strong>, rewarding genuine acuity. A net count of <strong>3 strikes</strong> during the 30-case probation window triggers bond seizure and expulsion. The rehabilitation offset means a probationer who catches two real frauds can afford four false alerts; one who catches none can afford three. At graduation, if the probationer's false alert ratio exceeds 50% (more cleared than confirmed), graduation is denied regardless of net strike count. This constrains noisy probationers to a narrow window while preserving honest disagreement with ambiguous historical verdicts.</p>
 
+<p><strong>100-pool premium.</strong> Arbitrators serving on the 100-arbitrator retroactive review pool earn <strong>3&times; the normal arbitration fee</strong>, but only when a bond was seized in that review. The premium is funded exclusively from seized bonds: when the 100-pool confirms fraud at 80% supermajority, the forfeited bond pays the 3&times; premium to the 100-pool arbitrators first, then standard panel fees, then the remainder flows to the BCAEN redundancy subsidy pool. When the 100-pool clears a case as legitimate (no fraud), no bond was seized and no premium is available &mdash; the arbitrators earn the standard rate. This is a feature: it prevents flooding the 100-pool with trivial reviews and ensures the premium is always backed by actual forfeiture. Arbitrators participate in cleared-case reviews because network integrity protects their sustained fee income from the normal queue, and because the 100-pool convenes infrequently relative to standard work.</p>
+
+<p><strong>Premium feedback loop.</strong> The premium creates a direct incentive alignment: confirmed fraud produces seized capital that funds stronger detection of future fraud. The worse the attack, the more seizures, the more premium capital available for retroactive review, the stronger the defense. In low-fraud periods the premium is scarce, but so is the need for it. The mechanism self-tunes to threat intensity without administrative adjustment.</p>
+
 <p><strong>Inactive arbitrator replacement.</strong> An arbitrator is flagged inactive when they decline or fail to respond to more than 80% of panel assignments over the most recent 30 case-event windows (minimum 5 cases to avoid false positives). Confirmed by supermajority of peer attestations, the arbitrator's eligibility is suspended and their slot opens. The bond is not forfeited &mdash; inactivity is not misconduct. Replacement only fires when rolling average queue depth over 30 windows is above zero.</p>
 
 <h3>14.4 Blind Voting and Asymmetric Penalty</h3>
@@ -1185,9 +1197,11 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 
 <p><strong>Responder misuse</strong> (harmful intervention, phantom attendance): panel fees first; remainder indemnifies the harmed party per arbitration verdict. If no identifiable victim, remainder enters the dispute resolution fund.</p>
 
-<p><strong>Arbitrator misconduct</strong> (corrupt arbitrator expelled by retroactive review, 80% supermajority): panel fees first; remainder flows 100% to the BCAEN redundancy subsidy pool (90-day drip release). The corrupt arbitrator's bond does not enrich the panel that ruled on them. The panel earns only its standard fee. The pool funds subsidised archival deployment in low-density cells, subsidised storage for thin-capital callers, and higher redundancy guarantees network-wide.</p>
+<p><strong>Arbitrator misconduct</strong> (corrupt arbitrator expelled by retroactive review, 80% supermajority): 100-pool premium at 3&times; paid first from the seized bond; standard panel fees at normal rate; remainder flows to the BCAEN redundancy subsidy pool (90-day drip release). If the case was flagged by a probationer, the premium covers that review. If no bond was seized (case cleared), no premium is paid and arbitrators earn standard rate. The corrupt arbitrator's bond does not enrich the panel that ruled on them.</p>
 
-<p><strong>Retroactive chain fraud</strong> (fabricated incidents, corrupt verdict chains): panel paid at normal rate; remainder enters BCAEN redundancy subsidy pool, drip-released over 90 days. Elevated archival node yield attracts new nodes; the attacker's capital strengthens the evidence infrastructure that detected them.</p>
+<p><strong>Retroactive chain fraud</strong> (fabricated incidents, corrupt verdict chains): 100-pool premium at 3&times; from seized bonds paid first; standard panel fees at normal rate; remainder enters BCAEN redundancy subsidy pool, drip-released over 90 days. Elevated archival node yield attracts new nodes; the attacker's capital strengthens the evidence infrastructure that detected them.</p>
+
+<p><strong>Probationer false-alert seizure</strong> (probationer reaches 3 net strikes or fails 50% ratio check): full bond seized. The 100-pool premium at 3&times; is paid from this seized bond for each review the probationer triggered that resulted in confirmed fraud. If a triggered review cleared the original arbitrator (no fraud), that specific review was already paid at standard rate from the general fee pool. Only confirmed-fraud reviews earn the premium. Remainder after all premium and panel payments enters BCAEN redundancy subsidy pool. The false-alerting probationer funds the premium for the arbitrators who confirmed their genuine catches.</p>
 
 <p><strong>Archival failure</strong> (failure to serve authenticated retrieval): forfeiture funds replacement slot costs; remainder enters BCAEN pool.</p>
 
@@ -1320,6 +1334,8 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <p><strong>The monopoly on security is not a feature of civilisation. It is a contingent historical arrangement that has been treated as inevitable because no technology existed to route around it.</strong></p>
 <p>Murray N. Rothbard&rsquo;s analysis in <em>For a New Liberty</em> (1973)<sup class="cite" id="cite-r26"><a href="#ref-r26">[26]</a></sup> describes how private defense arrangements could function through voluntary contractual relationships rather than coercive monopoly. Bitaid is the protocol layer on which such arrangements can emerge.</p>
 <p>Hans-Hermann Hoppe&rsquo;s &ldquo;The Private Production of Defense&rdquo; (1998/2003)<sup class="cite" id="cite-r27"><a href="#ref-r27">[27]</a></sup> develops the architecture in more detail: competing insurance companies as the natural providers of security services, with actuarial incentives to genuinely prevent harm rather than benefit from its recurrence. The insurer&rsquo;s profit is maximised precisely when its subscriber base experiences minimal loss events &mdash; the inverse of monopoly public safety provision, where budget growth tracks failure rather than success. Bitaid&rsquo;s insurance flywheel (<a href="#s3">&sect;3</a>, <a href="#s10">&sect;10.5</a>) is a direct on-chain implementation of this architecture: insurers competing on premium pricing and on the bounty and outcome reward levels they fund, with the prevention of incidents reducing the claims they would otherwise pay against life and property policies.</p>
+
+<p><strong>Hoppe&rsquo;s thesis made operational.</strong> Hoppe predicted that competing insurers would employ their own security personnel &mdash; guards, patrols, monitors &mdash; to deliver prevention services to subscribers. Bitaid specifies the coordination mechanism that makes this operational: the insurer employs guards who are bonded responders in the protocol; the same personnel serve both structural security (scheduled patrols) and emergency response (incident dispatch); the same bond, the same reputation, the same evidence network supports both roles. The structural security retainer funds the bond and operational cost; the emergency response bounty and outcome reward provide incremental income. The insurer does not hire emergency staff separately from structural security staff. It hires security staff who participate in the protocol, and the protocol routes emergency demand to them based on earned reputation. This is vertical integration of underwriting, employment, and prevention through a single coordination layer &mdash; exactly as Hoppe described, now with script-enforced payment and dispute resolution.</p>
 <p>Hoppe&rsquo;s <em>Democracy: The God That Failed</em> (2001)<sup class="cite" id="cite-r28"><a href="#ref-r28">[28]</a></sup> identifies two further structural problems that the protocol turns into features. First, democratic public safety is systematically biased: politicians optimise for metrics measurable before the next election, producing over-enforcement of victimless offences and under-response to victim crimes. Bitaid&rsquo;s incident deposit mechanism corrects this at the demand side &mdash; caller capital, not electoral calendar, determines what receives response. The demand side is sovereign. Second, time preference: institutions that reward long horizons and impose real cost on rapid exit produce better outcomes than those that allow instant entry and instant liquidation. The protocol&rsquo;s temporal seasoning requirement and arbitrator bond withdrawal delay (<a href="#s14">&sect;14.9</a>) encode this logic in mechanism. You cannot buy a reputation and immediately cash it out. You cannot corrupt a verdict and vanish. Time is on the side of honesty.</p>
 <p><strong>On market concentration and decentralisation.</strong> Decentralisation in Bitaid is measured by permissionless entry and exit, not by equal market share. A dominant insurer or responder firm that achieves scale through superior service is not a protocol failure; it is information revealing market structure. State coercion &mdash; licensing barriers, regulatory capture, subsidies to preferred entrants &mdash; creates illegitimate monopolies. Market-winning concentration, where any competitor may enter and challenge the incumbent, is legitimate and optimal at that time. The protocol enforces this through open bond posting, gossip-verifiable reserve ratios, and the fork mechanism (<a href="#s12">&sect;12</a>): no administrative gatekeeper can prevent entry or protect incumbents.</p>
 <p>The opt-in formal arbitration path (<a href="#s14">&sect;14.11</a>) preserves free choice: parties in pre-existing commercial relationships may select their own dispute resolution mechanism, and no single adjudicatory monopoly is assumed. The market determines which mechanism resolves which class of dispute.</p>
@@ -2951,7 +2967,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <line x1="610" y1="5488" x2="640" y2="5488" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
 <rect x="650" y="5450" width="700" height="50" rx="5" class="def-strong"/>
 <text x="668" y="5470" class="tl">TRAP: Probation with retroactive exposure</text>
-<text x="668" y="5488" class="tdef">40% flags; 100-pool must confirm fraud at 80%. Cannot swing verdicts.</text>
+<text x="668" y="5488" class="tdef">40% flags; 100-pool confirms fraud at 80%. 3x premium from seized bond only.</text>
 
 <!-- Step 7 / Result -->
 <rect x="20" y="5515" width="580" height="50" rx="5" class="atk-lo"/>
