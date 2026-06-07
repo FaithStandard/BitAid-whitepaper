@@ -964,7 +964,13 @@ li {
     {source:"frost",target:"attend",type:"secures",strength:1.5},{source:"frost",target:"forf",type:"enables",strength:1.3},{source:"arbiter",target:"frost",type:"uses",strength:1.5},
     {source:"insure",target:"responder",type:"funds",strength:1.5},{source:"attend",target:"forf",type:"triggers",strength:1.5},
     {source:"responder",target:"acpt_thresh",type:"uses",strength:1.5},{source:"acpt_thresh",target:"gossip",type:"filters",strength:1.3},
-    {source:"h3",target:"cell",type:"enables",strength:1.5},{source:"tier",target:"retrieval",type:"enables",strength:1.2}
+    {source:"h3",target:"cell",type:"enables",strength:1.5},{source:"tier",target:"retrieval",type:"enables",strength:1.2},
+    {source:"responder",target:"hbu",type:"enables",strength:1.3},{source:"responder",target:"bcaen",type:"enables",strength:1.3},
+    {source:"arbiter",target:"pool",type:"occupies",strength:1.2},{source:"arbiter",target:"inact_eject",type:"subject_to",strength:1},
+    {source:"prob",target:"forf",type:"triggers",strength:1.2},{source:"frost",target:"appeal",type:"secures",strength:1.3},
+    {source:"archivist",target:"retrieval",type:"provides",strength:1.3},{source:"h3",target:"gossip",type:"reinforces",strength:1},
+    {source:"insure",target:"caller",type:"reinforces",strength:1},{source:"insure",target:"arbiter",type:"reinforces",strength:1},
+    {source:"caller",target:"eject",type:"triggers",strength:1}
   ];
   const attackPaths={
     sybil:{label:"Sybil Identity Flood",defenses:["PoBL","caller","responder","arbiter","archivist","closed","calib","als","temp","eject","fee","insure","acpt_thresh"],desc:"An attacker floods the network with bonded identities across all 4 roles. Must defeat: PoB+L bond requirement for every role, structural pool closure, coherence competition, archival labor gating, temporal seasoning, price-out ejection, fee market, insurance buffer, and per-node acceptance thresholds (distributed first-line filter that rises under flood pressure)."},
@@ -984,7 +990,8 @@ li {
     enables:{color:"#27c",dash:"2,2",width:1.2},feeds:{color:"#c84",dash:"2,3",width:1.5},
     uses:{color:"#aaa",dash:"3,2",width:1.2},occupies:{color:"#27c",dash:"2,2",width:1.5},
     measuredBy:{color:"#b71",dash:"4,2",width:1.2},provides:{color:"#2a8",dash:"2,2",width:1.5},
-    maintains:{color:"#27c",dash:"3,2",width:1.5},filters:{color:"#aaa",dash:"4,2",width:1.2}
+    maintains:{color:"#27c",dash:"3,2",width:1.5},filters:{color:"#aaa",dash:"4,2",width:1.2},
+    subject_to:{color:"#c44",dash:"2,2",width:1.2}
   };
   const svg=d3.select("#mdg-svg");
   const container=svg.node().parentElement;
@@ -1189,7 +1196,18 @@ li {
     {"source":"responder", "target":"acpt_thresh", "type":"uses", "note":"Responders configure own acceptance thresholds"},
     {"source":"acpt_thresh", "target":"gossip", "type":"filters", "note":"Thresholds determine which alerts propagate through gossip"},
     {"source":"h3", "target":"cell", "type":"enables", "note":"H3 cells provide coordinate system for cell-scoped labor"},
-    {"source":"tier", "target":"retrieval", "type":"enables", "note":"Redundancy enables integrity verification through authenticated retrieval"}
+    {"source":"tier", "target":"retrieval", "type":"enables", "note":"Redundancy enables integrity verification through authenticated retrieval"},
+    {"source":"responder", "target":"hbu", "type":"enables", "note":"Responder camera triggers hash-before-upload ordering"},
+    {"source":"responder", "target":"bcaen", "type":"enables", "note":"Responder streams footage directly to BCAEN — the source of all stored evidence"},
+    {"source":"arbiter", "target":"pool", "type":"occupies", "note":"100-pool arbitrators drawn from same closed pool"},
+    {"source":"arbiter", "target":"inact_eject", "type":"subject_to", "note":"All arbitrators subject to inactivity ejection at >80% decline"},
+    {"source":"prob", "target":"forf", "type":"triggers", "note":"Probation net 3 strikes triggers bond forfeiture"},
+    {"source":"frost", "target":"appeal", "type":"secures", "note":"FROST withheld during embargo enables appeal window"},
+    {"source":"archivist", "target":"retrieval", "type":"provides", "note":"Archivists serve authenticated retrieval requests"},
+    {"source":"h3", "target":"gossip", "type":"reinforces", "note":"H3 cells bound gossip propagation geography"},
+    {"source":"insure", "target":"caller", "type":"reinforces", "note":"Insurer buffer backs caller deposit (zero protocol weight)"},
+    {"source":"insure", "target":"arbiter", "type":"reinforces", "note":"Insurer buffer extends to arbitrator bonds"},
+    {"source":"caller", "target":"eject", "type":"triggers", "note":"Caller deposit level determines price-out ejection"}
   ],
   "attackPaths": [
     {
@@ -1237,9 +1255,9 @@ li {
   ],
   "compoundTrapCount": 7,
   "nodeCount": 35,
-  "edgeCount": 58,
+  "edgeCount": 69,
   "layerCount": 6,
-  "averageNodeDegree": 3.7,
+  "averageNodeDegree": 3.9,
   "minCutNote": "The graph has no single-point min-cut. Removing any node reduces but does not eliminate protocol security. Removing any 3 non-adjacent nodes still leaves viable defence chains for all attack paths."
 }
 </script>
