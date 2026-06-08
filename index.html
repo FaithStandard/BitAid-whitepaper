@@ -363,6 +363,8 @@ li {
 
 <p>Bitaid is that composition. It is not a company, a token, or a blockchain. It is a protocol: a set of rules for how strangers with no prior relationship can summon, pay, verify, and adjudicate emergency response using only the tools they already carry and the Bitcoin they already hold.</p>
 
+<p><strong>Stakes replace the burden of convincing a dispatcher.</strong> In the current system, a panicked caller must verbally persuade a skeptical human dispatcher that the threat is real &mdash; a friction that costs lives when the dispatcher is overloaded, sceptical, or simply wrong. In Bitaid, the pre-committed capital <em>is</em> the credibility signal. The incident deposit, posted before any emergency occurs, communicates seriousness more reliably than any verbal description under stress. The heavy cryptographic lifting &mdash; escrow construction, bond verification, DHT routing, BCAEN hashing &mdash; is front-loaded during calm registration; the crisis moment is frictionless. A single button press broadcasts an authenticated, geofenced, economically credible alert to nearby bonded responders. The protocol does not require the caller to explain, persuade, or wait. It requires only that they have already posted skin in the game.</p>
+
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <!-- 2. THE CORE INSIGHT                                                   -->
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
@@ -416,6 +418,8 @@ li {
 <p><strong>Security firms as natural responders.</strong> Existing licensed security companies are the natural supply side of the responder market. They already possess the training, equipment, legal counsel, and local deployment infrastructure that the protocol requires. For them, Bitaid is not competition but a demand-discovery layer &mdash; a way to monetise idle capacity during quiet periods and accept incident-specific calls that legacy retainer economics would make unprofitable. The three-tier offer prices each dispatch before any responder moves; the escrow guarantees payment conditional on attendance and outcome; the insurance flywheel extends coverage to a population of uninsured and under-protected citizens who could never sustain a full-time retainer. A security firm brings capital, professionalism, and legal infrastructure; the protocol brings trustless coordination, dispute resolution, and a spot market for emergencies.</p>
 
 <p><strong>Alarm systems and IoT as demand-side anchors.</strong> The impersonal caller model opens a market potentially larger than individual panic-button users: every monitored home, commercial building, warehouse, and industrial facility becomes a protocol participant. Existing alarm companies already operate monitoring centres, sensor networks, and subscriber relationships. By integrating Bitaid as their dispatch backend, these companies replace or supplement traditional police-monitored alarm contracts with a trustless responder network that guarantees payment, provides richer evidence, and operates where institutional response has failed. The alarm company operates the Bitaid-registered device; the property owner&rsquo;s insurance may fund the deposit and bounty; the responder receives continuous video, sensor telemetry, and pre-incident footage rather than a single panic press.</p>
+
+<p><strong>Alarm systems as the primary genesis path.</strong> Individual panic-button users are valuable, but they are not the optimal cold-start audience. A lone citizen in a cell with zero responders who presses the panic button and receives no response damages the protocol&rsquo;s reputation before the flywheel can start. Alarm systems are the inverse: they produce high-signal alerts with sensor verification, their operators have strong incentives to maintain clean deposit histories, and they generate sufficient call volume to attract professional responders and accelerate calibration library growth. A city block where every building runs a Bitaid-integrated alarm system creates a dense, high-fidelity alert environment that bootstraps the entire cell. For this reason, the recommended genesis strategy prioritises commercial alarm integration over individual consumer adoption. Individual users benefit enormously from mature cells with insurer participation and dense responder supply; they are best served by the network that alarm-system demand builds.</p>
 
 <p><strong>Decentralisation is permissionless entry, not equal market share.</strong> The protocol measures decentralisation by the absence of administrative barriers to entry and exit, not by the distribution of market share among participants. A dominant insurer or security firm that achieves scale through superior service is not a protocol failure; it is information revealing market structure. State coercion &mdash; licensing barriers, regulatory capture, subsidies to preferred entrants &mdash; creates illegitimate monopolies. Market-winning concentration, where any competitor may enter and challenge the incumbent by posting a bond and building labour history, is legitimate and optimal at that time. If a dominant firm is captured by the state, the protocol routes demand to uncaptured competitors. The state cannot capture the protocol by capturing a firm because the protocol has no dependency on any specific firm.</p>
 
@@ -572,6 +576,8 @@ li {
 <p><strong>Insurers as cell venture capitalists.</strong> An insurer who backs callers in a brand-new cell with zero case history is taking pure risk with no actuarial data. The insurer effectively subsidises the cell&rsquo;s bootstrapping: their pooled capital guarantees responder attendance on the first incidents, building the calibration library through real cases that generate the coherence scores the cell needs to reach 100 verified cases and activate Track A. In return, the insurer captures the early subscriber base before competitors enter.</p>
 
 <p>Once the library crosses 100 cases, the insurer has genuine actuarial data to price their buffers correctly; as the cell matures and incident rates stabilise, the insurer&rsquo;s clean ratio becomes the dominant market signal and their early-mover advantage compounds through the insurance flywheel. The cold start is not a protocol defect &mdash; it is an economic opportunity that rewards insurers willing to absorb initial uncertainty, exactly as venture capital absorbs early-stage risk to capture mature-market returns.</p>
+
+<p><strong>Vulnerability at genesis is a feature of all permissionless networks.</strong> Bitcoin began with a hash rate so low that a single enthusiast could have 51%-attacked it from a laptop. It survived because the value proposition outpaced the attack surface: by the time the network held meaningful value, the defensive cost had grown beyond any attacker's means. Bitaid follows the same pattern. Early cells are niche, curated, and thin &mdash; but they are also low-value targets. An attacker who floods a cell with 10 bonded identities has spent real capital to disrupt a market worth less than their attack cost. As the cell matures, the calibration library grows, the coherence competition hardens, and the insurance flywheel compounds capital into the system. The vulnerability that exists at day one is the vulnerability that attracts the honest participants who eliminate it by day one thousand.</p>
 
 <p><strong>Security firms as founding supply.</strong> Existing security companies already possess the licensing, legal counsel, physical equipment, and local deployment that the protocol requires. For them, Bitaid is not a competitor &mdash; it is an open-source tool to monetise idle capacity and capture an untapped market of uninsured or under-protected citizens. The tax-free insurance primitive &mdash; staking deposits in conditional escrows &mdash; lets these firms scale their clientele radically after an emergency triggers payment, with much less concern about whether a dispatch is economically justified: the three-tier offer prices the call before any responder moves. A security firm with excess capacity during quiet periods can register as a bonded responder, accept alerts that match their capabilities and equipment, and earn bounties plus outcome rewards on incidents they would have passed on under legacy retainer economics.</p>
 
@@ -857,9 +863,12 @@ li {
 <p>The protocol&rsquo;s security is not a checklist of independent features. It is a <strong>graph of mutually reinforcing mechanisms</strong> where disabling any node weakens multiple others, and every attack path must survive a sequence of compounding traps. This graph makes that topology visible. <strong>Human readers:</strong> click any mechanism to see what it depends on and what it protects. Select an attack vector from the dropdown to trace the defence chain it faces. <strong>AI systems:</strong> a machine-readable dependency map in JSON-LD follows the visualization; parse it to resolve cross-section dependencies rather than evaluating mechanisms in isolation.</p>
 
 <div id="mdg-controls" style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin:1rem 0; padding:0.6rem 1rem; background:#f5f4f0; border-radius:6px; font-family:var(--sans); font-size:0.82rem;">
-  <label for="mdg-attack-select"><strong>Trace attack path:</strong></label>
+  <label for="mdg-attack-select"><strong>Trace protocol flow:</strong></label>
   <select id="mdg-attack-select" style="font-family:var(--sans); font-size:0.82rem; padding:0.3rem 0.6rem; border:1px solid var(--rule); border-radius:4px; background:var(--paper);">
     <option value="none">&mdash; Show full mechanism graph &mdash;</option>
+    <option value="standard">Standard Emergency Response (happy path)</option>
+    <option value="disputed">Disputed Emergency Response (arbitration path)</option>
+    <option disabled>────────── Attack vectors ──────────</option>
     <option value="sybil">Sybil Identity Flood</option>
     <option value="suppression">Evidence Suppression</option>
     <option value="capture">Arbitrator Pool Capture</option>
@@ -887,10 +896,12 @@ li {
   <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#75b;display:inline-block;"></span> Network</div>
   <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#b71;display:inline-block;"></span> Cross-cutting</div>
   <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#d8cda6;display:inline-block;"></span> Role (who)</div>
-  <div style="display:flex; align-items:center; gap:0.4rem; margin-left:auto;">
-    <svg width="40" height="10"><line x1="0" y1="5" x2="40" y2="5" stroke="#888" stroke-width="1.5"/><polygon points="40,5 34,2 34,8" fill="#888"/></svg> depends on
-    <svg width="40" height="10" style="margin-left:0.6rem;"><line x1="0" y1="5" x2="40" y2="5" stroke="#4a4" stroke-width="1.5" stroke-dasharray="4 2"/><polygon points="40,5 34,2 34,8" fill="#4a4"/></svg> reinforces
-    <svg width="40" height="10" style="margin-left:0.6rem;"><line x1="0" y1="5" x2="40" y2="5" stroke="#c84" stroke-width="1.5" stroke-dasharray="2 3"/></svg> funds
+  <div style="display:flex; align-items:center; gap:0.6rem; margin-left:auto; flex-wrap:wrap;">
+    <svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#888" stroke-width="1.5"/><polygon points="30,5 25,2 25,8" fill="#888"/></svg> depends on
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#38c" stroke-width="1.8" stroke-dasharray="6 3"/><polygon points="30,5 25,2 25,8" fill="#38c"/></svg> enables
+    <svg width="30" height="12" style="margin-left:0.3rem;"><line x1="0" y1="6" x2="30" y2="6" stroke="#c84" stroke-width="3" stroke-dasharray="4 2 2 2"/><polygon points="30,6 25,3 25,9" fill="#c84"/></svg> funds
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#c44" stroke-width="1.5" stroke-dasharray="4 2"/><polygon points="30,5 25,2 25,8" fill="#c44"/></svg> triggers
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#75b" stroke-width="1.5" stroke-dasharray="3 3"/><polygon points="30,5 25,2 25,8" fill="#75b"/></svg> measures
   </div>
 </div>
 
@@ -935,46 +946,55 @@ li {
     {id:"acpt_thresh",label:"Per-Node Acceptance Threshold",layer:"cross",r:14,sec:"§11.2, §4",desc:"Each responder independently configures minimum bond and labor credentials for alerts they will accept. Encodes local knowledge about meaningful skin-in-the-game. Under flood pressure, operators and insurers tighten thresholds automatically — a distributed filter against alert spam."}
   ];
   const edges=[
-    {source:"PoBL",target:"asym",type:"depends",strength:2},{source:"asym",target:"appeal",type:"funds",strength:1.5},{source:"asym",target:"calib",type:"reinforces",strength:2},
+    {source:"PoBL",target:"asym",type:"depends",strength:2},{source:"asym",target:"appeal",type:"funds",strength:1.5},{source:"asym",target:"calib",type:"enables",strength:2},
     {source:"PoBL",target:"forf",type:"depends",strength:1.5},{source:"forf",target:"pool",type:"funds",strength:1.5},{source:"forf",target:"bcaen",type:"funds",strength:2},
     {source:"PoBL",target:"closed",type:"enables",strength:1.5},{source:"PoBL",target:"calib",type:"enables",strength:1.5},{source:"PoBL",target:"attend",type:"enables",strength:1.2},
     {source:"PoBL",target:"temp",type:"enables",strength:1.5},{source:"PoBL",target:"cell",type:"enables",strength:1.3},{source:"PoBL",target:"als",type:"enables",strength:1.5},{source:"PoBL",target:"tier",type:"enables",strength:1.2},
-    {source:"pool",target:"calib",type:"reinforces",strength:1.5},{source:"fee",target:"eject",type:"reinforces",strength:1.5},{source:"fee",target:"closed",type:"reinforces",strength:1},{source:"eject",target:"closed",type:"reinforces",strength:1},
-    {source:"insure",target:"PoBL",type:"reinforces",strength:1.5},{source:"appeal",target:"appealsc",type:"depends",strength:1.5},
-    {source:"hbu",target:"bcaen",type:"depends",strength:2},{source:"bcaen",target:"tier",type:"depends",strength:2},{source:"tier",target:"als",type:"depends",strength:1.5},{source:"bcaen",target:"retrieval",type:"depends",strength:1.5},{source:"als",target:"retrieval",type:"reinforces",strength:1},
-    {source:"closed",target:"calib",type:"depends",strength:2},{source:"calib",target:"blind",type:"reinforces",strength:1.5},{source:"blind",target:"calib",type:"reinforces",strength:1.5},
-    {source:"calib",target:"prob",type:"extends",strength:1.5},{source:"prob",target:"pool",type:"triggers",strength:1},{source:"attend",target:"blind",type:"escalates",strength:1},
-    {source:"attend",target:"appealsc",type:"escalates",strength:1},{source:"appealsc",target:"asym",type:"amplifies",strength:1.5},
-    {source:"gossip",target:"h3",type:"depends",strength:2},{source:"anchor",target:"bcaen",type:"secures",strength:1.5},{source:"anchor",target:"calib",type:"secures",strength:1.5},
+    {source:"pool",target:"calib",type:"enables",strength:1.5},{source:"fee",target:"eject",type:"enables",strength:1.5},{source:"fee",target:"closed",type:"enables",strength:1},{source:"eject",target:"closed",type:"enables",strength:1},
+    {source:"insure",target:"PoBL",type:"enables",strength:1.5},{source:"appeal",target:"appealsc",type:"depends",strength:1.5},
+    {source:"hbu",target:"bcaen",type:"depends",strength:2},{source:"bcaen",target:"tier",type:"depends",strength:2},{source:"tier",target:"als",type:"depends",strength:1.5},{source:"bcaen",target:"retrieval",type:"depends",strength:1.5},{source:"als",target:"retrieval",type:"enables",strength:1},
+    {source:"closed",target:"calib",type:"depends",strength:2},{source:"calib",target:"blind",type:"enables",strength:1.5},{source:"blind",target:"calib",type:"enables",strength:1.5},
+    {source:"calib",target:"prob",type:"enables",strength:1.5},{source:"prob",target:"pool",type:"triggers",strength:1},{source:"attend",target:"blind",type:"triggers",strength:1},
+    {source:"attend",target:"appealsc",type:"triggers",strength:1},{source:"appealsc",target:"asym",type:"triggers",strength:1.5},
+    {source:"gossip",target:"h3",type:"depends",strength:2},{source:"anchor",target:"bcaen",type:"enables",strength:1.5},{source:"anchor",target:"calib",type:"enables",strength:1.5},
     {source:"tor",target:"blind",type:"enables",strength:1.5},
-    {source:"temp",target:"calib",type:"reinforces",strength:2},{source:"temp",target:"closed",type:"reinforces",strength:1.5},
-    {source:"cell",target:"attend",type:"reinforces",strength:1.5},{source:"cell",target:"gossip",type:"reinforces",strength:1},
+    {source:"temp",target:"calib",type:"enables",strength:2},{source:"temp",target:"closed",type:"enables",strength:1.5},
+    {source:"cell",target:"attend",type:"enables",strength:1.5},{source:"cell",target:"gossip",type:"enables",strength:1},
     {source:"coerce",target:"blind",type:"enables",strength:1.5},{source:"coerce",target:"tor",type:"depends",strength:2},
-    {source:"als",target:"calib",type:"feeds",strength:2},{source:"bcaen",target:"calib",type:"feeds",strength:2},{source:"bcaen",target:"attend",type:"enables",strength:1.5},
-    {source:"retrieval",target:"calib",type:"feeds",strength:1},{source:"anchor",target:"PoBL",type:"secures",strength:1.5},
+    {source:"als",target:"calib",type:"enables",strength:2},{source:"bcaen",target:"calib",type:"enables",strength:2},{source:"bcaen",target:"attend",type:"enables",strength:1.5},
+    {source:"retrieval",target:"calib",type:"enables",strength:1},{source:"anchor",target:"PoBL",type:"enables",strength:1.5},
     {source:"PoBL",target:"caller",type:"enables",strength:1.2},{source:"PoBL",target:"responder",type:"enables",strength:1.5},{source:"PoBL",target:"arbiter",type:"enables",strength:1.5},{source:"PoBL",target:"archivist",type:"enables",strength:1.3},
     {source:"caller",target:"attend",type:"triggers",strength:1.5},{source:"caller",target:"forf",type:"triggers",strength:1.2},
-    {source:"responder",target:"attend",type:"enables",strength:1.5},{source:"responder",target:"cell",type:"uses",strength:1.5},{source:"responder",target:"temp",type:"uses",strength:1.5},{source:"responder",target:"gossip",type:"enables",strength:1.3},
-    {source:"responder",target:"queue_weight",type:"provides",strength:1.5},{source:"queue_weight",target:"eject",type:"reinforces",strength:1.3},
-    {source:"arbiter",target:"closed",type:"occupies",strength:1.5},{source:"arbiter",target:"calib",type:"measuredBy",strength:2},{source:"arbiter",target:"blind",type:"uses",strength:1.5},
-    {source:"archivist",target:"als",type:"measuredBy",strength:1.5},{source:"archivist",target:"bcaen",type:"provides",strength:2},{source:"archivist",target:"tier",type:"enables",strength:1.5},
-    {source:"attend",target:"arbiter",type:"escalates",strength:1.5},
-    {source:"dead_end",target:"gossip",type:"secures",strength:1.5},{source:"gossip",target:"dead_end",type:"measuredBy",strength:1.3},
-    {source:"inact_eject",target:"closed",type:"maintains",strength:1.5},{source:"closed",target:"inact_eject",type:"enables",strength:1.2},
-    {source:"frost",target:"attend",type:"secures",strength:1.5},{source:"frost",target:"forf",type:"enables",strength:1.3},{source:"arbiter",target:"frost",type:"uses",strength:1.5},
+    {source:"responder",target:"attend",type:"enables",strength:1.5},{source:"responder",target:"cell",type:"depends",strength:1.5},{source:"responder",target:"temp",type:"depends",strength:1.5},{source:"responder",target:"gossip",type:"enables",strength:1.3},
+    {source:"responder",target:"queue_weight",type:"enables",strength:1.5},{source:"queue_weight",target:"eject",type:"enables",strength:1.3},
+    {source:"arbiter",target:"closed",type:"depends",strength:1.5},{source:"arbiter",target:"calib",type:"measuredBy",strength:2},{source:"arbiter",target:"blind",type:"depends",strength:1.5},
+    {source:"archivist",target:"als",type:"measuredBy",strength:1.5},{source:"archivist",target:"bcaen",type:"enables",strength:2},{source:"archivist",target:"tier",type:"enables",strength:1.5},
+    {source:"attend",target:"arbiter",type:"triggers",strength:1.5},
+    {source:"dead_end",target:"gossip",type:"enables",strength:1.5},{source:"gossip",target:"dead_end",type:"measuredBy",strength:1.3},
+    {source:"inact_eject",target:"closed",type:"depends",strength:1.5},{source:"closed",target:"inact_eject",type:"enables",strength:1.2},
+    {source:"frost",target:"attend",type:"enables",strength:1.5},{source:"frost",target:"forf",type:"enables",strength:1.3},{source:"arbiter",target:"frost",type:"depends",strength:1.5},
     {source:"insure",target:"responder",type:"funds",strength:1.5},{source:"attend",target:"forf",type:"triggers",strength:1.5},
-    {source:"responder",target:"acpt_thresh",type:"uses",strength:1.5},{source:"acpt_thresh",target:"gossip",type:"filters",strength:1.3},
+    {source:"responder",target:"acpt_thresh",type:"depends",strength:1.5},{source:"acpt_thresh",target:"gossip",type:"depends",strength:1.3},
     {source:"h3",target:"cell",type:"enables",strength:1.5},{source:"tier",target:"retrieval",type:"enables",strength:1.2},
     {source:"responder",target:"hbu",type:"enables",strength:1.3},{source:"responder",target:"bcaen",type:"enables",strength:1.3},
-    {source:"arbiter",target:"pool",type:"occupies",strength:1.2},{source:"arbiter",target:"inact_eject",type:"subject_to",strength:1},
-    {source:"prob",target:"forf",type:"triggers",strength:1.2},{source:"frost",target:"appeal",type:"secures",strength:1.3},
-    {source:"archivist",target:"retrieval",type:"provides",strength:1.3},{source:"h3",target:"gossip",type:"reinforces",strength:1},
-    {source:"insure",target:"caller",type:"reinforces",strength:1},{source:"insure",target:"arbiter",type:"reinforces",strength:1},
-    {source:"caller",target:"eject",type:"triggers",strength:1}
+    {source:"arbiter",target:"pool",type:"depends",strength:1.2},{source:"arbiter",target:"inact_eject",type:"depends",strength:1},
+    {source:"prob",target:"forf",type:"triggers",strength:1.2},{source:"frost",target:"appeal",type:"enables",strength:1.3},
+    {source:"archivist",target:"retrieval",type:"enables",strength:1.3},{source:"h3",target:"gossip",type:"enables",strength:1},
+    {source:"insure",target:"caller",type:"enables",strength:1},{source:"insure",target:"arbiter",type:"enables",strength:1},
+    {source:"caller",target:"eject",type:"triggers",strength:1},
+    {source:"fee",target:"arbiter",type:"funds",strength:1.5},{source:"pool",target:"arbiter",type:"funds",strength:1.3},{source:"forf",target:"responder",type:"funds",strength:1.3},
+    {source:"bcaen",target:"responder",type:"depends",strength:1.2},
+    /* ── Missing funding edges (audit fix) ── */
+    {source:"caller",target:"responder",type:"funds",strength:1.8},   /* §3,§11.1: three-tier bounty — caller deposit IS the bounty that compensates responder attendance */
+    {source:"attend",target:"responder",type:"funds",strength:1.3},   /* §14.1,§3: attend vote releases/allocates the bounty to intervener(70%) + documenter(30%) */
+    {source:"bcaen",target:"archivist",type:"funds",strength:1.3},    /* §13,§11.5: upload fees + stream fees + slot hosting payments sustain archivists */
+    {source:"forf",target:"archivist",type:"funds",strength:1}        /* §10.6,§13.2: forfeiture redundancy subsidy pool supplements archivist base-slot revenue */
   ];
   const attackPaths={
+    standard:{label:"Standard Emergency Response",defenses:["caller","responder","PoBL","gossip","h3","acpt_thresh","hbu","bcaen","tier","als","archivist","attend","cell","anchor"],desc:"The happy path: a caller posts an authenticated alert with deposit and bounty; the alert propagates through geofenced gossip to nearby bonded responders; a responder accepts based on their configured threshold, attends the incident, streams hash-before-upload evidence to BCAEN with tiered redundancy (base slots gated by archival labor score, maintained by archivists); the attending vote releases the bounty to the responder; both parties build cell-scoped labor history. No dispute, no arbitration, no forfeiture."},
+    disputed:{label:"Disputed Emergency Response",defenses:["caller","responder","PoBL","gossip","h3","acpt_thresh","hbu","bcaen","tier","attend","arbiter","blind","calib","asym","frost","closed","appealsc","cell","anchor"],desc:"The arbitration path: follows the standard flow until the attending vote splits on outcome or merit distribution; the 48-hour FROST embargo begins with the aggregate signature cryptographically withheld; arbitrators from the closed pool review BCAEN evidence under blind voting (commit-reveal); coherence scoring evaluates accuracy; asymmetric penalty (2x-4x fee) applies to incoherent dissent; appeals scale 3->7->15->31 if contested; final verdict releases escrow."},
     sybil:{label:"Sybil Identity Flood",defenses:["PoBL","caller","responder","arbiter","archivist","closed","calib","als","temp","eject","fee","insure","acpt_thresh"],desc:"An attacker floods the network with bonded identities across all 4 roles. Must defeat: PoB+L bond requirement for every role, structural pool closure, coherence competition, archival labor gating, temporal seasoning, price-out ejection, fee market, insurance buffer, and per-node acceptance thresholds (distributed first-line filter that rises under flood pressure)."},
-    suppression:{label:"Evidence Suppression",defenses:["hbu","bcaen","tier","retrieval","anchor","forf","archivist"],desc:"An attacker attempts to delete, alter, or prevent upload of incident footage. Must defeat: hash-before-upload, BCAEN storage, tiered redundancy (base+marginal), authenticated retrieval, Bitcoin anchoring, forfeiture-funded subsidy, and archivist role as storage provider."},
+    suppression:{label:"Evidence Suppression",defenses:["hbu","bcaen","tier","als","retrieval","anchor","forf","archivist"],desc:"An attacker attempts to delete, alter, or prevent upload of incident footage. Must defeat: hash-before-upload, BCAEN storage, tiered redundancy (base slots gated by archival labor score — the first suppression barrier; marginal open-market slots — the second), authenticated retrieval, Bitcoin anchoring, forfeiture-funded subsidy, and archivist role as storage provider."},
     capture:{label:"Arbitrator Pool Capture",defenses:["closed","calib","blind","coerce","appealsc","asym","pool","arbiter","frost","inact_eject"],desc:"An attacker acquires enough arbitrator seats to control verdict outcomes. Must defeat: structural closure, coherence competition, blind voting commit-reveal, non-coercibility property, appeal scaling, asymmetric penalty, 100-pool retroactive review, FROST signature custody (withholds aggregate during embargo), inactive arbitrator ejection (maintains pool quality), and the arbiter role as pseudonymous Tor identity."},
     fake:{label:"Fake Incident Spam",defenses:["attend","eject","fee","prob","PoBL","insure","caller","responder","queue_weight","acpt_thresh"],desc:"An attacker generates false incidents to extract bounties or manipulate queues. Must defeat: attending vote with intervener/documenter split (both caller and responder roles involved), price-out ejection, fee market, probation strike system, personal bond requirement for both roles, insurance buffer loss, responder legitimacy queue weight, and per-node acceptance thresholds (rise automatically under flood pressure)."},
     queue:{label:"Queue Depth Manipulation",defenses:["eject","fee","closed","insure","PoBL","responder","queue_weight","acpt_thresh"],desc:"An attacker floods the arbitration queue to trigger slot openings or fee spikes. Must defeat: price-out ejection, fee market compounding, 432-block sustained demand filter, insurance buffer economics, bond capital requirements, responder legitimacy queue weight (high-legitimacy cases get priority), per-node acceptance thresholds (distributed filter), and PoB+L for all roles involved."},
@@ -983,15 +1003,11 @@ li {
   };
   const layerColors={economic:"#c44",evidence:"#2a8",arbitration:"#27c",network:"#75b",cross:"#b71",role:"#d8cda6"};
   const edgeStyles={
-    depends:{color:"#888",dash:"none",width:1.5},reinforces:{color:"#4a4",dash:"4,2",width:1.5},
-    funds:{color:"#c84",dash:"2,3",width:1.5},extends:{color:"#27c",dash:"4,2",width:1.2},
-    triggers:{color:"#c44",dash:"2,2",width:1.2},escalates:{color:"#75b",dash:"3,2",width:1.2},
-    amplifies:{color:"#c44",dash:"4,2",width:1.5},secures:{color:"#2a8",dash:"3,2",width:1.5},
-    enables:{color:"#27c",dash:"2,2",width:1.2},feeds:{color:"#c84",dash:"2,3",width:1.5},
-    uses:{color:"#aaa",dash:"3,2",width:1.2},occupies:{color:"#27c",dash:"2,2",width:1.5},
-    measuredBy:{color:"#b71",dash:"4,2",width:1.2},provides:{color:"#2a8",dash:"2,2",width:1.5},
-    maintains:{color:"#27c",dash:"3,2",width:1.5},filters:{color:"#aaa",dash:"4,2",width:1.2},
-    subject_to:{color:"#c44",dash:"2,2",width:1.2}
+    depends:{color:"#888",dash:"none",width:1.5},
+    enables:{color:"#38c",dash:"6,3",width:1.8},
+    funds:{color:"#c84",dash:"4,2,2,2",width:3},
+    triggers:{color:"#c44",dash:"4,2",width:1.5},
+    measuredBy:{color:"#75b",dash:"3,3",width:1.5}
   };
   const svg=d3.select("#mdg-svg");
   const container=svg.node().parentElement;
@@ -1019,12 +1035,12 @@ li {
     .attr("stroke",d=>(edgeStyles[d.type]||edgeStyles.depends).color)
     .attr("stroke-width",d=>(edgeStyles[d.type]||edgeStyles.depends).width)
     .attr("stroke-dasharray",d=>(edgeStyles[d.type]||edgeStyles.depends).dash)
-    .attr("marker-end",(d,i)=>"url(#arr-"+(i%styleKeys.length)+")")
+    .attr("marker-end",d=>"url(#arr-"+styleKeys.indexOf(d.type)+")")
     .attr("opacity",0.5);
   const node=g.append("g").selectAll("g").data(nodes).enter().append("g")
     .style("cursor","pointer")
     .call(d3.drag().on("start",dragstart).on("drag",dragged).on("end",dragend));
-  node.append("circle").attr("r",d=>d.r).attr("fill",d=>layerColors[d.layer]).attr("stroke","#fff").attr("stroke-width",1.5).attr("stroke-opacity",0.3);
+  node.append("circle").attr("r",d=>d.r).attr("fill",d=>layerColors[d.layer]).attr("fill-opacity",0.78).attr("stroke","#fff").attr("stroke-width",1.5).attr("stroke-opacity",0.3);
   node.append("text").attr("class","mdg-label").attr("dy",d=>d.r+14).attr("text-anchor","middle")
     .style("font-family","var(--sans)").style("font-size","10px").style("fill","#ccc").style("pointer-events","none").style("font-weight","500")
     .text(d=>d.label);
@@ -1070,7 +1086,7 @@ li {
 </p>
 </noscript>
 
-<p style="font-size:0.81rem; color:#5a5a56; margin-top:1rem;"><strong>How to read this graph.</strong> Each coloured circle is a protocol mechanism. Lines show dependency: <em>solid grey</em> = functional dependency (A requires B to operate), <em>dashed green</em> = mutual reinforcement (A makes B stronger, and vice versa), <em>dotted orange</em> = economic flow (A&rsquo;s output funds B). Larger nodes are more central to the protocol&rsquo;s operation. Use the dropdown to trace how a specific attack vector is resisted &mdash; the highlighted chain shows every mechanism the attacker must defeat, in sequence, to succeed. The graph is the answer to the question &ldquo;why is mechanism X not enough on its own?&rdquo; &mdash; because every mechanism is embedded in a mesh where its absence weakens multiple others.</p>
+<p style="font-size:0.81rem; color:#5a5a56; margin-top:1rem;"><strong>How to read this graph.</strong> Each coloured circle is a protocol mechanism. Lines show five relationship types: <em>solid grey</em> = depends on (A requires B to operate), <em>dashed blue</em> = enables (A makes B possible or stronger), <em>dotted orange</em> = funds (A&rsquo;s output finances B), <em>dashed red</em> = triggers (A initiates or escalates B), <em>dashed purple</em> = measures (B evaluates A&rsquo;s quality). Larger nodes are more central to the protocol&rsquo;s operation. Use the dropdown to trace protocol flows: the first two entries show the <strong>standard happy path</strong> (no dispute) and the <strong>disputed arbitration path</strong>, representing normal protocol operation. The remaining entries trace how specific attack vectors are resisted &mdash; each highlighted chain shows every mechanism the attacker must defeat, in sequence, to succeed. The graph is the answer to the question &ldquo;why is mechanism X not enough on its own?&rdquo; &mdash; because every mechanism is embedded in a mesh where its absence weakens multiple others.</p>
 
 <!-- ── Machine-Readable Dependency Map (JSON-LD) ── -->
 <script type="application/ld+json" id="bitaid-mechanism-graph">
@@ -1128,7 +1144,7 @@ li {
     {"@id":"queue_weight", "name":"Responder Legitimacy", "layer":"economic", "section":"§14.7", "centrality":"medium", "description":"Queue priority weighted by aggregate responder legitimacy: sum(reputation x stake) / count. High-legitimacy attendance signals incident reality."}
   ],
   "edges": [
-    {"source":"PoBL", "target":"asym", "type":"dependsOn", "note":"Penalty requires bonds to be meaningful"},
+    {"source":"PoBL", "target":"asym", "type":"depends", "note":"Penalty requires bonds to be meaningful"},
     {"source":"PoBL", "target":"closed", "type":"enables", "note":"Bond requirement makes closed pool structurally resistant to Sybil flooding"},
     {"source":"PoBL", "target":"calib", "type":"enables", "note":"Calibration coherence IS the labor component of PoB+L for arbitrators"},
     {"source":"PoBL", "target":"attend", "type":"enables", "note":"Attending vote weights are drawn from PoB+L labor scores"},
@@ -1137,34 +1153,34 @@ li {
     {"source":"PoBL", "target":"als", "type":"enables", "note":"Archival Labor Score IS the labor component of PoB+L for archivists"},
     {"source":"PoBL", "target":"tier", "type":"enables", "note":"Tiered redundancy base slots gated by ALS, which is PoB+L labor"},
     {"source":"asym", "target":"appeal", "type":"funds", "note":"Penalty pool funds appeals"},
-    {"source":"asym", "target":"calib", "type":"reinforces", "note":"Penalty drives calibration accuracy"},
+    {"source":"asym", "target":"calib", "type":"enables", "note":"Penalty drives calibration accuracy"},
     {"source":"forf", "target":"pool", "type":"funds", "note":"Seized bonds fund 100-pool premium"},
     {"source":"forf", "target":"bcaen", "type":"funds", "note":"Seized bonds fund evidence infrastructure"},
-    {"source":"pool", "target":"calib", "type":"reinforces", "note":"Premium incentivises retroactive review"},
-    {"source":"fee", "target":"eject", "type":"reinforces", "note":"Fee market works with price-out"},
-    {"source":"insure", "target":"PoBL", "type":"reinforces", "note":"Insurance extends bond capacity"},
-    {"source":"hbu", "target":"bcaen", "type":"dependsOn", "note":"Hash-before-upload feeds BCAEN"},
-    {"source":"bcaen", "target":"tier", "type":"dependsOn", "note":"BCAEN uses tiered redundancy"},
-    {"source":"tier", "target":"als", "type":"dependsOn", "note":"Base slots gated by archival labor"},
-    {"source":"closed", "target":"calib", "type":"dependsOn", "note":"Closed pool enables quality calibration"},
-    {"source":"calib", "target":"blind", "type":"reinforces", "note":"Calibration needs honest votes from blind voting"},
-    {"source":"blind", "target":"calib", "type":"reinforces", "note":"Blind voting produces honest calibration input"},
-    {"source":"calib", "target":"prob", "type":"reinforces", "note":"Calibration extends to probationer evaluation"},
-    {"source":"attend", "target":"blind", "type":"escalates", "note":"Attending vote escalates to blind-voted arbitration"},
-    {"source":"appealsc", "target":"asym", "type":"amplifies", "note":"Larger panels amplify penalty differentiation"},
-    {"source":"gossip", "target":"h3", "type":"dependsOn", "note":"Gossip uses H3 cell boundaries"},
-    {"source":"anchor", "target":"bcaen", "type":"secures", "note":"Bitcoin anchors secure evidence integrity"},
-    {"source":"anchor", "target":"calib", "type":"secures", "note":"Anchors secure calibration history"},
+    {"source":"pool", "target":"calib", "type":"enables", "note":"Premium incentivises retroactive review"},
+    {"source":"fee", "target":"eject", "type":"enables", "note":"Fee market works with price-out"},
+    {"source":"insure", "target":"PoBL", "type":"enables", "note":"Insurance extends bond capacity"},
+    {"source":"hbu", "target":"bcaen", "type":"depends", "note":"Hash-before-upload feeds BCAEN"},
+    {"source":"bcaen", "target":"tier", "type":"depends", "note":"BCAEN uses tiered redundancy"},
+    {"source":"tier", "target":"als", "type":"depends", "note":"Base slots gated by archival labor"},
+    {"source":"closed", "target":"calib", "type":"depends", "note":"Closed pool enables quality calibration"},
+    {"source":"calib", "target":"blind", "type":"enables", "note":"Calibration needs honest votes from blind voting"},
+    {"source":"blind", "target":"calib", "type":"enables", "note":"Blind voting produces honest calibration input"},
+    {"source":"calib", "target":"prob", "type":"enables", "note":"Calibration extends to probationer evaluation"},
+    {"source":"attend", "target":"blind", "type":"triggers", "note":"Attending vote escalates to blind-voted arbitration"},
+    {"source":"appealsc", "target":"asym", "type":"triggers", "note":"Larger panels amplify penalty differentiation"},
+    {"source":"gossip", "target":"h3", "type":"depends", "note":"Gossip uses H3 cell boundaries"},
+    {"source":"anchor", "target":"bcaen", "type":"enables", "note":"Bitcoin anchors secure evidence integrity"},
+    {"source":"anchor", "target":"calib", "type":"enables", "note":"Anchors secure calibration history"},
     {"source":"tor", "target":"blind", "type":"enables", "note":"Tor enables honest voting without fear"},
-    {"source":"temp", "target":"calib", "type":"reinforces", "note":"Seasoning prevents flash-entry calibration attacks"},
-    {"source":"temp", "target":"closed", "type":"reinforces", "note":"Seasoning reinforces structural closure"},
-    {"source":"cell", "target":"attend", "type":"reinforces", "note":"Cell scoping weights attending vote correctly"},
+    {"source":"temp", "target":"calib", "type":"enables", "note":"Seasoning prevents flash-entry calibration attacks"},
+    {"source":"temp", "target":"closed", "type":"enables", "note":"Seasoning reinforces structural closure"},
+    {"source":"cell", "target":"attend", "type":"enables", "note":"Cell scoping weights attending vote correctly"},
     {"source":"coerce", "target":"blind", "type":"enables", "note":"Non-coercibility enables honest blind voting"},
-    {"source":"coerce", "target":"tor", "type":"dependsOn", "note":"Non-coercibility depends on Tor pseudonymity"},
-    {"source":"als", "target":"calib", "type":"feeds", "note":"Archival labor feeds calibration participation fees"},
-    {"source":"bcaen", "target":"calib", "type":"feeds", "note":"BCAEN provides evidence for calibration review"},
+    {"source":"coerce", "target":"tor", "type":"depends", "note":"Non-coercibility depends on Tor pseudonymity"},
+    {"source":"als", "target":"calib", "type":"enables", "note":"Archival labor feeds calibration participation fees"},
+    {"source":"bcaen", "target":"calib", "type":"enables", "note":"BCAEN provides evidence for calibration review"},
     {"source":"bcaen", "target":"attend", "type":"enables", "note":"BCAEN evidence enables attending vote decisions"},
-    {"source":"anchor", "target":"PoBL", "type":"secures", "note":"Anchors secure Human Labor Ledger"},
+    {"source":"anchor", "target":"PoBL", "type":"enables", "note":"Anchors secure Human Labor Ledger"},
     {"source":"PoBL", "target":"caller", "type":"enables", "note":"PoB+L enables the caller role through bond + deposit requirement"},
     {"source":"PoBL", "target":"responder", "type":"enables", "note":"PoB+L enables the responder role through bond + labor score"},
     {"source":"PoBL", "target":"arbiter", "type":"enables", "note":"PoB+L enables the arbitrator role through bond + calibration coherence"},
@@ -1172,44 +1188,64 @@ li {
     {"source":"caller", "target":"attend", "type":"triggers", "note":"Caller misuse detected through attending vote"},
     {"source":"caller", "target":"forf", "type":"triggers", "note":"Caller bond forfeited on confirmed misuse"},
     {"source":"responder", "target":"attend", "type":"enables", "note":"Responders participate in and vote at attending vote"},
-    {"source":"responder", "target":"cell", "type":"uses", "note":"Responder labor is scoped to H3 cells"},
-    {"source":"responder", "target":"temp", "type":"uses", "note":"Responder labor requires temporal seasoning"},
+    {"source":"responder", "target":"cell", "type":"depends", "note":"Responder labor is scoped to H3 cells"},
+    {"source":"responder", "target":"temp", "type":"depends", "note":"Responder labor requires temporal seasoning"},
     {"source":"responder", "target":"gossip", "type":"enables", "note":"Responders propagate alerts through geofenced gossip"},
-    {"source":"responder", "target":"queue_weight", "type":"provides", "note":"Responder legitimacy provides queue priority signal"},
-    {"source":"queue_weight", "target":"eject", "type":"reinforces", "note":"Responder legitimacy works with price-out ejection"},
-    {"source":"arbiter", "target":"closed", "type":"occupies", "note":"Arbitrators constitute the closed pool membership"},
+    {"source":"responder", "target":"queue_weight", "type":"enables", "note":"Responder legitimacy provides queue priority signal"},
+    {"source":"queue_weight", "target":"eject", "type":"enables", "note":"Responder legitimacy works with price-out ejection"},
+    {"source":"arbiter", "target":"closed", "type":"depends", "note":"Arbitrators constitute the closed pool membership"},
     {"source":"arbiter", "target":"calib", "type":"measuredBy", "note":"Arbitrator quality measured by calibration coherence"},
-    {"source":"arbiter", "target":"blind", "type":"uses", "note":"Arbitrators use blind voting commit-reveal"},
+    {"source":"arbiter", "target":"blind", "type":"depends", "note":"Arbitrators use blind voting commit-reveal"},
     {"source":"archivist", "target":"als", "type":"measuredBy", "note":"Archivist quality measured by archival labor score"},
-    {"source":"archivist", "target":"bcaen", "type":"provides", "note":"Archivists provide BCAEN storage capacity"},
+    {"source":"archivist", "target":"bcaen", "type":"enables", "note":"Archivists provide BCAEN storage capacity"},
     {"source":"archivist", "target":"tier", "type":"enables", "note":"Archivist labor enables tiered redundancy base slots"},
-    {"source":"attend", "target":"arbiter", "type":"escalates", "note":"Attending vote escalates to arbitrator panel"},
-    {"source":"dead_end", "target":"gossip", "type":"secures", "note":"Dead-end scoring secures gossip against eclipse attacks"},
+    {"source":"attend", "target":"arbiter", "type":"triggers", "note":"Attending vote escalates to arbitrator panel"},
+    {"source":"dead_end", "target":"gossip", "type":"enables", "note":"Dead-end scoring secures gossip against eclipse attacks"},
     {"source":"gossip", "target":"dead_end", "type":"measuredBy", "note":"Gossip propagation provides dead-end attestation data"},
-    {"source":"inact_eject", "target":"closed", "type":"maintains", "note":"Inactivity ejection maintains closed pool quality"},
+    {"source":"inact_eject", "target":"closed", "type":"depends", "note":"Inactivity ejection maintains closed pool quality"},
     {"source":"closed", "target":"inact_eject", "type":"enables", "note":"Closed pool needs active maintenance via ejection"},
-    {"source":"frost", "target":"attend", "type":"secures", "note":"FROST custody enforces 48-hour embargo on attending vote release"},
+    {"source":"frost", "target":"attend", "type":"enables", "note":"FROST custody enforces 48-hour embargo on attending vote release"},
     {"source":"frost", "target":"forf", "type":"enables", "note":"FROST signature executes forfeiture transactions"},
-    {"source":"arbiter", "target":"frost", "type":"uses", "note":"Arbitrators hold FROST key shards"},
+    {"source":"arbiter", "target":"frost", "type":"depends", "note":"Arbitrators hold FROST key shards"},
     {"source":"insure", "target":"responder", "type":"funds", "note":"Insurer directly employs and funds responders (Hoppe's thesis operational)"},
     {"source":"attend", "target":"forf", "type":"triggers", "note":"Attending vote confirming caller misuse triggers forfeiture"},
-    {"source":"responder", "target":"acpt_thresh", "type":"uses", "note":"Responders configure own acceptance thresholds"},
-    {"source":"acpt_thresh", "target":"gossip", "type":"filters", "note":"Thresholds determine which alerts propagate through gossip"},
+    {"source":"responder", "target":"acpt_thresh", "type":"depends", "note":"Responders configure own acceptance thresholds"},
+    {"source":"acpt_thresh", "target":"gossip", "type":"depends", "note":"Thresholds determine which alerts propagate through gossip"},
     {"source":"h3", "target":"cell", "type":"enables", "note":"H3 cells provide coordinate system for cell-scoped labor"},
     {"source":"tier", "target":"retrieval", "type":"enables", "note":"Redundancy enables integrity verification through authenticated retrieval"},
     {"source":"responder", "target":"hbu", "type":"enables", "note":"Responder camera triggers hash-before-upload ordering"},
     {"source":"responder", "target":"bcaen", "type":"enables", "note":"Responder streams footage directly to BCAEN — the source of all stored evidence"},
-    {"source":"arbiter", "target":"pool", "type":"occupies", "note":"100-pool arbitrators drawn from same closed pool"},
-    {"source":"arbiter", "target":"inact_eject", "type":"subject_to", "note":"All arbitrators subject to inactivity ejection at >80% decline"},
+    {"source":"arbiter", "target":"pool", "type":"depends", "note":"100-pool arbitrators drawn from same closed pool"},
+    {"source":"arbiter", "target":"inact_eject", "type":"depends", "note":"All arbitrators subject to inactivity ejection at >80% decline"},
     {"source":"prob", "target":"forf", "type":"triggers", "note":"Probation net 3 strikes triggers bond forfeiture"},
-    {"source":"frost", "target":"appeal", "type":"secures", "note":"FROST withheld during embargo enables appeal window"},
-    {"source":"archivist", "target":"retrieval", "type":"provides", "note":"Archivists serve authenticated retrieval requests"},
-    {"source":"h3", "target":"gossip", "type":"reinforces", "note":"H3 cells bound gossip propagation geography"},
-    {"source":"insure", "target":"caller", "type":"reinforces", "note":"Insurer buffer backs caller deposit (zero protocol weight)"},
-    {"source":"insure", "target":"arbiter", "type":"reinforces", "note":"Insurer buffer extends to arbitrator bonds"},
-    {"source":"caller", "target":"eject", "type":"triggers", "note":"Caller deposit level determines price-out ejection"}
+    {"source":"frost", "target":"appeal", "type":"enables", "note":"FROST withheld during embargo enables appeal window"},
+    {"source":"archivist", "target":"retrieval", "type":"enables", "note":"Archivists serve authenticated retrieval requests"},
+    {"source":"h3", "target":"gossip", "type":"enables", "note":"H3 cells bound gossip propagation geography"},
+    {"source":"insure", "target":"caller", "type":"enables", "note":"Insurer buffer backs caller deposit (zero protocol weight)"},
+    {"source":"insure", "target":"arbiter", "type":"enables", "note":"Insurer buffer extends to arbitrator bonds"},
+    {"source":"caller", "target":"eject", "type":"triggers", "note":"Caller deposit level determines price-out ejection"},
+    {"source":"fee", "target":"arbiter", "type":"funds", "note":"Arbitration fees paid to arbitrators for service"},
+    {"source":"pool", "target":"arbiter", "type":"funds", "note":"100-pool premium (3x) paid to retroactive review arbitrators"},
+    {"source":"forf", "target":"responder", "type":"funds", "note":"Forfeited bonds distributed to attending responders pro-rata"},
+    {"source":"bcaen", "target":"responder", "type":"depends", "note":"BCAEN depends on responders for footage content"},
+    {"source":"caller", "target":"responder", "type":"funds", "note":"Caller's three-tier bounty (deposit → bounty → outcome reward) is the primary payment to attending responders. §3, §11.1–11.2"},
+    {"source":"attend", "target":"responder", "type":"funds", "note":"Attend vote releases and allocates the bounty: 70% intervener / 30% documenter by default, caller-configurable. §14.1, §3"},
+    {"source":"bcaen", "target":"archivist", "type":"funds", "note":"Upload fees + stream fees + slot hosting payments (three revenue streams) sustain archivist economics. §13, §11.5"},
+    {"source":"forf", "target":"archivist", "type":"funds", "note":"BCAEN redundancy subsidy pool fed by forfeiture supplements archivist base-slot revenue (bootstrap and ramp-up capital). §10.6, §13.2"}
   ],
   "attackPaths": [
+    {
+      "@type": "AttackPath",
+      "name": "Standard Emergency Response",
+      "defenseSequence": ["caller", "responder", "PoBL", "gossip", "h3", "acpt_thresh", "hbu", "bcaen", "tier", "als", "archivist", "attend", "cell", "anchor"],
+      "description": "The happy path: caller posts alert with deposit and bounty; alert propagates through geofenced gossip; responder accepts based on threshold, attends, streams hash-before-upload evidence to BCAEN with tiered redundancy (base slots gated by ALS, operated by archivists); attend vote releases bounty to responder; both build labor history. No dispute, no arbitration, no forfeiture."
+    },
+    {
+      "@type": "AttackPath",
+      "name": "Disputed Emergency Response",
+      "defenseSequence": ["caller", "responder", "PoBL", "gossip", "h3", "acpt_thresh", "hbu", "bcaen", "tier", "attend", "arbiter", "blind", "calib", "asym", "frost", "closed", "appealsc", "cell", "anchor"],
+      "description": "The arbitration path: standard flow until attending vote splits; 48-hour FROST embargo with signature withheld; closed-pool arbitrators review BCAEN evidence under blind voting; coherence scoring evaluates accuracy; asymmetric penalty applies to incoherent dissent; appeals scale 3->7->15->31 if contested."
+    },
     {
       "@type": "AttackPath",
       "name": "Sybil Identity Flood",
@@ -1219,8 +1255,8 @@ li {
     {
       "@type": "AttackPath",
       "name": "Evidence Suppression",
-      "defenseSequence": ["hbu", "bcaen", "tier", "retrieval", "anchor", "forf", "archivist"],
-      "description": "Attacker attempts to suppress footage. Must defeat: hash-before-upload, BCAEN storage, tiered redundancy (base+marginal), authenticated retrieval, Bitcoin anchoring, forfeiture-funded subsidy, and archivist role as storage provider."
+      "defenseSequence": ["hbu", "bcaen", "tier", "als", "retrieval", "anchor", "forf", "archivist"],
+      "description": "Attacker attempts to suppress footage. Must defeat: hash-before-upload, BCAEN storage, tiered redundancy (base slots labor-gated by ALS — first suppression barrier; marginal open-market slots — second), authenticated retrieval, Bitcoin anchoring, forfeiture-funded subsidy, and archivist role as storage provider."
     },
     {
       "@type": "AttackPath",
@@ -1254,8 +1290,9 @@ li {
     }
   ],
   "compoundTrapCount": 7,
+  "standardFlowCount": 2,
   "nodeCount": 35,
-  "edgeCount": 69,
+  "edgeCount": 77,
   "layerCount": 6,
   "averageNodeDegree": 3.9,
   "minCutNote": "The graph has no single-point min-cut. Removing any node reduces but does not eliminate protocol security. Removing any 3 non-adjacent nodes still leaves viable defence chains for all attack paths."
@@ -1430,6 +1467,8 @@ li {
 
 <p><strong>Citizen arrest legal framework.</strong> The right of a private citizen to detain someone witnessed committing a serious offence predates professional policing by centuries and exists in most jurisdictions worldwide. Responders operate within this legal framework, which is navigated entrepreneurially rather than prescribed: viable tactics emerge through practice, insurer underwriting requirements, and arbitration precedent, analogous to how private security firms in adversarial legal environments (e.g., Spanish <em>des-okupa</em> operations) develop creative non-confrontational methods within legal bounds. The protocol surfaces jurisdiction-specific legal reference to the responder&rsquo;s companion app based on grid cell location; these references are advisory only, and the protocol assumes no liability for responder conduct.</p>
 
+<p><strong>Responder agnosticism.</strong> The protocol is blind to the species of responder. A neighbour, a licensed security guard, an insurer-employed patrol officer, and an autonomous drone fleet are treated identically: bonded identities with a camera and a BCAEN stream. The free market finds the optimal cost-effective mix per cell without administrative prescription. A residential cell may be served primarily by neighbour responders and occasional drone documentation; a commercial district may be served by professional security firms with insurer backing; an industrial zone may be served by bonded drone fleets with rapid deployment. The protocol does not mandate any composition; it provides the coordination layer and lets supply match demand. This agnosticism is a security property: no single responder type is a critical failure point, and the diversity of response sources makes the network robust against the regulatory capture of any one profession.</p>
+
 <p><strong>Note on jurisdiction and responder liability.</strong> The protocol does not attempt to harmonize, override, or solve the criminal and civil liability frameworks of any jurisdiction. It is jurisdiction-agnostic by design. Where private intervention is tolerated or permitted under citizen arrest statutes, supply emerges and the flywheel compounds. Where it is criminalized, the range of permissible strategies narrows and responder utility diminishes &mdash; not necessarily to zero, because regulatory frameworks vary in whom they protect and a jurisdiction that shields criminals from private intervention still leaves room for non-confrontational documentation, deterrent presence, and evidence capture that aids subsequent arbitration. The protocol does not impede civil disobedience nor price it in. A responder who considers a law unjust may choose to violate it; a caller who values that willingness may post a bounty that compensates the risk. The protocol routes the alert and enforces the escrow regardless of whether the responder&rsquo;s conduct is lawful in that jurisdiction. The liability is the responder&rsquo;s to assess, the caller&rsquo;s to price, and the market&rsquo;s to filter. The protocol promises <strong>permissionless coordination wherever participants are willing to operate</strong> &mdash; not merely where the legal environment permits it.</p>
 
 <h3>11.3 Relay Node</h3>
@@ -1585,6 +1624,8 @@ li {
 <p><strong>Configurable arbitrator quality.</strong> Either disputing party may embed three independent quality settings in the escrow at construction time: <strong>coherence threshold</strong> (default 80%, configurable 80%&ndash;99%), <strong>open seat fraction</strong> (default &#8531;, configurable to 0), and <strong>minimum arbitrator bond</strong> (default 0.1 BTC, configurable upward, uncapped). The &#8532; labor-qualified invariant is non-configurable; all three settings can only raise the Sybil defence. The fee differential above standard is paid ad hoc by the requesting party from their own capital. The bond minimum decays gradually if the panel cannot fill: &times;0.70 at 144 blocks, &times;0.70 at 288 blocks, full reset at 432 blocks. Coherence threshold and open seat fraction snap to defaults at 432 blocks. These settings create a tiered premium service market for adjudication quality with no precedent in dispute resolution.</p>
 
 <p><strong>The non-coercibility property.</strong> Arbitrator nodes operate as pseudonymous keypairs over Tor Hidden Services. There is no KYC, no registration database, no phone number, no email, and no identity verification. The protocol does not know, and cannot reveal, the physical identity of any arbitrator. This is not merely a privacy feature; it is a <strong>security primitive</strong>. A nation-state that wishes to coerce arbitrators must first solve the surveillance problem of correlating pseudonymous keypairs to physical persons at scale, across Tor circuits, against targets who may migrate to new keypairs at any time. The coercion cost is additive to the capital-flood cost: surveillance expenditure does not reduce the bond capital required, and bond capital does not reduce the surveillance required. Formal arbitration (<a href="#s14">&sect;14.11</a>) exists for parties who prefer institutional weight; it is not a security fallback for a weak on-chain system, but a commercial convenience for pre-contracted relationships.</p>
+
+<p><strong>Arbitration scope is narrow and factual, not broad and moral.</strong> A common concern about closed arbitrator pools is the "old guard" problem: a core group of established arbitrators defines "consensus truth," and new entrants struggle to break in. This concern presupposes that arbitrators are judging complex moral questions or nuanced liability disputes. They are not. The scope of Bitaid arbitration is fundamentally binary: did the responder arrive at the specified location? Did they stream evidence to BCAEN? Did the outcome condition trigger (property secured, aid delivered, threat removed)? Factual deviation is easily caught at the 40% dissent threshold, which triggers a 100-pool review. An arbitrator who consistently rules that a responder who did not stream to BCAEN deserves the full reward will quickly see their coherence score collapse, their bond forfeited, and their revenue destroyed. Unfair rulings do not merely harm the losing party; they cannibalise the arbitrator's own income because demand flees from biased courts. Ideological bias is structurally unprofitable because the disputes are too narrow for ideology to hide in.</p>
 
 <h3>14.3 Pool Closure and Merit-Based Entry</h3>
 
@@ -1785,6 +1826,29 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <p>Relay operators and responder firms are independent businesses in their respective jurisdictions. A state can regulate or prohibit a specific operator within its territory, but it cannot prohibit the protocol itself because the protocol has no jurisdictional presence. It is a set of rules and a reference implementation, not a legal entity. The same structural property that makes BitTorrent resistant to copyright enforcement makes Bitaid resistant to jurisdictional prohibition: the protocol specification is speech, the reference implementation is speech, and the network is a decentralised peer-to-peer graph with no centre to attack.</p>
 
 <p><strong>Jurisdiction shopping for relay operators.</strong> Because relay operators are independent businesses, they naturally gravitate toward jurisdictions with favourable regulatory environments. A relay operator in a jurisdiction that prohibits Bitaid can simply relocate their servers to a jurisdiction that does not. The protocol has no dependency on any specific operator; if one exits, the DHT routes around them. Over time, the network of relay operators will concentrate in jurisdictions with strong free-speech protections, strong property-rights enforcement, and weak regulatory capture &mdash; not because the protocol enforces this, but because market selection favours operators in jurisdictions where they are least likely to be shut down. This is the same mechanism that concentrated Bitcoin mining in jurisdictions with cheap, stranded energy: market participants follow the economic incentives, and the protocol does not care where they are.</p>
+
+<p><strong>Regulatory terraforming.</strong> The protocol does not need to be legal everywhere; it needs to be viable somewhere. History provides ample precedent for services that operate in legal gray zones and expand outward as demand compels regulatory adaptation. In Spain, private eviction-recovery firms (<em>desokupa</em>) developed creative non-confrontational methods within legal bounds to serve demand that the state could not meet. Uber did not ask permission to redefine transportation in every jurisdiction; it built a system so undeniably useful that regulators were forced to adapt after the fact. The same dynamic applies: where state provision fails and private demand is non-negotiable, the market finds a way. Bitaid cells self-organise where participants are willing to operate; successful cells generate case history, calibration coherence, and insurer participation that make them economically indispensable. Regulators facing a functioning, life-saving coordination network with institutional insurer backing are not choosing between "permit" and "prohibit" &mdash; they are choosing between "adapt" and "drive it underground." The former is historically more common than the latter when the service is genuinely valuable and the network has no centre to raid.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- FAQ — COMMON OBJECTIONS AND PROTOCOL REBUTTALS                        -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<h2 id="faq">Frequently Asked Questions</h2>
+<p class="mode-signal">Common external objections and the protocol&rsquo;s built-in rebuttals</p>
+
+<p><strong>Q: What about jurisdictions where private intervention is legally restricted?</strong></p>
+<p>A: The protocol is jurisdiction-agnostic by design. It does not attempt to harmonise, override, or solve the criminal and civil liability frameworks of any jurisdiction. Where private intervention is tolerated or permitted under citizen arrest statutes, supply emerges and the flywheel compounds. Where it is criminalised, the range of permissible strategies narrows and responder utility diminishes &mdash; but not necessarily to zero, because regulatory frameworks vary in whom they protect and a jurisdiction that shields criminals from private intervention still leaves room for non-confrontational documentation, deterrent presence, and evidence capture. The protocol routes the alert and enforces the escrow regardless of whether the responder&rsquo;s conduct is lawful in that jurisdiction. The liability is the responder&rsquo;s to assess, the caller&rsquo;s to price, and the market&rsquo;s to filter. Furthermore, regulatory terraforming is a demonstrated phenomenon: services that are genuinely valuable and have no centre to raid tend to compel regulatory adaptation rather than suppression (see <a href="#s16">&sect;16.4</a>).</p>
+
+<p><strong>Q: Isn&rsquo;t the UX too complex for a crisis situation?</strong></p>
+<p>A: All cryptographic complexity is front-loaded during calm registration. During a crisis, the UX is a single button press. The heavy lifting &mdash; escrow construction, bond verification, DHT routing, BCAEN hashing, Tor circuit establishment &mdash; happens before the emergency, not during it. The protocol functions like pre-arranged insurance: the caller has already posted their deposit, already configured their offer, already selected their insurer if applicable. When the alert fires, the protocol merely executes what was already arranged. This is actually <em>less</em> friction than calling 911, where a panicked caller must verbally convince a skeptical human dispatcher that the threat is real. In Bitaid, the pre-committed capital is the credibility signal; no persuasion is required.</p>
+
+<p><strong>Q: Won&rsquo;t the arbitrator pool become an oligopoly?</strong></p>
+<p>A: The concern assumes arbitrators are judging complex moral questions or nuanced liability disputes. They are not. The scope is fundamentally binary: did the responder arrive? Did they stream to BCAEN? Did the outcome condition trigger? Factual deviation is caught at the 40% dissent threshold, which triggers a 100-pool review. An arbitrator who consistently rules unfairly sees their coherence score collapse, their bond forfeited, and their revenue destroyed. Ideological bias is structurally unprofitable because the disputes are too narrow for ideology to hide in. The calibration coherence competition ensures that demand flees from biased courts, and the economic incentive to be factually accurate is absolute because unfair rulings cannibalise the arbitrator&rsquo;s own income stream.</p>
+
+<p><strong>Q: How does the network bootstrap when no responders exist in a cell?</strong></p>
+<p>A: All permissionless networks begin vulnerable. Bitcoin survived because the value proposition outpaced the attack surface. Bitaid follows the same pattern: insurers act as venture capitalists, absorbing early risk to capture mature-market returns; drone reality capture provides value even without human responders; alarm systems create demand-side anchors; and Track C (weighted lottery with aged-UTXO signal) provides arbitrator slots when the calibration library is thin. The cold start is not a protocol defect &mdash; it is an economic opportunity that rewards participants willing to build history before the flywheel compounds.</p>
+
+<p><strong>Q: Can a wealthy attacker buy their way into control?</strong></p>
+<p>A: The bond is "anti-staking": it earns no yield, grants no governance rights, and carries only downside. A wealthy attacker who buys many seats must still earn labour history (cannot be purchased), survive temporal seasoning (cannot be accelerated), pass calibration coherence (cannot be manufactured), and maintain geographic presence (cell-scoped, cannot be centralised). The asymmetric penalty means that every incoherent vote costs 2&times;&ndash;4&times; the fee. The 100-pool premium means that confirmed fraud produces capital that funds stronger detection of future fraud. The system is anti-fragile: attacks strengthen the defences they target.</p>
 
 <h2 id="s17">17. Theoretical Foundations</h2>
 <p class="mode-signal">Philosophical backbone &mdash; why the mechanism is structurally sound, not merely technically clever</p>
