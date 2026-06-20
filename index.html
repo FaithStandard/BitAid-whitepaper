@@ -405,6 +405,8 @@ li {
 
 <p>Responders sort incoming alerts by the full economic package &mdash; stake credibility, bounty size, outcome reward, and labor credentials &mdash; not by queue position. A flood of minimum-stake noise does not outbid a serious bounty-and-reward package. As the network professionalises, callers who offer no bounty or conditional reward find fewer professional responders accepting their alerts &mdash; not because the protocol blocks them, but because professional responders price their time and risk against the full economic offer. The protocol routes alerts and lets the market clear. No authority determines priorities.</p>
 
+<p><strong>Staged development, not designed equity.</strong> A cell does not launch with high standards; it grows into them. Low capital, low labor history, low entry barriers &mdash; that is the correct starting condition for a market that does not yet know what it needs. As incidents accumulate, labor scores stratify, and capital finds the cell worth entering, standards rise without a governance vote, without a committee, without a protocol upgrade. This was built to function, not to be fair or unfair. The byproduct is that quality of service tracks capital and labor history rather than need. That is not a design goal; it is what staged market discovery produces when nothing enforces an artificial floor. Equity cannot be wished into existence by protocol design any more than it can by the monopoly this protocol is built to outcompete.</p>
+
 <p>The three tiers together produce the first market price signals for passive emergency response &mdash; not the pre-arranged bilateral market for private guards or contracted security firms, where the price is set before any emergency exists and the service is delivered regardless of whether an incident occurs, but a real-time spot market where strangers with no prior relationship bid to respond to an unknown caller at an unknown location, with payment conditional on showing up and performing. That market has not existed before, not because no one thought of it, but because it required trustless conditional payment and pseudonymous coordination that no prior technology made possible.</p>
 
 <p><strong>Offer-linked integrity.</strong> For high-value alerts, the protocol makes an explicit pairing: no responder should profit more from cheating on an incident than they stand to lose when cheating is proven. At alert construction, the packet carries recommended minimum bond and labor credentials that every node computes identically from the posted economics. On large bounties, the median bond among attendees cannot be dragged down by floor-minimum identities; the offer size sets the comparison baseline. Clients may warn when a large reward is paired with a weak credibility signal. Under alert floods, operators and insurers tighten thresholds &mdash; the expected equilibrium, not an emergency patch.</p>
@@ -1374,6 +1376,8 @@ li {
 
 <p><strong>Responder bond floor &mdash; 0.01 BTC at genesis.</strong> Approximately $1,000 at $100,000 per BTC. The responder physically intervenes, uses force where the legal framework of citizen arrest applies, and is exposed to civil and criminal liability as well as BCAEN-documented misuse rulings. This floor closes the attack surfaces in C2.1 (phantom attendance), C2.2 (vote collusion), and C2.4 (excessive-force intervention). Unlike the caller floor, the responder bond carries no deflation schedule. As Bitcoin appreciates, the fiat-equivalent cost rises &mdash; passively filtering toward professionalisation on the supply side. Individual responders at genesis are joined over time by insured firms and security companies for whom a larger bond is a normal operating cost. The protocol never needs a governance vote to raise professional standards; Bitcoin appreciation does it automatically.</p>
 
+<p><strong>Cell maturity as emergent liability policy.</strong> A cell at genesis has no labor scores, minimal stake floors, and low entry barriers. This is the correct starting condition for a market that does not yet know what it needs. As incidents accumulate and labor scores stratify, the attending vote produces precedents. Responders with documented intervention history outcompete newcomers for the highest-value alerts. Callers with bad incident history find their alerts deprioritised. Over time, without a governance vote, without a committee, without a protocol upgrade, the cell develops what amounts to a liability policy: implicit minimum standards enforced by market selection rather than by rule. The most mature cells produce innovations in tooling and operational strategy &mdash; better technique, better coordination, better use of whatever instruments the local responders can access &mdash; that get exported to younger cells as the labor history of mobile responders and insured firms carries the practice with them. The ballista invented in a frontier city does not stay in the frontier city.</p>
+
 <p><strong>Arbitrator bond floor &mdash; minimum 0.1 BTC, fixed.</strong> Ten times the responder floor. The arbitrators decides outcome reward releases and contested arbitration &mdash; their verdict moves the largest sums, and incoherent votes are penalised at 2&times; to 4&times;. The pool is closed by default; entry is via merit-based coherence competition rather than open-market bond posting &mdash; this is the primary defence against capital-flood attacks on arbitrator selection (C4.1). The entry mechanism works in conjunction with the reputation quota, temporal seasoning, and cohort correlation detection described in <a href="#s14">&sect;14.3</a>.</p>
 
 <p><strong>Archival bond floor &mdash; 0.005 BTC base, scaling with declared capacity.</strong> Half the responder floor at genesis. Bond size sets the node's floor bid in the slot auction; declared capacity above the minimum scales the bond linearly. Forfeiture triggers on failure to serve authenticated retrieval requests. This floor closes C6.2 (availability fraud) and C6.5 (slot collusion). Carries no deflation schedule. At genesis, nodes may post <strong>signal bonds</strong> (0.5 BTC or more, 100&times; minimum) to demonstrate commitment before archival labor history exists; see <a href="#s13">&sect;13.5</a> for the genesis cold-start mechanism.</p>
@@ -1411,6 +1415,8 @@ li {
 <p><strong>Insurer track record as market signal.</strong> Every buffer seizure is recorded on the Bitcoin-anchored event log. Nodes compute an insurer <code>clean_ratio</code> &mdash; the proportion of backed identities never slashed, discounted by temporal seasoning. This ratio is gossip-propagated and advisory only; the protocol does not weight it in arbitrator selection or bond calculation. However, responder nodes and arbitrator panels may reference it as a soft filter. An insurer with a 99% clean ratio signals rigorous vetting; an insurer with repeated slashes sees market preference degrade across all remaining subscribers in real time. A single bad actor poisons the insurer's entire pool.</p>
 
 <p><strong>The buffer stack does not replace the personal deposit.</strong> Every participant must post 100% of the protocol floor from their own capital. In the payment-backing model, the IBS extends above the personal payment commitment, covering the gap between personal capital and the offered bounty or outcome reward. In the threshold-signalling model, the IBS stacks above the personal bond, amplifying visible capital without replacing it. Stack depth is unbounded by protocol; the personal floor &mdash; bond or payment UTXO &mdash; is always the terminal input in the spending transaction.</p>
+
+<p><strong>Capital leverage, with the numbers run.</strong> Run the numbers from the community&rsquo;s side rather than one individual&rsquo;s, and the conclusion sharpens considerably. A cell of 1,000 households with a 1% per-household annual incident rate generates 10 incidents a year. At $200 consumed per incident &mdash; a deliberately low bounty, chosen to show the floor case rather than the favourable one &mdash; total annual exposure across the entire cell is $2,000. Mutualised evenly across 1,000 households, that is <strong>$2 per household per year</strong> for continuous, full-cell incident coverage. Raise the bounty tenfold to $2,000 &mdash; enough to attract a genuinely competitive responder pool rather than the floor minimum &mdash; and per-household cost rises to $20 a year, still trivial against what any household already spends on a single insurance premium or a single hour of private security. The conclusion holds at any reasonable bounty level: very high incentives to protect life and property become extremely low cost once mutualised across the population that benefits from them. A single individual could instead front the full $1,000 alone and cover six months of the same cell-wide exposure before needing to replenish &mdash; a meaningful act, but a less durable model than mutualisation, since it depends on one person&rsquo;s continued willingness to refill the buffer rather than on a standing arrangement the whole cell sustains together. The same $1,000, split into five IBS layers of $200 each instead of pooled, does not change this math &mdash; it changes isolation: each layer ring-fences to a separate subscriber, so one incident draining one layer leaves the other four subscribers&rsquo; coverage untouched. Mutualisation determines cost; layering determines whose coverage is exposed when an incident occurs. An insurer combining both &mdash; many small per-household contributions, each ring-fenced &mdash; achieves the low per-capita cost of the community model with the isolation guarantees of the individual model simultaneously.</p>
 
 <p><strong>Bitcoin-denominated bonds: volatility as structural advantage.</strong> Bitcoin-denominated bonds are not a volatility liability for insurers; they are a structural advantage that no fiat-denominated competitor can replicate. The &ldquo;risk&rdquo; of BTC volatility is only a risk for fiat-native institutions trying to denominate everything in dollars. For a Bitcoin-native insurer, the volatility is the return. Post-halving bull runs appreciate bond capital 3&ndash;10&times; in fiat terms. Even a severe 70% bear market drawdown following that run typically leaves the insurer with 1&ndash;3&times; their original fiat capital &mdash; a return that traditional insurers holding fiat reserves at 3&ndash;4% annual yield would need decades to match. The insurer who holds BTC through the cycle outperforms every traditional insurance investment model by default.</p>
 
@@ -1474,6 +1480,8 @@ li {
 <p>BCAEN upload and hosting costs for responder-originated evidence are funded initially by the responder&rsquo;s own capital at upload time. This ensures footage lands in the archival network the moment an incident is accepted, before any dispute can arise about settlement. At case close, these upload costs are reimbursed from the caller&rsquo;s deposit escrow as part of standard settlement. If the caller successfully disputes the outcome, the upload costs remain the responder&rsquo;s loss. This aligns incentives precisely: responders only upload material they would stand behind under adversarial review.</p>
 
 <p><strong>Intervention labor vs. documentation labor.</strong> A responder who physically intervenes &mdash; detains, de-escalates, evacuates, administers aid &mdash; and achieves a verified outcome earns intervention labor score from the conditional reward. A responder who attends and documents without confirmed intervention earns documentation labor score from the bounty alone. Both scores are permanent, cell-scoped, and public. The attending vote distinguishes them: intervention history grants outcome voting rights and the intervener bounty share; documentation history grants the documentation bounty share only. The protocol does not ask what species of responder attended; it asks what they have demonstrably done, and weights their future participation accordingly. A bonded drone fleet accumulates documentation labor score by default and intervention labor score only when BCAEN evidence confirms a verified intervention outcome.</p>
+
+<p><em>Scope note: the attending vote governs only how the bounty is split among those present &mdash; it has no authority over the caller&rsquo;s deposit or final dispute resolution, both of which remain subject to standard arbitration if any party contests. Its scope is internal to the responder pool: a coordination game over merit, not a unilateral mechanism to adjudicate between caller and responders.</em></p>
 
 <p><strong>Citizen arrest legal framework.</strong> The right of a private citizen to detain someone witnessed committing a serious offence predates professional policing by centuries and exists in most jurisdictions worldwide. Responders operate within this legal framework, which is navigated entrepreneurially rather than prescribed: viable tactics emerge through practice, insurer underwriting requirements, and arbitration precedent, analogous to how private security firms in adversarial legal environments (e.g., Spanish <em>des-okupa</em> operations) develop creative non-confrontational methods within legal bounds. The protocol surfaces jurisdiction-specific legal reference to the responder&rsquo;s companion app based on grid cell location; these references are advisory only, and the protocol assumes no liability for responder conduct.</p>
 
@@ -1596,6 +1604,8 @@ li {
 <p class="mode-signal">Specification &mdash; attending vote, arbitrator pool, coherence competition, penalty scaling, appeals, fee market</p>
 
 <p><em>Attack surface codes in this section refer to entries in the companion <a onclick="document.getElementById('threat-dialog').showModal(); return false;" href="#" style="color:inherit; text-decoration:underline; text-decoration-style:dotted; cursor:pointer;">Threat Vector Map</a>.</em></p>
+
+<p><strong>Arbitrators apply natural law, not legislation.</strong> They judge who is the aggressor and who is the victim, and whether the commercial contract was fulfilled. Footage shows directionality &mdash; who initiated force, who responded to it &mdash; and that directionality is what gets judged, not proportionality measured against a jurisdiction's use-of-force statute. A responder who restrains a mugger until the caller is safe is not evaluated against a penal code; he is evaluated against whether the aggression he interrupted was real, and whether his presence and documentation fulfilled the outcome the caller paid for. The same applies to a trespasser removed from private property, or a stalker deterred from approaching a caller &mdash; the arbitrators determine who initiated the illegitimate aggression and whether the response addressed it, nothing more. Outcome conditions are protocol-set, not caller-written, for a specific reason: a caller who wrote their own conditions could use the protocol to coordinate bounty hunting or manufacture a pretext for harming someone they label an aggressor. The protocol does not permit this. Callers post stakes and bounties. They do not write verdicts.</p>
 
 <p>Bitaid arbitration is a two-tier structure. The first tier &mdash; attending-only voting &mdash; resolves incident validity and bounty release among parties who were physically present. The second tier &mdash; the independent arbitrators &mdash; governs outcome reward release and disputes that attending parties cannot resolve. Precedence is strict: the attending vote resolves all matters in scope unless any bonded party files escalation within 48 hours, at which point the entire dispute moves to the arbitration tier. Partial escalation is not permitted; the arbitrators inherits the full incident record and issues a single binding verdict across all escrows.</p>
 
@@ -1837,6 +1847,8 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 
 <p><strong>Jurisdiction shopping for relay operators.</strong> Because relay operators are independent businesses, they naturally gravitate toward jurisdictions with favourable regulatory environments. A relay operator in a jurisdiction that prohibits Bitaid can simply relocate their servers to a jurisdiction that does not. The protocol has no dependency on any specific operator; if one exits, the DHT routes around them. Over time, the network of relay operators will concentrate in jurisdictions with strong free-speech protections, strong property-rights enforcement, and weak regulatory capture &mdash; not because the protocol enforces this, but because market selection favours operators in jurisdictions where they are least likely to be shut down. This is the same mechanism that concentrated Bitcoin mining in jurisdictions with cheap, stranded energy: market participants follow the economic incentives, and the protocol does not care where they are.</p>
 
+<p><strong>The infancy window.</strong> The protocol does not need a jurisdiction that has declared it legal. It needs a window in which it has not yet become a target &mdash; the same default condition that let Bitcoin's early proof-of-work network exist for years beneath the notice of anyone capable of stopping it. Legislators do not regulate what they have not yet recognised as a threat. Obscurity, low initial impact, and irrelevance to existing power structures are not a strategy to be wished for; they are the default state of anything genuinely new, and that default state is what lets a protocol take root, accumulate case history, and set precedent before it becomes visible enough to provoke an organised response. Genesis cells form first in low-friction environments &mdash; not because those places have declared Bitaid legal, but because friction there is lowest, and low friction is what determines how long the window of obscurity lasts before scrutiny arrives.</p>
+
 <p><strong>Regulatory terraforming.</strong> The protocol does not need to be legal everywhere; it needs to be viable somewhere. History provides ample precedent for services that operate in legal gray zones and expand outward as demand compels regulatory adaptation. In Spain, private eviction-recovery firms (<em>desokupa</em>) developed creative non-confrontational methods within legal bounds to serve demand that the state could not meet. Uber did not ask permission to redefine transportation in every jurisdiction; it built a system so undeniably useful that regulators were forced to adapt after the fact. The same dynamic applies: where state provision fails and private demand is non-negotiable, the market finds a way. Bitaid cells self-organise where participants are willing to operate; successful cells generate case history, calibration coherence, and insurer participation that make them economically indispensable. Regulators facing a functioning, life-saving coordination network with institutional insurer backing are not choosing between "permit" and "prohibit" &mdash; they are choosing between "adapt" and "drive it underground." The former is historically more common than the latter when the service is genuinely valuable and the network has no centre to raid.</p>
 
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
@@ -1844,6 +1856,9 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <h2 id="faq">Frequently Asked Questions</h2>
 <p class="mode-signal">Common external objections and the protocol&rsquo;s built-in rebuttals</p>
+
+<p><strong>Q: How does a cell start with zero responders and zero history? Isn&rsquo;t this a chicken-and-egg problem?</strong></p>
+<p>A: No, because the market is demand-pull, not supply-push. Callers with skin in the game are the price signal. Responders follow the price; they are not pre-built infrastructure waiting for demand to arrive. Genesis does not require a professional supply chain. It requires a single caller willing to post a stake and a bounty, and a single person willing to pick it up &mdash; a neighbourhood-watch interaction at the protocol level. It costs the caller nothing until claimed, minus transaction fees that are irrelevant at the scale of any meaningful bounty. The sophistication of the supply side grows with the cell: today&rsquo;s single responder with a phone camera is tomorrow&rsquo;s insured security firm, once the bounty history makes the opportunity undeniable. The protocol does not build the market. It makes the price visible, and visible prices attract supply on their own schedule.</p>
 
 <p><strong>Q: What about jurisdictions where private intervention is legally restricted?</strong></p>
 <p>A: The protocol is jurisdiction-agnostic by design. It does not attempt to harmonise, override, or solve the criminal and civil liability frameworks of any jurisdiction. Where private intervention is tolerated or permitted under citizen arrest statutes, supply emerges and the flywheel compounds. Where it is criminalised, the range of permissible strategies narrows and responder utility diminishes &mdash; but not necessarily to zero, because regulatory frameworks vary in whom they protect and a jurisdiction that shields criminals from private intervention still leaves room for non-confrontational documentation, deterrent presence, and evidence capture. The protocol routes the alert and enforces the escrow regardless of whether the responder&rsquo;s conduct is lawful in that jurisdiction. The liability is the responder&rsquo;s to assess, the caller&rsquo;s to price, and the market&rsquo;s to filter. Furthermore, regulatory terraforming is a demonstrated phenomenon: services that are genuinely valuable and have no centre to raid tend to compel regulatory adaptation rather than suppression (see <a href="#s16">&sect;16.4</a>).</p>
@@ -2147,7 +2162,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
   </div>
   <div style="overflow: auto; max-height: calc(92vh - 44px); padding: 1rem; background: #f5f4f0;">
 <p style="font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:0.78rem;color:#3a3a36;margin:0 0 0.8rem;line-height:1.5;max-width:900px;"><strong>Protocol-layer outcomes.</strong> Failed commercial abuse typically forfeits bonds to honest participants and raises local acceptance thresholds. This is not chain re-org or rule change. Tail risk: insurer mispricing (off-protocol). Nation-state: formal arbitration (<a href="#s14">&sect;14.11</a>), not protocol capture alone.</p>
-<svg viewBox="0 0 1480 5670" xmlns="http://www.w3.org/2000/svg" width="100%">
+<svg viewBox="0 0 1480 6200" xmlns="http://www.w3.org/2000/svg" width="100%">
 <defs>
   <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2173,6 +2188,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
     .def-primary   { fill: #EAFAF1; stroke: #1E8E50; stroke-width: 1.4; }
     .def-secondary { fill: #F0F4FF; stroke: #3B5BDB; stroke-width: 1.2; }
     .def-weak      { fill: #FFF8E1; stroke: #C49825; stroke-width: 1.2; }
+    .def-strong    { fill: #D7F5E0; stroke: #14753F; stroke-width: 1.6; }
 
     .residual     { fill: #EAF3FB; stroke: #2C6AB0; stroke-width: 1.0; stroke-dasharray: 3 2; }
     .residual-risk { fill: #F5E8FB; stroke: #7B3FAF; stroke-width: 1.0; stroke-dasharray: 3 2; }
@@ -3457,97 +3473,98 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
-<!-- FOOTER -->
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
-<rect x="20" y="5325" width="1440" height="2" fill="#d8d6ce"/>
-<text x="740" y="5350" text-anchor="middle" class="tm">Bitaid — Threat Vector Map · 29 vectors across 9 categories · Each defence layer closes a gap the previous layer left open.</text>
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
 <!-- CATEGORY 9: THE ARBITRATOR POOL DOMINATION GAUNTLET                  -->
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
-<rect x="20" y="5050" width="1440" height="40" rx="4" class="hbar9"/>
-<text x="38" y="5075" class="cat">9. THE GAUNTLET &mdash; Sequential Attack Simulation</text>
-<text x="380" y="5075" class="subcat">Step-by-step: what an attacker must survive to place one corrupted arbitrator in the pool</text>
+<rect x="20" y="5315" width="1440" height="40" rx="4" class="hbar9"/>
+<text x="38" y="5340" class="cat">9. THE GAUNTLET &mdash; Sequential Attack Simulation</text>
+<text x="380" y="5340" class="subcat">Step-by-step: what an attacker must survive to place one corrupted arbitrator in the pool</text>
 
 <!-- Step 1 -->
-<rect x="20" y="5110" width="580" height="50" rx="5" class="atk-med"/>
-<text x="38" y="5130" class="th">1. Attacker wants one pool slot</text>
-<text x="38" y="5148" class="ts">The pool is closed. Slots only open on natural</text>
-<text x="38" y="5162" class="ts">turnover or sustained 432-block queue pressure.</text>
-<line x1="610" y1="5135" x2="640" y2="5135" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5110" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5130" class="tl">TRAP: Closed pool with demand-signalled entry</text>
-<text x="668" y="5148" class="tdef">Capital alone cannot open a slot. Demand signal required.</text>
+<rect x="20" y="5375" width="580" height="70" rx="5" class="atk-md"/>
+<text x="38" y="5395" class="th">1. Attacker wants one pool slot</text>
+<text x="38" y="5410" class="ts">The pool is closed. Slots only open on natural</text>
+<text x="38" y="5425" class="ts">turnover or sustained 432-block queue pressure.</text>
+<line x1="610" y1="5410" x2="640" y2="5410" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5375" width="700" height="70" rx="5" class="def-strong"/>
+<text x="668" y="5395" class="tl">TRAP: Closed pool with demand-signalled entry</text>
+<text x="668" y="5410" class="tdef">Capital alone cannot open a slot. Demand signal required.</text>
 
 <!-- Step 2 -->
-<rect x="20" y="5175" width="580" height="65" rx="5" class="atk-med"/>
-<text x="38" y="5195" class="th">2. Must create queue pressure &mdash; 432 blocks</text>
-<text x="38" y="5213" class="ts">Queue depth is weighted by aggregate responder legitimacy</text>
-<text x="38" y="5227" class="ts">and stake. Low-labor cases do not count. The queue clears as</text>
-<text x="38" y="5241" class="ts">arbitrators pick up cases. Maintaining &gt;0 requires dozens of fake</text>
-<text x="38" y="5255" class="ts">high-labor responders, each 90-day seasoned, all in the same cell.</text>
-<line x1="610" y1="5218" x2="640" y2="5218" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5175" width="700" height="65" rx="5" class="def-strong"/>
-<text x="668" y="5195" class="tl">TRAP: Queue weight by responder legitimacy</text>
-<text x="668" y="5213" class="tdef">One fake responder is not enough. Need a pipeline of seasoned fakes</text>
-<text x="668" y="5227" class="tdef">generating cases faster than arbitrators resolve them &mdash; all with real</text>
-<text x="668" y="5241" class="tdef">capital at risk, all cell-scoped, all under honest observation. For one slot.</text>
+<rect x="20" y="5460" width="580" height="100" rx="5" class="atk-md"/>
+<text x="38" y="5480" class="th">2. Must create queue pressure &mdash; 432 blocks</text>
+<text x="38" y="5495" class="ts">Queue depth is weighted by aggregate responder legitimacy</text>
+<text x="38" y="5510" class="ts">and stake. Low-labor cases do not count. The queue clears as</text>
+<text x="38" y="5525" class="ts">arbitrators pick up cases. Maintaining &gt;0 requires dozens of fake</text>
+<text x="38" y="5540" class="ts">high-labor responders, each 90-day seasoned, all in the same cell.</text>
+<line x1="610" y1="5510" x2="640" y2="5510" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5460" width="700" height="100" rx="5" class="def-strong"/>
+<text x="668" y="5480" class="tl">TRAP: Queue weight by responder legitimacy</text>
+<text x="668" y="5495" class="tdef">One fake responder is not enough. Need a pipeline of seasoned fakes</text>
+<text x="668" y="5510" class="tdef">generating cases faster than arbitrators resolve them &mdash; all with real</text>
+<text x="668" y="5525" class="tdef">capital at risk, all cell-scoped, all under honest observation. For one slot.</text>
 
 <!-- Step 3 -->
-<rect x="20" y="5255" width="580" height="50" rx="5" class="atk-med"/>
-<text x="38" y="5275" class="th">3. Must build cell-scoped labor &mdash; in real cells</text>
-<text x="38" y="5293" class="ts">Labor score is recorded per H3 cell and does not</text>
-<text x="38" y="5307" class="ts">transfer. Remote reputation farming is impossible.</text>
-<line x1="610" y1="5280" x2="640" y2="5280" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5255" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5275" class="tl">TRAP: Cell-scoped labour</text>
-<text x="668" y="5293" class="tdef">Must operate under honest participants' continuous observation.</text>
+<rect x="20" y="5575" width="580" height="70" rx="5" class="atk-md"/>
+<text x="38" y="5595" class="th">3. Must build cell-scoped labor &mdash; in real cells</text>
+<text x="38" y="5610" class="ts">Labor score is recorded per H3 cell and does not</text>
+<text x="38" y="5625" class="ts">transfer. Remote reputation farming is impossible.</text>
+<line x1="610" y1="5610" x2="640" y2="5610" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5575" width="700" height="70" rx="5" class="def-strong"/>
+<text x="668" y="5595" class="tl">TRAP: Cell-scoped labour</text>
+<text x="668" y="5610" class="tdef">Must operate under honest participants' continuous observation.</text>
 
 <!-- Step 4 -->
-<rect x="20" y="5320" width="580" height="50" rx="5" class="atk-med"/>
-<text x="38" y="5340" class="th">4. Must maintain deception for 90+ days</text>
-<text x="38" y="5358" class="ts">Every fake incident is permanent BCAEN evidence.</text>
-<text x="38" y="5372" class="ts">Retroactive review at 40% dissent catches any slip.</text>
-<line x1="610" y1="5345" x2="640" y2="5345" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5320" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5340" class="tl">TRAP: Temporal seasoning + retroactive review</text>
-<text x="668" y="5358" class="tdef">90-day minimum. Every case a permanent, growing liability.</text>
+<rect x="20" y="5660" width="580" height="70" rx="5" class="atk-md"/>
+<text x="38" y="5680" class="th">4. Must maintain deception for 90+ days</text>
+<text x="38" y="5695" class="ts">Every fake incident is permanent BCAEN evidence.</text>
+<text x="38" y="5710" class="ts">Retroactive review at 40% dissent catches any slip.</text>
+<line x1="610" y1="5695" x2="640" y2="5695" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5660" width="700" height="70" rx="5" class="def-strong"/>
+<text x="668" y="5680" class="tl">TRAP: Temporal seasoning + retroactive review</text>
+<text x="668" y="5695" class="tdef">90-day minimum. Every case a permanent, growing liability.</text>
 
 <!-- Step 5 -->
-<rect x="20" y="5385" width="580" height="50" rx="5" class="atk-med"/>
-<text x="38" y="5405" class="th">5. Queue triggers slot open</text>
-<text x="38" y="5423" class="ts">Attacker enters coherence competition: must pay</text>
-<text x="38" y="5437" class="ts">participation fee + intention bond + score well on 10 cases.</text>
-<line x1="610" y1="5410" x2="640" y2="5410" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5385" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5405" class="tl">TRAP: Coherence competition</text>
-<text x="668" y="5423" class="tdef">Work determines selection, not capital. Must outscore honest applicants.</text>
+<rect x="20" y="5745" width="580" height="70" rx="5" class="atk-md"/>
+<text x="38" y="5765" class="th">5. Queue triggers slot open</text>
+<text x="38" y="5780" class="ts">Attacker enters coherence competition: must pay</text>
+<text x="38" y="5795" class="ts">participation fee + intention bond + score well on 10 cases.</text>
+<line x1="610" y1="5780" x2="640" y2="5780" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5745" width="700" height="70" rx="5" class="def-strong"/>
+<text x="668" y="5765" class="tl">TRAP: Coherence competition</text>
+<text x="668" y="5780" class="tdef">Work determines selection, not capital. Must outscore honest applicants.</text>
 
 <!-- Step 6 -->
-<rect x="20" y="5450" width="580" height="50" rx="5" class="atk-med"/>
-<text x="38" y="5470" class="th">6. Wins slot &mdash; enters 30-case probation</text>
-<text x="38" y="5488" class="ts">Votes recorded but do not count toward calibration. Seats capped</text>
-<text x="38" y="5502" class="ts">at 1/3 of any panel &mdash; cannot control a verdict. 40% dissent on</text>
-<text x="38" y="5516" class="ts">an old case flags for review by the 100-arbitrator pool.</text>
-<line x1="610" y1="5488" x2="640" y2="5488" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
-<rect x="650" y="5450" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5470" class="tl">TRAP: Probation with retroactive exposure</text>
-<text x="668" y="5488" class="tdef">40% flags; 100-pool confirms fraud at 80%. 3x premium from seized bond only.</text>
+<rect x="20" y="5830" width="580" height="90" rx="5" class="atk-md"/>
+<text x="38" y="5850" class="th">6. Wins slot &mdash; enters 30-case probation</text>
+<text x="38" y="5865" class="ts">Votes recorded but do not count toward calibration. Seats capped</text>
+<text x="38" y="5880" class="ts">at 1/3 of any panel &mdash; cannot control a verdict. 40% dissent on</text>
+<text x="38" y="5895" class="ts">an old case flags for review by the 100-arbitrator pool.</text>
+<line x1="610" y1="5875" x2="640" y2="5875" stroke="#1E8E50" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="650" y="5830" width="700" height="90" rx="5" class="def-strong"/>
+<text x="668" y="5850" class="tl">TRAP: Probation with retroactive exposure</text>
+<text x="668" y="5865" class="tdef">40% flags; 100-pool confirms fraud at 80%. 3x premium from seized bond only.</text>
 
 <!-- Step 7 / Result -->
-<rect x="20" y="5515" width="580" height="50" rx="5" class="atk-lo"/>
-<text x="38" y="5535" class="th">7. Survives = 1 of ~200 arbitrators</text>
-<text x="38" y="5553" class="ts">Attacker now holds 1/n of the pool, where n grows</text>
-<text x="38" y="5567" class="ts">over time. To corrupt a majority, repeat steps 1-6 (n/2+1) times.</text>
-<line x1="610" y1="5540" x2="640" y2="5540" stroke="#E74C3C" stroke-width="2" marker-end="url(#arr)"/>
-<rect x="650" y="5515" width="700" height="50" rx="5" class="def-strong"/>
-<text x="668" y="5535" class="tl">RESULT: Compounding traps, not independent filters</text>
-<text x="668" y="5553" class="tdef">Each "success" increases exposure. The defence accelerates.</text>
+<rect x="20" y="5935" width="580" height="70" rx="5" class="atk-lo"/>
+<text x="38" y="5955" class="th">7. Survives = 1 of ~200 arbitrators</text>
+<text x="38" y="5970" class="ts">Attacker now holds 1/n of the pool, where n grows</text>
+<text x="38" y="5985" class="ts">over time. To corrupt a majority, repeat steps 1-6 (n/2+1) times.</text>
+<line x1="610" y1="5970" x2="640" y2="5970" stroke="#E74C3C" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="650" y="5935" width="700" height="70" rx="5" class="def-strong"/>
+<text x="668" y="5955" class="tl">RESULT: Compounding traps, not independent filters</text>
+<text x="668" y="5970" class="tdef">Each "success" increases exposure. The defence accelerates.</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<rect x="20" y="6045" width="1440" height="2" fill="#d8d6ce"/>
+<text x="740" y="6070" text-anchor="middle" class="tm">Bitaid — Threat Vector Map · 29 vectors across 9 categories · Each defence layer closes a gap the previous layer left open.</text>
 
 <!-- Summary text -->
-<text x="740" y="5610" text-anchor="middle" class="tf">Each layer penetrated forces the attacker to maintain a larger, longer, more visible deception. Fee compounding is the gravitational sink &mdash; by week 4, a single 3-arbitrator panel costs &gt;1 BTC in fees.</text>
+<text x="740" y="6105" text-anchor="middle" class="tf">Each layer penetrated forces the attacker to maintain a larger, longer, more visible deception. Fee compounding is the gravitational sink &mdash; by week 4, a single 3-arbitrator panel costs &gt;1 BTC in fees.</text>
 
-<text x="740" y="5630" text-anchor="middle" class="tm">Residual risks noted explicitly. Nation-state threats face economic exhaustion from the protocol first; formal arbitration is optional escalation. Protocol is not a magic box.</text>
-<text x="740" y="5650" text-anchor="middle" class="tm">Whitepaper v5.0 &middot; 2026</text>
+<text x="740" y="6125" text-anchor="middle" class="tm">Residual risks noted explicitly. Nation-state threats face economic exhaustion from the protocol first; formal arbitration is optional escalation. Protocol is not a magic box.</text>
+<text x="740" y="6145" text-anchor="middle" class="tm">Whitepaper v5.0 &middot; 2026</text>
 
 </svg>
   </div>
