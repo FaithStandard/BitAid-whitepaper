@@ -1799,6 +1799,107 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 
 <p><strong>Why formal arbitration is not the nation-state defence.</strong> The on-chain arbitration mechanism is economically self-defending against state-level attack through exponential cost compounding (see &sect;14.10). Formal arbitration does not supplement a weak on-chain system; it serves a different clientele entirely &mdash; commercial parties with pre-existing contracts and preferred venues. A state actor attempting to corrupt the protocol layer faces costs that exceed any realistic security budget within weeks, while simultaneously subsidising honest arbitrators and archivists with their own attack capital. The defence is not jurisdictional; it is mathematical.</p>
 
+<h3>14.12 Dispute-Type Verdict Checklists</h3>
+
+<p><strong>Special verdict, not general verdict.</strong> Every mechanism above this point assumes a verdict is available to attest to &mdash; the attending vote in &sect;14.1, the blind commit-reveal in &sect;14.4, the pre-committed oracle points each candidate outcome is keyed to at case escalation (&sect;15.1). None of that specifies how a panel, or an attending party, actually arrives at a verdict for a given fact pattern. Two things make this more than a drafting gap. First, the oracle-point mechanism requires the set of possible outcomes to be bounded and enumerated before voting starts; an open-ended holistic judgment call doesn't decompose into a bounded set on its own. Second, &sect;14.2's coherence math assumes arbitrators converge on the same answer often enough that disagreement is informative &mdash; which holds far better for a series of narrow factual questions than for one holistic "was this handled properly" judgment. Common-law systems solve the equivalent problem with a <em>special verdict</em>: the panel answers a fixed set of factual questions, and the outcome is a deterministic function of the answers, rather than a <em>general verdict</em> where the panel picks the outcome directly. What follows applies that structure to the dispute types that recur most.</p>
+
+<p><strong>The Atomic Verdict Principle.</strong> The unit of verdict is the bonded party &mdash; one bond, one Leaf 2 script &mdash; not a human body and not a physical asset. A single bonded responder may field more than one asset under one engagement (personnel, a drone, a vehicle, or a combination) and still receives exactly one verdict instance, checked against the aggregate of what that identity fielded; an asset-specific predicate is checked against whichever fielded asset is actually capable of satisfying it, not against presence of any fielded asset. What this does rule out is one verdict trying to cover <em>multiple separately-bonded</em> responders at once, which is exactly where an outcome space the oracle-point mechanism can't absorb would come from. Each separately-bonded party gets an independent instance of the relevant checklist below, evaluated against the same shared BCAEN evidence.</p>
+
+<p>Each checklist below is written once and applies at both tiers described in the section introduction: attending parties apply it to each other, self-interested but fast; arbitrators apply the identical predicates on escalation, slower but reading the evidence cold. What differs between tiers is who is answering, not the questions.</p>
+
+<h4>Caller Misuse &mdash; Troll or False Alert <span style="font-weight:400; color:#7a7768;">(C1.1)</span></h4>
+
+<p>Not every alert carries a stated incident category &mdash; some are a bare location and a distress signal. The first predicate below exists for that reason: it doesn't itself determine misuse, it determines what standard the second predicate gets checked against.</p>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1a</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Alert specified an incident category, vs. a bare location/distress signal</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Alert metadata at transmission</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1b</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">A verifiable genuine incident existed at the location/time &mdash; matched against the stated category if Q1a=True, or against any qualifying emergency condition if Q1a=False</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">BCAEN footage, attending-responder testimony</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Caller had a plausible good-faith basis for believing an emergency existed, even if none is ultimately confirmed</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Alert metadata, situational context in footage</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Caller has a prior confirmed troll/misuse rating</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">On-chain reputation record &mdash; pattern evidence only, never case-decisive alone</td></tr>
+</tbody>
+</table>
+
+<p><strong>Outcomes.</strong> Q1b=True: legitimate, standard settlement. Q1b=False and Q2=True: good-faith error, no forfeiture, no troll rating applied. Q1b=False and Q2=False: confirmed troll &mdash; deposit seized and distributed to attending responders pro-rata by merit weight (&sect;14.1); Q3 does not gate this finding, a clean history cannot excuse a confirmed troll on this case's own facts, but it scales severity within it &mdash; a prior rating pushes toward the harsher end of any discretionary range, a clean history toward the lighter end. Uncertain on Q1b or Q2: escalate rather than resolve on an uncertain factual basis; the &sect;14.1 SYBIL_SUSPECT fast-track (3-arbitrator review within 24 blocks) remains the expedited path when responders themselves report no real incident.</p>
+
+<h4>Responder Classification / Bounty-Split Dispute &mdash; "Leeching" <span style="font-weight:400; color:#7a7768;">(C2.3)</span></h4>
+
+<p>This is what &sect;14.1's attending vote exists to decide, made explicit. Intervention and documentation labor scores are historical &mdash; already on the Human Labor Ledger before this incident &mdash; and they set each attendee's <em>voting weight</em>, not their classification for this case. What the vote (or, on escalation, the arbitrators) actually determines is the retrospective question &sect;14.1 poses directly: who intervened at <em>this</em> incident. That determination sets this case's split between the intervener and documentation pools, and separately feeds forward into each attendee's own labor score.</p>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate (per attendee being assessed)</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">This party performed a physical intervention action</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, timeline reconstruction</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">This party performed documentation (recording/streaming to BCAEN)</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">BCAEN upload record, stream metadata</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">If Q1 and Q2 are both False: some other protocol-recognized contribution applies (e.g. relay/coordination)</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, gossip/relay logs &mdash; a residual catch, expected False in most cases</td></tr>
+</tbody>
+</table>
+
+<p><strong>Classification.</strong> Q1=True: intervener credit &mdash; counts toward the 70% pool this time and toward this attendee's own future intervention labor score. Q1=False, Q2=True: documenter-only credit, 30% pool only. All three False: no credit toward either pool &mdash; the leech case. Where the vote can't reach 80% supermajority on a given attendee's classification, or any bonded party exercises their 48-hour escalation right in either direction (§14.1 names both a party overcredited and "a responder who believes they were wrongly classified as documenter" as valid grounds), the whole case moves to arbitration, same three predicates, applied by a neutral panel reading BCAEN evidence rather than by interested co-attendees.</p>
+
+<p style="font-size:0.92em; color:#5a5848;"><em>Two points this checklist surfaces rather than resolves. Whether a leech attendee (all three predicates False) still draws a share of the 30% documentation-pool floor isn't settled by the text above: &sect;14.1 describes a pool attendees get "a share" of, while the parameter reference (&sect;18) describes the 30% floor as split equally among all attendees, and those two descriptions don't obviously agree on what "all attendees" means. Read the inclusive way, showing up with nothing to contribute still guarantees a slice &mdash; a leeching incentive the default itself would be creating, not one this checklist catches after the fact. Related: if the 30% pool genuinely splits flat-equal per head, it's unclear what purpose documenter_weight (&sect;14.1) serves on the payout side, since the prose there describes it as determining a share. Both should resolve to one consistent rule before this is load-bearing.</em></p>
+
+<h4>Responder Non-Performance / Phantom Attendance <span style="font-weight:400; color:#7a7768;">(C2.1)</span></h4>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Sustained presence of the responder's fielded asset(s) &mdash; personnel, drone, vehicle, or a combination under this one bond &mdash; at the incident location for the claimed duration</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Multi-source BCAEN cross-validation across whichever assets this responder fielded</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">The specific contracted action was performed by an asset of this responder capable of that action, not merely presence of any fielded asset</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage content, matched to the capability of the specific asset claimed to have performed it</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">The claimed outcome was achieved</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, incident resolution record</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q4</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">If Q3=False: failure was due to external/uncontrollable factors rather than responder fault</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, timeline reconstruction</td></tr>
+</tbody>
+</table>
+
+<p><strong>Outcomes.</strong> Q1&ndash;Q3 True: full bounty, positive coherence credit. Present and performed but outcome not achieved through no fault of the responder (Q4=True): bounty per pre-agreed good-faith terms, no penalty. Present and performed but outcome not achieved through responder fault (Q4=False): partial bounty reduction. Present but did not perform (Q2=False): bond forfeiture proportional to the failure (&sect;14.8, responder misuse). Not present (Q1=False): full bond forfeiture, phantom-attendance ruling. Uncertain on Q1 or Q2: escalate. A drone's continuous presence establishes Q1 for a surveillance-type claim; it doesn't by itself establish Q2 for a claim like medical aid administered &mdash; that needs evidence the human-capable component of this same bonded responder was the one actually there.</p>
+
+<h4>Responder Misconduct &mdash; Excessive Force <span style="font-weight:400; color:#7a7768;">(C2.4)</span></h4>
+
+<p>This is the highest-stakes dispute type in the system. The predicates below operationalise the directionality principle stated at the top of this section &mdash; who initiated force, who responded to it, not proportionality against a jurisdiction's use-of-force statute &mdash; without asking arbitrators to adjudicate a graded proportionality scale the protocol has already rejected on principle.</p>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Physical force was used against a person during the intervention</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage &mdash; gates whether the rest applies</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">The responder reasonably perceived an active threat at the moment force was initiated &mdash; judged from what was observable to them on-scene at the time, not from a full-hindsight reconstruction available only to a reviewer who already knows how it ended</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage reconstructing the responder's vantage point &mdash; visible actions of the target, prior warnings, angle</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3a</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Force was goal-oriented toward the legitimate protective objective (protecting the covered person or property), not gratuitous or excessive for its own sake &mdash; a purpose test, not a mandate to hold back against a genuine threat</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage &mdash; chiefly whether force continued past functional need (Q5)</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3b</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Force was directed at the correct target &mdash; the actual aggressor, not a bystander and not the protected person or property itself</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q4</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Resulting injury severity (none / minor / serious / fatal)</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, medical record if available</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q5</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Force did not continue or escalate against the target once restrained/incapacitated &mdash; whether that overshoot happens as a continuation after an otherwise-complete subdual, or within the same continuous action that achieves it</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage &mdash; the concrete evidentiary anchor for Q3a</td></tr>
+</tbody>
+</table>
+
+<p><strong>Outcomes.</strong> Q1=False: not applicable, miscategorized. Q2, Q3a, Q3b all True: lawful intervention, no forfeiture. Q2 and Q3b True, Q3a False (per Q5): excess or gratuitous continuation against the correct target &mdash; partial forfeiture proportional to the excess. Q2=False, or Q3b=False: full bond forfeiture (&sect;14.8, responder misuse &mdash; harmed party indemnified from the forfeiture), and this case should proceed up the standard appeal ladder (&sect;14.5) toward the 31-arbitrator final panel rather than settle at first-instance panel size, with urgency scaled by Q4. Note precisely: this does not route through &sect;14.11's formal arbitration path &mdash; that path is opt-in and requires caller and responder to already share a qualifying pre-existing arbitration-clause relationship, which will not hold for most incidents; the appeal ladder is the general-purpose route to maximum scrutiny. Uncertain on Q2, Q3a, or Q3b: given the stakes, escalate directly rather than resolve at minimum panel size &mdash; unlike lower-stakes dispute types, this one is worth starting at a larger panel than the protocol default of three.</p>
+
+<h4>Caller Non-Cooperation <span style="font-weight:400; color:#7a7768;">(C1.2)</span></h4>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Responder arrived within the contracted/reasonable window</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage timestamp, alert record</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Caller acknowledged/engaged with the responder on arrival</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, attending-vote record</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q3</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">If Q2=False: a plausible innocent explanation exists (caller incapacitated, situation resolved pre-arrival, unreachable through no fault of their own)</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage, situational context</td></tr>
+</tbody>
+</table>
+
+<p><strong>Outcomes.</strong> Q2=True: normal cooperation, standard settlement. Q2=False, Q3=True: innocent non-engagement, no penalty, deposit follows the timeout path or partial responder compensation for the attempt. Q2=False, Q3=False: non-cooperation confirmed &mdash; treated as caller misuse per &sect;14.1 (which names bad-faith non-cooperation alongside troll alerts and fabricated incidents), deposit seized and distributed to attending responders pro-rata by merit weight. Uncertain: escalate.</p>
+
+<h4>Evidence / Access Disputes <span style="font-weight:400; color:#7a7768;">(C6.4, C6.6)</span></h4>
+
+<p>Procedural rather than incident-outcome disputes, and closer to cryptographically verifiable than the types above &mdash; kept lightweight deliberately, and it isn't clear this dispute type routes through the attending-vote tier at all, since it isn't about incident-day presence.</p>
+
+<table style="border-collapse:collapse; width:100%; margin:0.6rem 0; font-size:0.92em;">
+<tbody>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">#</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Predicate</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce; font-weight:600;">Evidence source</td></tr>
+<tr><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q1</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Footage/content was accessed without the required signed consent transaction</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">On-chain audit log, consent registry</td></tr>
+<tr style="background:#fafaf5;"><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Q2</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Independent hash/metadata verification confirms uploaded content was fabricated or tampered with</td><td style="padding:0.35rem 0.8rem; border:1px solid #d8d6ce;">Cryptographic hash mismatch, metadata anomaly</td></tr>
+</tbody>
+</table>
+
+<p><strong>Outcomes.</strong> Q1=True: access violation, stake seizure, access privileges revoked. Q2=True: fabrication confirmed, immediate purge, full stake seizure, remainder to BCAEN subsidy pool (&sect;14.8). Neither: no action.</p>
+
+
 <h2 id="s15">15. Payment Protocol</h2>
 <p class="mode-signal">Specification &mdash; Liquid, Boltz, Elements scripts, Lightning, institutional path</p>
 
@@ -2284,7 +2385,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 1.1 Troll alert -->
 <g>
 <rect x="20" y="255" width="355" height="110" rx="6" class="atk-hi"/>
-<text x="38" y="275" class="tid">C1.1 · §10.2, §11.2</text>
+<text x="38" y="275" class="tid">C1.1 · §10.2, §11.2, §14.12</text>
 <text x="38" y="293" class="th">Troll / false alert</text>
 <text x="38" y="311" class="ts">Caller triggers alert with no real</text>
 <text x="38" y="326" class="ts">emergency — wastes responder time,</text>
@@ -2321,7 +2422,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 1.2 Non-cooperation timelock exit -->
 <g>
 <rect x="20" y="380" width="355" height="110" rx="6" class="atk-hi"/>
-<text x="38" y="400" class="tid">C1.2 · §10.3, §11.2</text>
+<text x="38" y="400" class="tid">C1.2 · §10.3, §11.2, §14.12</text>
 <text x="38" y="418" class="th">Non-cooperation CLTV exit</text>
 <text x="38" y="436" class="ts">Caller refuses to co-sign after getting</text>
 <text x="38" y="451" class="ts">service, waits for CLTV timelock to</text>
@@ -2415,7 +2516,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 2.1 Phantom attendance -->
 <g>
 <rect x="20" y="800" width="355" height="110" rx="6" class="atk-hi"/>
-<text x="38" y="820" class="tid">C2.1 · §10.2, §14.2</text>
+<text x="38" y="820" class="tid">C2.1 · §10.2, §14.2, §14.12</text>
 <text x="38" y="838" class="th">Phantom attendance</text>
 <text x="38" y="856" class="ts">Responder claims attendance remotely</text>
 <text x="38" y="871" class="ts">with fabricated GPS metadata and</text>
@@ -2489,7 +2590,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 2.3 Witness free-rider -->
 <g>
 <rect x="20" y="1050" width="355" height="110" rx="6" class="atk-md"/>
-<text x="38" y="1070" class="tid">C2.3 · §11.3</text>
+<text x="38" y="1070" class="tid">C2.3 · §11.3, §14.12</text>
 <text x="38" y="1088" class="th">Witness free-rider capture</text>
 <text x="38" y="1106" class="ts">Low-bond witnesses outnumber actual</text>
 <text x="38" y="1121" class="ts">interveners, vote in attending tier to</text>
@@ -2526,7 +2627,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 2.4 Bad-faith intervention -->
 <g>
 <rect x="20" y="1175" width="355" height="105" rx="6" class="atk-hi"/>
-<text x="38" y="1195" class="tid">C2.4 · §14.4, §16</text>
+<text x="38" y="1195" class="tid">C2.4 · §14.4, §16, §14.12</text>
 <text x="38" y="1213" class="th">Excessive-force intervention</text>
 <text x="38" y="1231" class="ts">Responder uses excessive force or</text>
 <text x="38" y="1246" class="ts">intervenes beyond jurisdiction's</text>
@@ -3180,7 +3281,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 6.4 Footage access leakage -->
 <g>
 <rect x="20" y="3955" width="355" height="105" rx="6" class="atk-md"/>
-<text x="38" y="3975" class="tid">C6.4 · §14.3</text>
+<text x="38" y="3975" class="tid">C6.4 · §14.3, §14.12</text>
 <text x="38" y="3993" class="th">Unauthorised footage access</text>
 <text x="38" y="4011" class="ts">Attacker attempts to obtain BCAEN</text>
 <text x="38" y="4026" class="ts">footage without signed consent — state</text>
@@ -3235,7 +3336,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 &rarr; one pool slot
 <!-- 6.6 Malicious BCAEN content injection -->
 <g>
 <rect x="20" y="4195" width="355" height="115" rx="6" class="atk-hi"/>
-<text x="38" y="4215" class="tid">C6.6 · §14.2, §14.4, §14</text>
+<text x="38" y="4215" class="tid">C6.6 · §14.2, §14.4, §14, §14.12</text>
 <text x="38" y="4233" class="th">Malicious BCAEN content injection</text>
 <text x="38" y="4251" class="ts">Attacker uploads unrelated, copyrighted,</text>
 <text x="38" y="4266" class="ts">or illegal content (worst case: CSAM)</text>
