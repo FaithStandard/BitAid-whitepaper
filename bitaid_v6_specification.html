@@ -40,7 +40,7 @@ blockquote{margin:1rem 0;padding:.2rem 1rem;border-left:3px solid var(--rule);co
 #TOC a{color:var(--text);text-decoration:none}#TOC a:hover{text-decoration:underline}
 .abstract p{font-size:.95em}
 .fig{margin:1.4rem 0 .4rem}.fig svg{width:100%;height:auto;display:block}.fig+p em{display:block;text-align:center;font-size:.86em;color:var(--muted)}.fig+p{text-align:center}
-@media (max-width:640px){body{font-size:16.5px}.page{padding:1.5rem 16px 4rem}p{text-align:left}}
+@media (max-width:640px){.fig[style]{margin:1rem 0!important}body{font-size:16.5px}.page{padding:1.5rem 16px 4rem}p{text-align:left}}
 @media print{.page{box-shadow:none;max-width:none}nav.docs{display:none}}
 </style>
 </head>
@@ -74,7 +74,7 @@ Bitaid Specification
 <li><a href="#app-a" id="toc-app-a">Appendix A — Protocol Parameter Reference</a></li>
 <li><a href="#app-b" id="toc-app-b">Appendix B — Implementation Reference (Draft)</a></li>
 <li><a href="#app-c" id="toc-app-c">Appendix C — Threat Vector Map</a></li>
-<li><a href="#app-d" id="toc-app-d">Appendix D — Machine-Readable Mechanism Graph (JSON-LD)</a></li>
+<li><a href="#app-d" id="toc-app-d">Appendix D — Mechanism Dependency Graph</a></li>
 </ul>
 </nav>
 <h2 id="s1">1. Conventions</h2>
@@ -96,6 +96,118 @@ Bitaid Specification
 <p><strong>Offer-linked integrity —</strong> every operator stakes more than it could gain: a responder accepts only with a personal bond plus layer 0 buffer of at least twice the most it could capture (by default), an arbitrator takes a case only with a bond above everything the verdict can move; every node computes the gates identically from the posted economics.</p>
 <p><strong>Labor quota with temporal seasoning —</strong> two thirds of every arbitrator panel must hold verified case history; seasoning discounts rapidly accumulated records; blind taking and blind commit-reveal voting leave coordinated blocs no way to choose their panels or follow each other.</p>
 <p><strong>Zero-cost-till-need participation model —</strong> no subscription, no standing retainer, no membership fee. Costs incurred only when an actual incident occurs. Opens emergency response to the uninsured and under-protected who could never sustain private security or insurance premiums.</p>
+<h3 id="s1-2">1.2 Architecture at a Glance</h3>
+<p>The map below answers one question: who runs what, in which role, staking what, for what. Every participant runs the same software and takes one or more roles, each unlocked by its own stake. The interactive graph of how the mechanisms depend on one another is in <a href="#app-d">Appendix D</a>. (Both are drawn in the HTML edition; the map is also published as figures/architecture.svg.)</p>
+<figure class="fig" style="margin:1.2rem 0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 394" role="img" aria-label="Who runs what, as which role, staking what, for what" style="color:var(--text,#1a1a18);font-family:'IBM Plex Sans',system-ui,sans-serif"><defs><symbol id="r-app-window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" />
+  <path d="M10 4v4" />
+  <path d="M2 8h20" />
+  <path d="M6 4v4" /></symbol><symbol id="r-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1" />
+  <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
+  <path d="M10 12h4" /></symbol><symbol id="r-bitcoin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727" /></symbol><symbol id="r-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6" />
+  <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+  <path d="M7 6h1v4" />
+  <path d="m16.71 13.88.7.71-2.82 2.82" /></symbol><symbol id="r-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2" />
+  <rect width="6" height="6" x="9" y="9" rx="1" />
+  <path d="M15 2v2" />
+  <path d="M15 20v2" />
+  <path d="M2 15h2" />
+  <path d="M2 9h2" />
+  <path d="M20 15h2" />
+  <path d="M20 9h2" />
+  <path d="M9 2v2" />
+  <path d="M9 20v2" /></symbol><symbol id="r-gavel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8" />
+  <path d="m16 16 6-6" />
+  <path d="m8 8 6-6" />
+  <path d="m9 7 8 8" />
+  <path d="m21 11-8-8" /></symbol><symbol id="r-hand-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+  <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+  <path d="m2 16 6 6" />
+  <circle cx="16" cy="9" r="2.9" />
+  <circle cx="6" cy="5" r="3" /></symbol><symbol id="r-hard-drive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="2" y1="12" y2="12" />
+  <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+  <line x1="6" x2="6.01" y1="16" y2="16" />
+  <line x1="10" x2="10.01" y1="16" y2="16" /></symbol><symbol id="r-key-round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+  <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></symbol><symbol id="r-life-buoy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="m4.93 4.93 4.24 4.24" />
+  <path d="m14.83 9.17 4.24-4.24" />
+  <path d="m14.83 14.83 4.24 4.24" />
+  <path d="m9.17 14.83-4.24 4.24" />
+  <circle cx="12" cy="12" r="4" /></symbol><symbol id="r-person-standing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1" />
+  <path d="m9 20 3-6 3 6" />
+  <path d="m6 8 6 2 6-2" />
+  <path d="M12 10v4" /></symbol><symbol id="r-radio-tower" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" />
+  <path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" />
+  <circle cx="12" cy="9" r="2" />
+  <path d="M16.2 4.8c2 2 2.26 5.11.8 7.47" />
+  <path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1" />
+  <path d="M9.5 18h5" />
+  <path d="m8 22 4-11 4 11" /></symbol><symbol id="r-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2" />
+  <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />
+  <line x1="6" x2="6.01" y1="6" y2="6" />
+  <line x1="6" x2="6.01" y1="18" y2="18" /></symbol><symbol id="r-siren" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18v-6a5 5 0 1 1 10 0v6" />
+  <path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" />
+  <path d="M21 12h1" />
+  <path d="M18.5 4.5 18 5" />
+  <path d="M2 12h1" />
+  <path d="M12 2v1" />
+  <path d="m4.929 4.929.707.707" />
+  <path d="M12 12v6" /></symbol><symbol id="r-smartphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+  <path d="M12 18h.01" /></symbol><symbol id="r-umbrella" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a10.06 10.06 1 0 0-20 0Z" />
+  <path d="M12 12v8a2 2 0 0 0 4 0" />
+  <path d="M12 2v1" /></symbol><symbol id="r-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" />
+  <rect x="2" y="6" width="14" height="12" rx="2" /></symbol><symbol id="r-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol><marker id="r-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" fill-opacity="0.45"/></marker></defs>
+<text x="84" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted,#6a6a66)">RUNS ON</text>
+<text x="238" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted,#6a6a66)">SOFTWARE</text>
+<text x="392" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted,#6a6a66)">ROLE</text>
+<text x="554" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted,#6a6a66)">STAKES</text>
+<text x="726" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted,#6a6a66)">GETS</text>
+<rect x="18" y="38" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#B7791F" stroke-width="1.3"/><rect x="18" y="38" width="132" height="48" rx="10" fill="#B7791F" fill-opacity="0.07"/><use href="#r-smartphone" x="27" y="51" width="22" height="22" style="color:#B7791F"/><text x="56" y="60" font-size="13.5" font-weight="600" fill="currentColor">Phone</text><text x="56" y="75" font-size="11" fill="var(--muted,#6a6a66)">or alarm panel</text>
+<line x1="152" y1="62" x2="165" y2="62" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="168" y="38" width="140" height="48" rx="10" fill="var(--paper,#fff)" stroke="#B7791F" stroke-width="1.3"/><rect x="168" y="38" width="140" height="48" rx="10" fill="#B7791F" fill-opacity="0.07"/><use href="#r-app-window" x="177" y="51" width="22" height="22" style="color:#B7791F"/><text x="206" y="60" font-size="13.5" font-weight="600" fill="currentColor">Bitaid app</text><text x="206" y="75" font-size="11" fill="var(--muted,#6a6a66)">one button</text>
+<line x1="310" y1="62" x2="323" y2="62" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="326" y="38" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#B7791F" stroke-width="2.2"/><rect x="326" y="38" width="132" height="48" rx="10" fill="#B7791F" fill-opacity="0.16"/><use href="#r-siren" x="335" y="51" width="22" height="22" style="color:#B7791F"/><text x="364" y="60" font-size="13.5" font-weight="700" fill="currentColor">Caller</text><text x="364" y="75" font-size="11" fill="var(--muted,#6a6a66)">asks for help</text>
+<line x1="460" y1="62" x2="473" y2="62" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="476" y="38" width="156" height="48" rx="10" fill="var(--paper,#fff)" stroke="#B7791F" stroke-width="1.3"/><rect x="476" y="38" width="156" height="48" rx="10" fill="#B7791F" fill-opacity="0.07"/><use href="#r-wallet" x="485" y="51" width="22" height="22" style="color:#B7791F"/><text x="514" y="60" font-size="13.5" font-weight="600" fill="currentColor">Deposit</text><text x="514" y="75" font-size="11" fill="var(--muted,#6a6a66)">+ escrowed offer</text>
+<line x1="634" y1="62" x2="647" y2="62" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="650" y="38" width="152" height="48" rx="10" fill="var(--paper,#fff)" stroke="#B7791F" stroke-width="1.3"/><rect x="650" y="38" width="152" height="48" rx="10" fill="#B7791F" fill-opacity="0.07"/><use href="#r-life-buoy" x="659" y="51" width="22" height="22" style="color:#B7791F"/><text x="688" y="60" font-size="13.5" font-weight="600" fill="currentColor">Response</text><text x="688" y="75" font-size="11" fill="var(--muted,#6a6a66)">when it matters</text>
+<rect x="18" y="100" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#C0502E" stroke-width="1.3"/><rect x="18" y="100" width="132" height="48" rx="10" fill="#C0502E" fill-opacity="0.07"/><use href="#r-video" x="27" y="113" width="22" height="22" style="color:#C0502E"/><text x="56" y="122" font-size="13.5" font-weight="600" fill="currentColor">Camera</text><text x="56" y="137" font-size="11" fill="var(--muted,#6a6a66)">bodycam or drone</text>
+<line x1="152" y1="124" x2="165" y2="124" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="168" y="100" width="140" height="48" rx="10" fill="var(--paper,#fff)" stroke="#C0502E" stroke-width="1.3"/><rect x="168" y="100" width="140" height="48" rx="10" fill="#C0502E" fill-opacity="0.07"/><use href="#r-cpu" x="177" y="113" width="22" height="22" style="color:#C0502E"/><text x="206" y="122" font-size="13.5" font-weight="600" fill="currentColor">App + AidCore</text><text x="206" y="137" font-size="11" fill="var(--muted,#6a6a66)">own node</text>
+<line x1="310" y1="124" x2="323" y2="124" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="326" y="100" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#C0502E" stroke-width="2.2"/><rect x="326" y="100" width="132" height="48" rx="10" fill="#C0502E" fill-opacity="0.16"/><use href="#r-person-standing" x="335" y="113" width="22" height="22" style="color:#C0502E"/><text x="364" y="122" font-size="13.5" font-weight="700" fill="currentColor">Responder</text><text x="364" y="137" font-size="11" fill="var(--muted,#6a6a66)">attends, records</text>
+<line x1="460" y1="124" x2="473" y2="124" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="476" y="100" width="156" height="48" rx="10" fill="var(--paper,#fff)" stroke="#C0502E" stroke-width="1.3"/><rect x="476" y="100" width="156" height="48" rx="10" fill="#C0502E" fill-opacity="0.07"/><use href="#r-coins" x="485" y="113" width="22" height="22" style="color:#C0502E"/><text x="514" y="122" font-size="13.5" font-weight="600" fill="currentColor">Bond</text><text x="514" y="137" font-size="11" fill="var(--muted,#6a6a66)">≥ 0.01 BTC, ≥ 2× gain</text>
+<line x1="634" y1="124" x2="647" y2="124" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="650" y="100" width="152" height="48" rx="10" fill="var(--paper,#fff)" stroke="#C0502E" stroke-width="1.3"/><rect x="650" y="100" width="152" height="48" rx="10" fill="#C0502E" fill-opacity="0.07"/><use href="#r-hand-coins" x="659" y="113" width="22" height="22" style="color:#C0502E"/><text x="688" y="122" font-size="13.5" font-weight="600" fill="currentColor">Bounty + reward</text><text x="688" y="137" font-size="11" fill="var(--muted,#6a6a66)">and tips</text>
+<rect x="18" y="162" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#3B7D2A" stroke-width="1.3"/><rect x="18" y="162" width="132" height="48" rx="10" fill="#3B7D2A" fill-opacity="0.07"/><use href="#r-hard-drive" x="27" y="175" width="22" height="22" style="color:#3B7D2A"/><text x="56" y="184" font-size="13.5" font-weight="600" fill="currentColor">Server + disk</text><text x="56" y="199" font-size="11" fill="var(--muted,#6a6a66)">a Pi will do</text>
+<line x1="152" y1="186" x2="165" y2="186" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="168" y="162" width="140" height="48" rx="10" fill="var(--paper,#fff)" stroke="#3B7D2A" stroke-width="1.3"/><rect x="168" y="162" width="140" height="48" rx="10" fill="#3B7D2A" fill-opacity="0.07"/><use href="#r-cpu" x="177" y="175" width="22" height="22" style="color:#3B7D2A"/><text x="206" y="184" font-size="13.5" font-weight="600" fill="currentColor">AidCore</text><text x="206" y="199" font-size="11" fill="var(--muted,#6a6a66)">+ evidence store</text>
+<line x1="310" y1="186" x2="323" y2="186" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="326" y="162" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#3B7D2A" stroke-width="2.2"/><rect x="326" y="162" width="132" height="48" rx="10" fill="#3B7D2A" fill-opacity="0.16"/><use href="#r-archive" x="335" y="175" width="22" height="22" style="color:#3B7D2A"/><text x="364" y="184" font-size="13.5" font-weight="700" fill="currentColor">Archivist</text><text x="364" y="199" font-size="11" fill="var(--muted,#6a6a66)">keeps footage</text>
+<line x1="460" y1="186" x2="473" y2="186" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="476" y="162" width="156" height="48" rx="10" fill="var(--paper,#fff)" stroke="#3B7D2A" stroke-width="1.3"/><rect x="476" y="162" width="156" height="48" rx="10" fill="#3B7D2A" fill-opacity="0.07"/><use href="#r-coins" x="485" y="175" width="22" height="22" style="color:#3B7D2A"/><text x="514" y="184" font-size="13.5" font-weight="600" fill="currentColor">Bond</text><text x="514" y="199" font-size="11" fill="var(--muted,#6a6a66)">≥ 0.005 BTC</text>
+<line x1="634" y1="186" x2="647" y2="186" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="650" y="162" width="152" height="48" rx="10" fill="var(--paper,#fff)" stroke="#3B7D2A" stroke-width="1.3"/><rect x="650" y="162" width="152" height="48" rx="10" fill="#3B7D2A" fill-opacity="0.07"/><use href="#r-hand-coins" x="659" y="175" width="22" height="22" style="color:#3B7D2A"/><text x="688" y="184" font-size="13.5" font-weight="600" fill="currentColor">Storage fees</text><text x="688" y="199" font-size="11" fill="var(--muted,#6a6a66)">per retrieval</text>
+<rect x="18" y="224" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#2F6DB0" stroke-width="1.3"/><rect x="18" y="224" width="132" height="48" rx="10" fill="#2F6DB0" fill-opacity="0.07"/><use href="#r-server" x="27" y="237" width="22" height="22" style="color:#2F6DB0"/><text x="56" y="246" font-size="13.5" font-weight="600" fill="currentColor">Server</text><text x="56" y="261" font-size="11" fill="var(--muted,#6a6a66)">always on</text>
+<line x1="152" y1="248" x2="165" y2="248" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="168" y="224" width="140" height="48" rx="10" fill="var(--paper,#fff)" stroke="#2F6DB0" stroke-width="1.3"/><rect x="168" y="224" width="140" height="48" rx="10" fill="#2F6DB0" fill-opacity="0.07"/><use href="#r-cpu" x="177" y="237" width="22" height="22" style="color:#2F6DB0"/><text x="206" y="246" font-size="13.5" font-weight="600" fill="currentColor">AidCore</text><text x="206" y="261" font-size="11" fill="var(--muted,#6a6a66)">+ oracle key share</text>
+<line x1="310" y1="248" x2="323" y2="248" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="326" y="224" width="132" height="48" rx="10" fill="var(--paper,#fff)" stroke="#2F6DB0" stroke-width="2.2"/><rect x="326" y="224" width="132" height="48" rx="10" fill="#2F6DB0" fill-opacity="0.16"/><use href="#r-gavel" x="335" y="237" width="22" height="22" style="color:#2F6DB0"/><text x="364" y="246" font-size="13.5" font-weight="700" fill="currentColor">Arbitrator</text><text x="364" y="261" font-size="11" fill="var(--muted,#6a6a66)">settles disputes</text>
+<line x1="460" y1="248" x2="473" y2="248" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="476" y="224" width="156" height="48" rx="10" fill="var(--paper,#fff)" stroke="#2F6DB0" stroke-width="1.3"/><rect x="476" y="224" width="156" height="48" rx="10" fill="#2F6DB0" fill-opacity="0.07"/><use href="#r-coins" x="485" y="237" width="22" height="22" style="color:#2F6DB0"/><text x="514" y="246" font-size="13.5" font-weight="600" fill="currentColor">Bond</text><text x="514" y="261" font-size="11" fill="var(--muted,#6a6a66)">≥ 0.1 BTC, &gt; case</text>
+<line x1="634" y1="248" x2="647" y2="248" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#r-arr)"/>
+<rect x="650" y="224" width="152" height="48" rx="10" fill="var(--paper,#fff)" stroke="#2F6DB0" stroke-width="1.3"/><rect x="650" y="224" width="152" height="48" rx="10" fill="#2F6DB0" fill-opacity="0.07"/><use href="#r-hand-coins" x="659" y="237" width="22" height="22" style="color:#2F6DB0"/><text x="688" y="246" font-size="13.5" font-weight="600" fill="currentColor">Case fees</text><text x="688" y="261" font-size="11" fill="var(--muted,#6a6a66)">when right</text>
+<rect x="168" y="292" width="290" height="40" rx="10" fill="var(--paper,#fff)" stroke="#7A6A2E" stroke-width="1.3"/><rect x="168" y="292" width="290" height="40" rx="10" fill="#7A6A2E" fill-opacity="0.07"/><use href="#r-radio-tower" x="177" y="301" width="22" height="22" style="color:#7A6A2E"/><text x="206" y="310" font-size="13.5" font-weight="600" fill="currentColor">Every node relays alerts</text><text x="206" y="325" font-size="11" fill="var(--muted,#6a6a66)">no fee, no bond; bad relays lose routing</text>
+<rect x="476" y="292" width="326" height="40" rx="10" fill="var(--paper,#fff)" stroke="#5f5e5a" stroke-width="1.3"/><rect x="476" y="292" width="326" height="40" rx="10" fill="#5f5e5a" fill-opacity="0.07"/><use href="#r-umbrella" x="485" y="301" width="22" height="22" style="color:#5f5e5a"/><text x="514" y="310" font-size="13.5" font-weight="600" fill="currentColor">Insurers can back any stake</text><text x="514" y="325" font-size="11" fill="var(--muted,#6a6a66)">buffers: seized first, zero weight in scoring</text>
+<rect x="18" y="344" width="784" height="40" rx="10" fill="#6B5BA8" fill-opacity="0.10" stroke="#6B5BA8" stroke-width="1.3"/>
+<use href="#r-bitcoin" x="28" y="353" width="22" height="22" style="color:#6B5BA8"/>
+<text x="58" y="362" font-size="13.5" font-weight="600" fill="currentColor">Every stake is a Bitcoin output</text>
+<text x="58" y="376" font-size="11" fill="var(--muted,#6a6a66)">Liquid or Bitcoin L1 · paths fixed in advance · no custodian</text>
+<use href="#r-key-round" x="560" y="354" width="20" height="20" style="color:#8b0000"/>
+<text x="586" y="362" font-size="13" font-weight="600" fill="currentColor">Keys stay in your wallet</text>
+<text x="586" y="376" font-size="11" fill="var(--muted,#6a6a66)">the node holds only a fenced hot key</text></svg></figure>
+<p style="font-family:var(--sans);font-size:.8rem;color:var(--muted);text-align:left"><strong>How to read this map.</strong> Each row reads left to right: the device a participant runs, the software on it, the role it plays, what it stakes, and what it gets. The bottom rows hold for everyone. Other questions have their own pictures: how money and evidence move between the roles (Whitepaper, Figure 1), how an escrow pays out (Figures 2–3), the life of an incident (Figures 14, 15 and 23), and how the mechanisms depend on one another (Appendix D).</p>
 <h2 id="s2">2. Bonds</h2>
 <p><em>Attack surface codes (C2.1, C4.1, etc.) in this section refer to entries in the Threat Vector Map (<a href="#app-c">Appendix C</a>), which enumerates all identified attack surfaces across 9 categories and their protocol mitigations.</em></p>
 <h3 id="s2-1">2.1 Bond Types</h3>
@@ -204,6 +316,28 @@ Bitaid Specification
 <p>At registration the caller commits their incident deposit, configures their optional bounty and outcome reward, calibrates their panic trigger, may tag vulnerabilities of the covered person from a fixed list — advanced age, epilepsy or photosensitivity, pacemaker, hearing aid, pregnancy — which travel with the alert to accepted responders only, in a form drone software can respect automatically (free text may be attached, but only the tags count toward fault, <a href="#s11">§11</a>), and designates a recovery address — a Bitcoin address to receive the deposit return in the event of incapacitation. The stake is already in place before any incident occurs. The wallet also authorises the scoped signing key that will sign the caller’s side when a responder accepts, commits the template of the caller-side outputs, and chooses who holds the key: the phone, the caller’s Core, or bonded BCAEN signing delegates (<a href="#s3">§3</a>). After that, the caller’s only action in an emergency is the button. The app also offers a <strong>duress PIN</strong>: entered when someone forces the caller to cancel, it appears to cancel while raising a silent alert — the standard defence of alarm systems against coerced disarming, and the one that matters most to a holder facing a wrench attack.</p>
 <p>The panic trigger activates immediately on press. Pre-trigger buffering — a configurable rolling window of up to 60 seconds — captures the moments before the button is pressed as well as after. A 911 call (or local equivalent) is an <strong>opt-in</strong> feature, off by default. Regardless of whether a 911-equivalent call was placed, an audio transcript of the incident can be attached to the post-incident report as a supplementary evidence track, stored in BCAEN alongside the video footage, and subject to the same access-consent model.</p>
 <p><strong>Feel Unsafe mode.</strong> Records a local pre-trigger buffer on the device only — no live stream, no BCAEN upload, no gossip load until full panic. On panic, upload, hash gossip, escrow encumbrance, and responder economics activate together. Registration stake and operator relay thresholds still apply to any path that reaches the network. Misuse rules on confirmed false incidents apply after full alert the same as any caller. Because Feel Unsafe recordings begin locally and are not hash-gossiped until full panic, the chain-of-custody proof is marginally weaker than a full alert. The protocol addresses this through <strong>timestamp chaining</strong>: the panic-triggered BCAEN upload includes the full local buffer as a contiguous stream with no gaps, and the upload hash commits to the entire recording including the pre-panic segment. A verifier can confirm that the pre-panic footage was recorded continuously and has not been tampered with. For the highest-stakes cases, the requesting party may configure escrow settings to require a full alert path rather than Feel Unsafe.</p>
+<figure class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 256" role="img" aria-label="Feel Unsafe and duress" style="color:var(--text)" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="14">
+<title>Feel Unsafe and duress</title>
+<defs><marker id="ah-spec_unsafe" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="aha-spec_unsafe" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent, #8b0000)"/></marker></defs>
+<line x1="30" y1="40" x2="650" y2="40" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah-spec_unsafe)"/>
+<text text-anchor="end" font-size="11" fill="var(--muted, #6a6a66)" font-weight="normal" font-style="italic" dominant-baseline="middle"><tspan x="650" y="30.0">seconds</tspan></text>
+<rect x="30.0" y="56" width="248.0" height="30" rx="3" fill="currentColor" fill-opacity="0.12" stroke="currentColor"/>
+<text text-anchor="middle" font-size="11.5" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="154.0" y="71.0">Feel Unsafe: recording on the phone only</tspan></text>
+<rect x="278.0" y="56" width="372.0" height="30" rx="3" fill="var(--accent, #8b0000)" fill-opacity="0.25" stroke="var(--accent, #8b0000)"/>
+<text text-anchor="middle" font-size="11.5" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="464.0" y="71.0">panic: live alert, upload, hashes gossiped</tspan></text>
+<line x1="278.0" y1="30" x2="278.0" y2="100" stroke="var(--accent, #8b0000)" stroke-opacity="1" stroke-width="2"/>
+<text text-anchor="middle" font-size="11.5" fill="var(--accent, #8b0000)" font-weight="bold" dominant-baseline="middle"><tspan x="278.0" y="112.0">button</tspan></text>
+<path d="M30.0,92 v8 H278.0 v-8" fill="none" stroke="currentColor"/>
+<text text-anchor="middle" font-size="11.5" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="154.0" y="132.0">up to 60 s buffered before the press is uploaded</tspan></text>
+<text text-anchor="middle" font-size="11.5" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="154.0" y="148.0">as one stream; one hash commits to all of it</tspan></text>
+<text text-anchor="start" font-size="12.5" fill="currentColor" font-weight="bold" dominant-baseline="middle"><tspan x="20" y="190.0">If someone forces a cancel:</tspan></text>
+<rect x="20" y="202" width="200" height="40" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="1.3"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="120.0" y="222.0">normal PIN: alert cancelled</tspan></text>
+<rect x="240" y="202" width="200" height="40" rx="3" fill="var(--paper, #ffffff)" stroke="var(--accent, #8b0000)" stroke-width="1.8"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="340.0" y="222.0">duress PIN: screen says cancelled</tspan></text>
+<line x1="440" y1="222" x2="470" y2="222" stroke="var(--accent, #8b0000)" stroke-width="1.3" marker-end="url(#aha-spec_unsafe)"/>
+<rect x="472" y="202" width="190" height="40" rx="3" fill="var(--paper, #ffffff)" stroke="var(--accent, #8b0000)" stroke-width="1.8"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="567.0" y="222.0">alert continues silently</tspan></text>
+</svg>
+</figure>
+<p><em>Figure S1. Before and during the press. Up to 60 seconds recorded locally before the button is pressed upload as one stream under one hash; a duress PIN appears to cancel while the alert continues.</em></p>
 <p><strong>Impersonal callers: alarm systems and automated monitors.</strong> A caller need not be a person. A home security system, a commercial alarm panel, an industrial sensor array, or any automated monitoring device can register as a caller identity and trigger alerts autonomously when its sensors detect intrusion, fire, medical emergency, or any configured threat condition. The protocol mechanics are identical: the device posts an incident deposit, broadcasts an alert packet with GPS and cell coordinates, streams evidence to BCAEN, and funds responder bounties from its escrow.</p>
 <p>The difference is the quality of the evidence: an automated caller produces a <em>richer</em> BCAEN report than a human caller typically can — continuous video feed from multiple angles, sensor telemetry (motion, heat, sound, glass-break), and pre-incident footage that may span minutes or hours rather than seconds. This richer evidence enables more targeted responder intervention: a responder reviewing BCAEN footage from a monitored premises sees exactly what triggered the alert, where the threat is located, and whether it is still active before they arrive.</p>
 <p>Caller identity is held encrypted locally and never transmitted in plaintext. Full identity disclosure is caller-initiated only: the caller signs a disclosure transaction authorising release to specific parties. For impersonal callers, disclosure is configured at registration by the device operator — property address and contact details are pre-authorised for release to attending responders, since a building cannot choose to disclose mid-incident.</p>
@@ -216,6 +350,9 @@ Bitaid Specification
 <p>BCAEN upload and hosting costs for responder-originated evidence are funded initially by the responder’s own capital at upload time. This ensures footage lands in the archival network the moment an incident is accepted, before any dispute can arise about settlement. At case close, these upload costs are reimbursed from the caller’s deposit escrow as part of standard settlement. If the caller successfully disputes the outcome, the upload costs remain the responder’s loss. This aligns incentives precisely: responders only upload material they would stand behind under adversarial review.</p>
 <p><strong>Intervention labor vs. documentation labor.</strong> A responder who intervenes — a deliberate act directed at the threat or at the person in danger, such as restraining, warning off an aggressor they are able to stop, de-escalating, evacuating or administering aid (<a href="#s11">§11</a>, C2.3) — earns intervention labor score whether or not the act succeeded; success is recorded beside it and paid by the outcome reward. A responder who attends and documents without confirmed intervention earns documentation labor score from the bounty alone. Both scores are permanent, cell-scoped, and public. The attending vote distinguishes them: intervention history grants outcome voting rights and the intervener bounty share; documentation history grants the documentation bounty share only. The protocol does not ask what species of responder attended; it asks what they have demonstrably done, and weights their future participation accordingly. A bonded drone fleet accumulates documentation labor score by default, and intervention labor score when BCAEN evidence shows it intervened: a strobe aimed at the aggressor counts, and so does a warning the drone is armed to back; lighting the scene for the camera, or a warning with nothing behind it, does not.</p>
 <p><strong>Scene channel.</strong> Responders who accept the same incident share an end-to-end encrypted scene channel, keyed from the incident set and joined automatically by anyone who accepts later. It carries voice or short messages and each responder’s live position, and each member’s device acknowledges every message, so the record shows who received what. The caller is on it by default: they can say where they are and whether they are armed, hear who is approaching, and ask for a hold. A caller’s hold is information, not a command: responders remain judged by whether a threat to a person is still active (<a href="#s11">§11</a>, C2.4), so protecting someone while the caller shouts to stop is lawful. A real cancellation goes through the cancel flow, where the duress PIN covers coercion (<a href="#s5-1">§5.1</a>). On it a responder announces an act that endangers others on the scene — a strobe, a sound device, a taser, entry into a building — and anyone can call a hold; a drone announces its strobe automatically before firing it. Responders remain free to use their own radios, but the scene channel is the one whose record is guaranteed: its transcript is hashed to BCAEN like footage, and is evidence of what each party said and could know at the time (<a href="#s11">§11</a>).</p>
+<p><strong>Scene coordination.</strong> Every working standard for shared scenes has some hierarchy, and a scene of strangers from several firms needs one too. The protocol supplies the minimum and leaves the rest to the market. Each attending firm is one <strong>unit</strong> under its own chain of command; an independent responder is a unit of one. Each unit names a <strong>liaison</strong> on the scene channel — its team leader, or a dispatcher off the scene — who speaks for it to the other units, so the person under fire is not also the one negotiating with other firms. The liaison of the first unit to accept is the <strong>coordinator</strong>. When a unit with a higher combined merit weight arrives, the app offers it the role, and the coordinator hands over when the scene allows: coordination does not change hands by itself in the middle of a fight. The coordinator makes three kinds of call, each recorded on the channel: it names the <strong>contact</strong>, the one responder who gives orders to the subject, so the subject is never given orders that cannot all be obeyed; it assigns <strong>positions and sectors</strong> on the shared map (“hold the east door”, “take the rear”); and it settles <strong>challenges</strong> between units. It directs units, not the people inside them, and it commands no one: accepting an alert is accepting the scene’s coordination, and what a call changes is the evidence. Following an assignment protects a responder; acting against one without urgency weighs as an ignored hold, and entering another unit’s declared sector is walking into an announced act (<a href="#s11-7">§11.7</a>). The role pays nothing and touches neither the bounty split nor any ballot, so there is nothing to win by holding it; an assignment made to sideline a rival is sabotage.</p>
+<p><strong>Calls and identification.</strong> The short calls — hold, clear, contact, bang, taser, shots, challenge — are buttons as well as words: the app recognises them, ties each to its receipts, and delivers a hold or a challenge ahead of other traffic. Every shared position carries the accuracy its device reports, and a responder is knowably at a place only to within that accuracy; indoors, where satellite positioning is worst, the map alone makes no position knowable. A <strong>challenge</strong> — one responder querying an armed stranger — makes every accepted device within range flash and vibrate; a responder who is challenged stops, shows their hands and answers before doing anything else. Another responder’s shot is not itself a threat observed (<a href="#s11-6">§11.6</a>, C2.4 Q2): it is grounds to take cover and look, and force follows only what the responder then sees.</p>
+<p><strong>The floor, not the standard.</strong> These rules are a floor. Insurers carry the cost of every coordination failure in their buffers, so what reduces harm between responders — training, drills, shared calls, positioning that works indoors, headsets that mark allies in view — will be priced into cover, and the units that adopt it will be the units insurers back. The standard will rise with the buffers, as compliance with outcome-priced terms rather than with a regulator. The protocol does not choose among these practices; it records what was said, where everyone was and what each could know, so that the price can follow the conduct.</p>
 <p><em>Scope note: the attending vote governs only how the bounty is split among those present — it has no authority over the caller’s deposit or final dispute resolution, both of which remain subject to standard arbitration if any party contests. Its scope is internal to the responder pool: a coordination game over merit, not a unilateral mechanism to adjudicate between caller and responders.</em></p>
 <h3 id="s5-3">5.3 Relaying (Every Node)</h3>
 <p>Every AidCore daemon relays by default. There is no separate relay role, no forwarding fee market, and no protocol-level payment for packet routing. A caller who runs their own Core to avoid connecting to third-party infrastructure is simply a self-sovereign participant. A responder relays. An archival node relays. An arbitrator node relays. All of them relay because that is what AidCore nodes do — it is the baseline cost of network membership, not a monetised service.</p>
@@ -558,7 +695,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </tr>
 <tr class="even">
 <td>Q2</td>
-<td>When the episode began, the responder reasonably perceived an active threat to a person, or was recovering property from someone seen taking it — a threat observable as such from the responder’s own vantage point: an act, a weapon, flight with the taken property. A caller’s designation alone (“that’s him”) does not satisfy this</td>
+<td>When the episode began, the responder reasonably perceived an active threat to a person, or was recovering property from someone seen taking it — a threat observable as such from the responder’s own vantage point: an act, a weapon, flight with the taken property. A caller’s designation alone (“that’s him”) does not satisfy this, nor does another responder’s fire alone, which is grounds to take cover and look</td>
 <td>Footage reconstructing the responder’s vantage point</td>
 <td>True — presumption for the intervener</td>
 </tr>
@@ -657,6 +794,23 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <p><strong>The rule of thumb.</strong> Excess against an aggressor in the heat of a fight costs a margin; holding someone past need, or hurting them for no purpose, costs the bond; harm to someone who was clearly no threat costs everything: expulsion from the protocol for good, the bond and the insurer’s first layer seized, and the forfeiture counted against that insurer, which makes it costlier for whoever it vouches for next. The table makes that reading mechanical, so arbitrators who agree on the facts cannot disagree on the tier. Injury here is that of the person force was used against; for Q8 it is the bystander’s.</p>
 <p><strong>Harm to the caller’s side.</strong> When a responder’s force or device injures the protected person or damages the caller’s property, the caller is a harmed party to the case if the act was at fault: misaimed (Q3b False), or used close to a person whose vulnerability the alert tagged when it could have waited. Without such a note, an appropriate act aimed at the aggressor carries no fault, whatever the frailty of whoever it startled; the protocol does not make responders answer for every body’s limits. Where there is fault, the harm table and the repair order of the next checklist apply, with the caller’s key receiving the repair on the covered person’s behalf. Holding the covered person for the aid the alert asked for is not an episode under this checklist unless it continues after resistance to the aid has stopped.</p>
 <p><strong>Two clients, one fight.</strong> When both sides of a fight have raised alerts, each incident set protects its own covered person, and client identity never defines the threat: C2.4 judges the threat observed. The sibling alert is shown to each panel as context, but the cases are not merged and the protocol does not apportion blame between callers. Each team separates its own covered person, and the recordings help establish who was at fault from then on.</p>
+<figure class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 292" role="img" aria-label="Two clients one fight" style="color:var(--text)" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="14">
+<title>Two clients one fight</title>
+<defs><marker id="ah-spec_twoclients" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="aha-spec_twoclients" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent, #8b0000)"/></marker></defs>
+<rect x="250" y="110" width="180" height="44" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="2"/><text text-anchor="middle" font-size="13" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="340.0" y="132.0">One fight</tspan></text>
+<rect x="20" y="30" width="190" height="40" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="1.3"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="115.0" y="50.0">Caller A raises an alert</tspan></text>
+<rect x="20" y="180" width="190" height="56" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="1.3"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="115.0" y="200.8">Incident set A</tspan><tspan x="115.0" y="215.2">protects A</tspan></text>
+<line x1="115" y1="70" x2="115" y2="178" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah-spec_twoclients)"/>
+<line x1="210" y1="208" x2="248" y2="156" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah-spec_twoclients)"/>
+<rect x="470" y="30" width="190" height="40" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="1.3"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="565.0" y="50.0">Caller B raises an alert</tspan></text>
+<rect x="470" y="180" width="190" height="56" rx="3" fill="var(--paper, #ffffff)" stroke="currentColor" stroke-width="1.3"/><text text-anchor="middle" font-size="12" fill="currentColor" font-weight="normal" dominant-baseline="middle"><tspan x="565.0" y="200.8">Incident set B</tspan><tspan x="565.0" y="215.2">protects B</tspan></text>
+<line x1="565" y1="70" x2="565" y2="178" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah-spec_twoclients)"/>
+<line x1="470" y1="208" x2="432" y2="156" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah-spec_twoclients)"/>
+<text text-anchor="middle" font-size="11.5" fill="var(--muted, #6a6a66)" font-weight="normal" font-style="italic" dominant-baseline="middle"><tspan x="340" y="262.0">Each team separates its own client. Being a client never defines the threat: the footage does.</tspan></text>
+<text text-anchor="middle" font-size="11.5" fill="var(--muted, #6a6a66)" font-weight="normal" font-style="italic" dominant-baseline="middle"><tspan x="340" y="279.0">Each panel sees the other alert as context; the cases are not merged, and blame is not split between callers.</tspan></text>
+</svg>
+</figure>
+<p><em>Figure S2. Two clients, one fight. Each incident set protects its own client; the panels see the other alert as context, and the cases are not merged.</em></p>
 <h3 id="s11-7">11.7 Harm to Fellow Responders — Scene Coordination</h3>
 <p>Responders at one scene rarely work for the same company, but they share its risks: a strobe that stops an attacker also blinds the guard about to restrain him, a drone flown low obstructs a pursuit, a taser fired across a line of sight hits the wrong person. The protocol does not tell responders how to coordinate; it records whether they did, and penalises harm to each other as C2.4 penalises harm to anyone else. The scene channel (<a href="#s5-2">§5.2</a>) is the record. The first question is whether anyone harmed or sabotaged another; how much it matters then depends on intent and urgency. Urgency decides whether coordination was owed at all: an act that could not wait needed no announcement, and one that could wait needed an announcement that actually reached the people it endangered. The same two protections as C2.4 apply — the presumption favours the party who acted, and a finding needs footage or a channel record that makes the failure obvious, not a reviewer’s view that the act could have been better timed.</p>
 <table>
@@ -684,7 +838,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </tr>
 <tr class="odd">
 <td>Q3</td>
-<td>The act could not wait: delay would have let the threat cause serious harm</td>
+<td>The act could not wait: delay would have let the threat cause serious harm. Urgency excuses a missing announcement and an ignored hold, never the line of fire (Q8)</td>
 <td>Footage</td>
 <td>True — presumption for the party who acted</td>
 </tr>
@@ -696,13 +850,13 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </tr>
 <tr class="odd">
 <td>Q5</td>
-<td>The acting party could know the affected responder was within reach of the act — from the positions shared on the scene channel or what was visible to them at that moment</td>
+<td>The acting party could know the affected responder was within reach of the act — from the positions shared on the scene channel, within the accuracy each device reported, from the coordinator’s assignments, or from what was visible to them at that moment</td>
 <td>Shared positions, footage from the actor’s vantage point</td>
 <td>False — presumption for the party who acted</td>
 </tr>
 <tr class="even">
 <td>Q6</td>
-<td>The act was started or continued after a hold called by a responder within reach of it, without the urgency of Q3</td>
+<td>The act was started or continued after a hold called by a responder within reach of it, or against a position or sector the coordinator assigned (<a href="#s5-2">§5.2</a>), without the urgency of Q3</td>
 <td>Scene channel record, shared positions, footage</td>
 <td>False</td>
 </tr>
@@ -712,9 +866,15 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <td>Footage, medical record if available</td>
 <td>The highest class the evidence establishes; doubt resolves downward</td>
 </tr>
+<tr class="even">
+<td>Q8</td>
+<td>Whatever the urgency: the act was aimed, fired or thrown toward a place where the acting party could know a responder was (Q5), when another line, moment or means was open to them — the bystander question of C2.4, applied to fellow responders</td>
+<td>Footage, shared positions, footage from the actor’s vantage point</td>
+<td>False — presumption for the party who acted</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Outcomes.</strong> Q1=False: not applicable. Q2=True: sabotage — the right-hand column of the table below. Otherwise the act was a fair risk of a shared scene, and no one is penalised, if it could not wait (Q3), was properly announced or evident (Q4), or the actor could not know the other was within reach (Q5=False); a responder who walks into an announced act bears that risk. If none of these holds, the forfeiture is set by the harm done (Q7) and the fault:</p>
+<p><strong>Outcomes.</strong> Q1=False: not applicable. Q2=True: sabotage — the right-hand column of the table below. Q8=True: at least negligent, whatever Q3 found — a fellow responder is owed no less care than a bystander. Otherwise the act was a fair risk of a shared scene, and no one is penalised, if it could not wait (Q3), was properly announced or evident (Q4), or the actor could not know the other was within reach (Q5=False); a responder who walks into an announced act bears that risk. If none of these holds, the forfeiture is set by the harm done (Q7) and the fault:</p>
 <table>
 
 <thead>
@@ -791,7 +951,7 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </tr>
 </tbody>
 </table>
-<p><strong>Recurrence.</strong> Like an arbitrator’s momentum (<a href="#s10-4">§10.4</a>), lapses compound. Each lapse adds 1 to a lapse score L that decays by 2% per accepted incident (half-life about 35 incidents), and the lapse forfeiture is 25% × 2^L, rounded down to a pre-signed fraction: 25% for an isolated lapse, 50% for a second soon after, and 100% — the misconduct tier — for a third. A responder gets a margin, never a free pass, and a pattern is treated as what it is.</p>
+<p><strong>Recurrence.</strong> Like an arbitrator’s momentum (<a href="#s10-4">§10.4</a>), lapses compound. Each lapse adds 1 to a lapse score L that decays by 2% per accepted incident (half-life about 35 incidents), and the lapse forfeiture is 25% × 2^(L−1), L counted after adding the new lapse, rounded to the nearest pre-signed fraction: 25% for an isolated lapse, 50% for a second within about 26 incidents of the first, and 100% — the misconduct tier — for a third once L passes about 2.6. A responder gets a margin, never a free pass, and a pattern is treated as what it is.</p>
 <p><strong>Harm to other parties to the case.</strong> Harm to a fellow responder, or to the caller’s side, is sized by the harm table in the checklist above rather than by these rows, drawn in the same order, and repaid to the harmed party first.</p>
 <p><strong>Irreversible findings get the larger panel.</strong> Any finding that carries permanent exclusion — the bannable tier, or the cells of the harm table marked excluded — starts at the larger panel used for serious and fatal injury (C2.4) and proceeds up the appeal ladder (<a href="#s10-5">§10.5</a>), rather than resting on three arbitrators.</p>
 <p><strong>Which assets are taken.</strong> Misconduct and bannable findings drain both the personal bond and the layer 0 insurer buffer: the worst case falls on the person who earned it, and an insurer’s layer 0 is its bet on that person’s credibility. Policy exclusions between an insurer and its client are off-chain; the insurer prices that bet and recovers under its own contract. Fees — a responder’s own and those owed to others — and lapse fines are taken from the first insurer layer before the bond, and only in the amount owed: the rest of the layer is returned to an output with the same buffer script and keeps covering its clients. A misconduct or bannable finding takes the whole personal bond and the whole first insurer layer, which for that kind of seizure acts as a larger base deposit. Deeper layers are never touched.</p>
@@ -1231,8 +1391,8 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </tr>
 <tr class="odd">
 <td>Lapse recurrence</td>
-<td>25% × 2^L, L decaying 2% per incident (provisional)</td>
-<td>rounded down to 25 / 50 / 100%</td>
+<td>25% × 2^(L−1), L decaying 2% per incident (provisional)</td>
+<td>rounded to the nearest of 25 / 50 / 100%</td>
 <td>§11</td>
 <td>A third lapse soon after reaches the misconduct tier</td>
 </tr>
@@ -2075,22 +2235,305 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 </ul>
 <h3 id="s9">9. THE GAUNTLET — Sequential Attack Simulation — Step-by-step: what an attacker must survive to place one corrupted arbitrator in the pool</h3>
 <h4 id="attacker-wants-one-pool-slot">1. Attacker wants one pool slot</h4>
-<p>The pool is closed. Slots only open on natural turnover or sustained 432-block queue pressure. - <strong>TRAP: Closed pool with demand-signalled entry:</strong> Capital alone cannot open a slot. Demand signal required.</p>
+<p>The pool is closed. Slots only open on natural turnover or sustained 432-block queue pressure.</p>
+<ul>
+<li><strong>TRAP: Closed pool with demand-signalled entry:</strong> Capital alone cannot open a slot. Demand signal required.</li>
+</ul>
 <h4 id="must-create-queue-pressure-432-blocks">2. Must create queue pressure — 432 blocks</h4>
-<p>Queue depth is weighted by aggregate responder legitimacy and stake. Low-labor cases do not count. The queue clears as arbitrators pick up cases. Maintaining &gt;0 requires dozens of fake high-labor responders, each 90-day seasoned, all in the same cell. - <strong>TRAP: Queue weight by responder legitimacy:</strong> One fake responder is not enough. Need a pipeline of seasoned fakes generating cases faster than arbitrators resolve them — all with real capital at risk, all cell-scoped, all under honest observation. For one slot.</p>
+<p>Queue depth is weighted by aggregate responder legitimacy and stake. Low-labor cases do not count. The queue clears as arbitrators pick up cases. Maintaining &gt;0 requires dozens of fake high-labor responders, each 90-day seasoned, all in the same cell.</p>
+<ul>
+<li><strong>TRAP: Queue weight by responder legitimacy:</strong> One fake responder is not enough. Need a pipeline of seasoned fakes generating cases faster than arbitrators resolve them — all with real capital at risk, all cell-scoped, all under honest observation. For one slot.</li>
+</ul>
 <h4 id="must-build-cell-scoped-labor-in-real-cells">3. Must build cell-scoped labor — in real cells</h4>
-<p>Labor score is recorded per H3 cell and does not transfer. Remote reputation farming is impossible. - <strong>TRAP: Cell-scoped labor:</strong> Must operate under honest participants’ continuous observation.</p>
+<p>Labor score is recorded per H3 cell and does not transfer. Remote reputation farming is impossible.</p>
+<ul>
+<li><strong>TRAP: Cell-scoped labor:</strong> Must operate under honest participants’ continuous observation.</li>
+</ul>
 <h4 id="must-maintain-deception-for-90-days">4. Must maintain deception for 90+ days</h4>
-<p>Every fake incident is permanent BCAEN evidence. Retroactive review at 40% dissent catches any slip. - <strong>TRAP: Temporal seasoning + retroactive review:</strong> 90-day minimum. Every case a permanent, growing liability.</p>
+<p>Every fake incident is permanent BCAEN evidence. Retroactive review at 40% dissent catches any slip.</p>
+<ul>
+<li><strong>TRAP: Temporal seasoning + retroactive review:</strong> 90-day minimum. Every case a permanent, growing liability.</li>
+</ul>
 <h4 id="queue-triggers-slot-open">5. Queue triggers slot open</h4>
-<p>Attacker enters coherence competition: must pay participation fee + intention bond + score well on 15 cases (10 live, 5 canon). - <strong>TRAP: Coherence competition:</strong> Work determines selection, not capital. Must outscore honest applicants.</p>
+<p>Attacker enters coherence competition: must pay participation fee + intention bond + score well on 15 cases (10 live, 5 canon).</p>
+<ul>
+<li><strong>TRAP: Coherence competition:</strong> Work determines selection, not capital. Must outscore honest applicants.</li>
+</ul>
 <h4 id="wins-slot-enters-30-case-probation">6. Wins slot — enters 30-case probation</h4>
-<p>Votes recorded but do not count toward calibration. Seats capped at 1/3 of any panel — cannot control a verdict. 40% dissent on an old case flags for review by the 100-arbitrator pool. - <strong>TRAP: Probation with retroactive exposure:</strong> 40% flags; 100-pool confirms fraud at 80%. 3x premium from seized bond only.</p>
+<p>Votes recorded but do not count toward calibration. Seats capped at 1/3 of any panel — cannot control a verdict. 40% dissent on an old case flags for review by the 100-arbitrator pool.</p>
+<ul>
+<li><strong>TRAP: Probation with retroactive exposure:</strong> 40% flags; 100-pool confirms fraud at 80%. 3x premium from seized bond only.</li>
+</ul>
 <h4 id="survives-1-of-200-arbitrators">7. Survives = 1 of ~200 arbitrators</h4>
-<p>Attacker now holds 1/n of the pool, where n grows over time. To corrupt a majority, repeat steps 1-6 (n/2+1) times. - <strong>RESULT: Compounding traps, not independent filters:</strong> Each “success” increases exposure. The defence accelerates.</p>
+<p>Attacker now holds 1/n of the pool, where n grows over time. To corrupt a majority, repeat steps 1-6 (n/2+1) times.</p>
+<ul>
+<li><strong>RESULT: Compounding traps, not independent filters:</strong> Each “success” increases exposure. The defence accelerates.</li>
+</ul>
 <p>Bitaid — Threat Vector Map · 37 vectors across 9 categories · Each defence layer closes a gap the previous layer left open. Each layer penetrated forces the attacker to maintain a larger, longer, more visible deception. Fee compounding is the gravitational sink — by week 4 the time trigger alone has multiplied the fee about 790,000× in fees. Residual risks noted explicitly. Nation-state threats face economic exhaustion from the protocol first; formal arbitration is optional escalation. Protocol is not a magic box. Specification v6.0 · 2026</p>
-<h2 id="app-d">Appendix D — Machine-Readable Mechanism Graph (JSON-LD)</h2>
-<p>The mechanisms of this specification and the dependencies between them, for reviewers and tools that want to trace a defence across sections rather than evaluate one in isolation.</p>
+<h2 id="app-d">Appendix D — Mechanism Dependency Graph</h2>
+<p>The protocol’s security is not a list of independent features but a graph of mechanisms that reinforce one another: disabling one weakens several others, and every attack must pass a series of them. In the HTML edition the graph is interactive. The same graph follows in machine-readable form (JSON-LD), for reviewers and tools that want to trace a defence across sections rather than evaluate one in isolation.</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<p>The mechanisms of this specification as an interactive graph. Click a mechanism to see what it depends on and what it protects, or choose a flow or an attack from the menu to highlight every mechanism it must pass. The section references in each tooltip point to this Specification.</p>
+<div id="mdg-controls" style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin:1rem 0; padding:0.6rem 1rem; background:var(--row); border-radius:6px; font-family:var(--sans); font-size:0.82rem;">
+  <label for="mdg-attack-select"><strong>Trace protocol flow:</strong></label>
+  <select id="mdg-attack-select" style="font-family:var(--sans); font-size:0.82rem; padding:0.3rem 0.6rem; border:1px solid var(--rule); border-radius:4px; background:var(--paper); color:var(--text);">
+    <option value="none">&mdash; Show full mechanism graph &mdash;</option>
+    <option value="standard">Standard Emergency Response (happy path)</option>
+    <option value="disputed">Disputed Emergency Response (arbitration path)</option>
+    <option disabled>────────── Attack vectors ──────────</option>
+    <option value="sybil">Sybil Identity Flood</option>
+    <option value="suppression">Evidence Suppression</option>
+    <option value="capture">Arbitrator Pool Capture</option>
+    <option value="fake">Fake Incident Spam</option>
+    <option value="queue">Queue Depth Manipulation</option>
+    <option value="coerce">State Coercion of Arbitrators</option>
+    <option value="farm">Remote Labor Farming</option>
+  </select>
+  <span style="color:var(--muted);">|</span>
+  <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+    <input type="checkbox" id="mdg-labels" checked style="cursor:pointer;"> Show labels
+  </label>
+  <span style="color:var(--muted); margin-left:auto;">Click any node to highlight its dependency chain. Drag to rearrange.</span>
+</div>
+
+<div id="mdg-container" style="width:100%; height:600px; background:#1a1a1a; border-radius:8px; position:relative; overflow:hidden;">
+  <svg id="mdg-svg" width="100%" height="100%"></svg>
+  <div id="mdg-tooltip" style="position:absolute; display:none; background:rgba(255,255,255,0.96); color:#1a1a18; padding:0.7rem 1rem; border-radius:6px; font-family:var(--sans); font-size:0.78rem; line-height:1.5; max-width:280px; box-shadow:0 4px 20px rgba(0,0,0,0.3); pointer-events:none; z-index:10; border:1px solid var(--rule);"></div>
+</div>
+
+<div id="mdg-legend" style="display:flex; flex-wrap:wrap; gap:1.2rem; margin:0.8rem 0; font-family:var(--sans); font-size:0.78rem;">
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#c44;display:inline-block;"></span> Economic</div>
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#2a8;display:inline-block;"></span> Evidence</div>
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#27c;display:inline-block;"></span> Arbitration</div>
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#75b;display:inline-block;"></span> Network</div>
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#b71;display:inline-block;"></span> Cross-cutting</div>
+  <div style="display:flex; align-items:center; gap:0.4rem;"><span style="width:14px;height:14px;border-radius:50%;background:#d8cda6;display:inline-block;"></span> Role (who)</div>
+  <div style="display:flex; align-items:center; gap:0.6rem; margin-left:auto; flex-wrap:wrap;">
+    <svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#888" stroke-width="1.5"/><polygon points="30,5 25,2 25,8" fill="#888"/></svg> depends on
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#38c" stroke-width="1.8" stroke-dasharray="6 3"/><polygon points="30,5 25,2 25,8" fill="#38c"/></svg> enables
+    <svg width="30" height="12" style="margin-left:0.3rem;"><line x1="0" y1="6" x2="30" y2="6" stroke="#c84" stroke-width="3" stroke-dasharray="4 2 2 2"/><polygon points="30,6 25,3 25,9" fill="#c84"/></svg> funds
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#c44" stroke-width="1.5" stroke-dasharray="4 2"/><polygon points="30,5 25,2 25,8" fill="#c44"/></svg> triggers
+    <svg width="30" height="10" style="margin-left:0.3rem;"><line x1="0" y1="5" x2="30" y2="5" stroke="#75b" stroke-width="1.5" stroke-dasharray="3 3"/><polygon points="30,5 25,2 25,8" fill="#75b"/></svg> measures
+  </div>
+</div>
+
+<script>
+(function() {
+  if(typeof d3==="undefined"){console.warn("D3 not loaded");return;}
+  const nodes=[
+    {id:"PoBL",label:"Proof of Bond + Labor + Coherence",layer:"economic",r:22,sec:"Spec §6, §2; Whitepaper §10",desc:"Root Sybil-resistance: capital locked as escrow + earned case history that cannot be purchased + agreement with the calibration canon. Bond prevents spam; labor prevents Sybil; coherence anchors judgment; together they produce coordination without prior trust."},
+    {id:"asym",label:"Asymmetric Penalty",layer:"economic",r:16,sec:"Spec §10.4",desc:"Incoherent minority arbitrators forfeit 2×–4× the per-case fee, compounding up to 32× for a pattern of errors. The penalty is the fee multiplier, not bond percentage. Creates direct financial incentive for accurate voting."},
+    {id:"forf",label:"Bond Forfeiture → BCAEN",layer:"economic",r:14,sec:"Spec §12, §8",desc:"Seized bonds repay harmed parties to the case first, then fund evidence infrastructure. Forfeiture pays panel fees next, then feeds the BCAEN redundancy subsidy pool. The system is anti-fragile to fraud."},
+    {id:"pool",label:"100-Pool Premium",layer:"economic",r:14,sec:"Spec §10.3",desc:"3× arbitration fee for retroactive review panels, funded exclusively from seized bonds. Confirmed fraud produces capital that funds stronger detection of future fraud."},
+    {id:"fee",label:"Fee Market (EIP-1559)",layer:"economic",r:15,sec:"Spec §10.6",desc:"Dual-trigger adjustment: event trigger (×1.125/×0.875 per case) + time trigger (×1.0625 every 3h). Self-tuning to congestion without administrative adjustment."},
+    {id:"eject",label:"Price-Out Ejection",layer:"economic",r:13,sec:"Spec §10.7",desc:"Cases whose deposit cannot cover current fee × min_panel_size enter 36-block grace, then eject. Prevents underfunded cases from inflating queue depth."},
+    {id:"insure",label:"Insurance Buffer / Flywheel",layer:"economic",r:15,sec:"Spec §4; Foundations §3.2",desc:"Insurer-backed buffers serve two functions: (1) payment backing — buffer UTXOs cover bounty and outcome reward obligations in incident escrows, de-risking caller payment commitments; (2) threshold signalling — buffers stacked on the personal bond amplify visible skin-in-the-game to clear discriminatory relay/acceptance filters. Stackable as Insurance Buffer Stack (IBS): multiple slots consumed in creation order; payment-default cascades through the full stack; forfeiture events cap at layer 0 only, ring-fencing deeper slots; a draw on payment default is not a penalty. Zero protocol weight in scoring."},
+    {id:"appeal",label:"Appeal Subsidy",layer:"economic",r:12,sec:"Spec §10.4",desc:"Penalty pool locks into appeal escrow. Incoherent arbitrators subsidise the reconsideration of their own error. Subsidy is zero when prior tier was unanimous."},
+    {id:"hbu",label:"Hash-Before-Upload",layer:"evidence",r:16,sec:"Spec §8.1",desc:"SHA-256 hash broadcast over gossip before upload completes. Any verifier can confirm retrieved content matches publicly propagated hash. Suppression requires compromising every layer simultaneously."},
+    {id:"bcaen",label:"BCAEN Storage",layer:"evidence",r:18,sec:"Spec §8",desc:"Content-addressed evidence network. Class A (incident footage) + Class B (anchored state records). Upload fees, stream fees, and slot hosting payments sustain operation."},
+    {id:"tier",label:"Tiered Redundancy",layer:"evidence",r:16,sec:"Spec §8.3",desc:"Base slots (3–5) gated by archival labor score + marginal slots (6+) via open-market auction. Two independent suppression barriers: economic (base) and jurisdictional (marginal)."},
+    {id:"als",label:"Archival Labor Score",layer:"evidence",r:14,sec:"Spec §8.2",desc:"Earned via uptime, retrieval reliability, and Class B service history. Cannot be purchased. Gates base-slot eligibility and calibration participation fees."},
+    {id:"retrieval",label:"Authenticated Retrieval",layer:"evidence",r:12,sec:"Spec §8.5",desc:"Every retrieval serves dual purpose: service delivery + integrity verification. Proves evidence exists and is unaltered without requiring full replication by every node."},
+    {id:"closed",label:"Closed Pool",layer:"arbitration",r:16,sec:"Spec §10.3",desc:"Pool closed by default. Opens only on natural turnover or sustained 432-block non-zero queue after price-out ejection. Structurally impossible to guarantee attack progress regardless of capital."},
+    {id:"calib",label:"Calibration Coherence",layer:"arbitration",r:17,sec:"Spec §10.2, §10.3",desc:"Share of votes that agree with the final ruling, or on canon cases with the canon's recorded answers. Not windowed — early incoherent votes persist indefinitely. 80% is the eligibility floor; with momentum penalties serving pays only above about 97%. Track A weights live shadow votes ⅔, canon ⅓."},
+    {id:"canon",label:"Calibration Canon",layer:"arbitration",r:15,sec:"Spec §10.3, §11; Foundations §4.1, §5",desc:"Launch library of reference cases annotated with predicate answers under the non-aggression principle. Fixed reference for coherence: a third of the Track A exam score, studied openly, and calibration-queue items are scored against it. No in-protocol amendment — a canon error is corrected only by fork and adoption of an alternative."},
+    {id:"blind",label:"Blind Voting",layer:"arbitration",r:14,sec:"Spec §10.4",desc:"Commit-reveal scheme: hash(vote, salt, pubkey) broadcast first, preimage revealed second. Prevents vote observation before commitment. Late reveals are currently treated as abstentions (open issue: Spec §16, item 8)."},
+    {id:"attend",label:"Attending Vote",layer:"arbitration",r:16,sec:"Spec §9",desc:"Intervener (earned intervention history) vs documenter (documentation only) split. 70/30 bounty default. Always disputable to arbitration within 48-hour embargo."},
+    {id:"prob",label:"Probation + Strikes",layer:"arbitration",r:14,sec:"Spec §10.3",desc:"30-case probation: votes recorded but not consensus-weighted. +1 strike per cleared false alert, −1 per confirmed fraud catch. Net 3 strikes = expulsion. 50% false-alert ratio blocks graduation."},
+    {id:"appealsc",label:"Appeal Scaling / Re-rolls",layer:"arbitration",r:13,sec:"Spec §10.5",desc:"Paid re-rolls: 3 → 7 → 15 → 31 → … arbitrators, no fixed cap, each formed by blind taking. ⅔ supermajority at every tier. Frivolous appeals self-deterring: no subsidy after unanimous verdict."},
+    {id:"gossip",label:"Geofenced Gossip",layer:"network",r:14,sec:"Spec §7.1",desc:"Alerts propagate only to same-cell + adjacent H3 cells. Dead-end scoring detects censorship: >0.6 ratio over 200 attestations triggers exclusion."},
+    {id:"h3",label:"H3 Grid Cell System",layer:"network",r:13,sec:"Spec §7.1",desc:"Resolution 7 hexagons (~5 km² per cell, ~1.4 km edge). Low-density areas auto-expand to next ring. Cell membership deterministic from GPS."},
+    {id:"tor",label:"Tor Hidden Services",layer:"network",r:14,sec:"Spec §10.2, §14",desc:"All arbitrator nodes operate as pseudonymous keypairs over Tor. No KYC, no database, no identity. Coercion requires solving surveillance at scale against migrating targets."},
+    {id:"anchor",label:"Bitcoin-Anchored Log",layer:"network",r:15,sec:"Spec §7.2",desc:"Every event signed and anchored to Bitcoin block height. State computed deterministically by replaying ordered log. On-chain: transactions, a hash per panel tier of roster and predicate answers, and evidence roots. Anchor verification defaults to local full node."},
+    {id:"temp",label:"Temporal Seasoning",layer:"cross",r:14,sec:"Spec §6",desc:"Labor is discounted by min(1, days/90). Calendar time cannot be purchased or compressed."},
+    {id:"cell",label:"Cell-Scoped Labor",layer:"cross",r:13,sec:"Spec §6",desc:"Labor earned in one H3 cell does not transfer to another. Closes remote-farming attack: manufactured history in deserted cells is useless elsewhere."},
+    {id:"coerce",label:"Non-Coercibility",layer:"cross",r:13,sec:"Spec §10.2",desc:"Pseudonymous arbitrators + Tor + no identity database = coercion cost additive to capital-flood cost. Surveillance expenditure does not reduce bond requirement and vice versa."},
+    {id:"caller",label:"Caller Role",layer:"role",r:13,sec:"Spec §5.1",desc:"The party requesting emergency response. Posts incident deposit, bounty and outcome reward in a funding output. Misuse is decided by an arbitration panel; attendees may flag it."},
+    {id:"responder",label:"Responder Role",layer:"role",r:15,sec:"Spec §5.2",desc:"The party attending incidents physically. Earns intervention or documentation labor score. Cell-scoped, temporally seasoned, bond-posted. Queue legitimacy derives from responder labor."},
+    {id:"arbiter",label:"Arbitrator Role",layer:"role",r:15,sec:"Spec §5.4",desc:"The party resolving disputes. Operates pseudonymously over Tor in a closed pool. Calibration coherence is the labor score for this role. Bond-posted, coherence-competed."},
+    {id:"archivist",label:"Archivist Role",layer:"role",r:13,sec:"Spec §5.5",desc:"The party storing evidence. Earns archival labor score through uptime and retrieval. Base-slot eligibility is labor-gated. Bond-posted."},
+    {id:"queue_weight",label:"Responder Legitimacy",layer:"economic",r:12,sec:"Spec §10.7",desc:"Queue priority weighted by aggregate responder legitimacy: sum(reputation × stake) / count. High-legitimacy attendance signals incident reality."},
+    {id:"dead_end",label:"Dead-End Scoring",layer:"network",r:12,sec:"Spec §5.3",desc:"Censorship-detection signal for geofenced gossip. Ratio of failed propagation attempts per peer over 200 attestations; >0.3 triggers deprioritisation, >0.6 triggers exclusion. Secures gossip against eclipse attacks."},
+    {id:"inact_eject",label:"Inactive Arbitrator Ejection",layer:"arbitration",r:12,sec:"Spec §10.3",desc:"Arbitrators declining >80% of panels over 30 windows are suspended by peer supermajority. Bond not forfeited — inactivity is not misconduct. Slot opens only when queue depth > 0. Maintains closed pool quality without punishing honest absence."},
+    {id:"frost",label:"Joint Signing at Acceptance",layer:"arbitration",r:12,sec:"Spec §3.2, §13.4",desc:"MuSig2 among the parties at acceptance commits inputs, input order and outputs via SIGHASH_ALL, enforcing insurer buffer ordering. FROST is used only for the oracle's threshold key."},
+    {id:"dlc_attest",label:"Verdict Attestation",layer:"arbitration",r:13,sec:"Spec §3.3, Appendix B.3",desc:"The oracle (a FROST threshold key held by the seasoned arbitrator pool) attests once per case, after the last re-roll, under a per-case nonce. The attestation is the secret that completes exactly one payout pre-signed at acceptance; it cannot create another. The same key co-signs bond withdrawals and pre-signed bond forfeitures as ordinary signatures."},
+    {id:"acpt_thresh",label:"Per-Node Acceptance Threshold",layer:"cross",r:14,sec:"Spec §2.3, §5.2",desc:"Each responder and node operator independently sets minimum bond and labor credentials for the alerts it accepts or relays. Under flood pressure operators raise them — a distributed filter against alert spam, chosen by the market rather than triggered by the protocol."},
+    {id:"stake_exp",label:"Stake Above Exposure",layer:"economic",r:15,sec:"Spec §2.3, §10.2",desc:"Every operator's own capital at risk must exceed what its counterparty has at stake with it. Responders: personal bond + layer 0 buffer ≥ 2× the most they could capture (default gate). Arbitrators: own bond must exceed everything the verdict can move. No cheating is worth attempting."},
+    {id:"blind_take",label:"Blind Taking",layer:"arbitration",r:14,sec:"Spec §10.2",desc:"Panels form by taking, not selection or opt-in. Takers see only fee, tier, case value and eligibility filters; parties and evidence are disclosed after the seat is committed. Excess takers are drawn by block hash, so speed cannot fill a chosen panel."},
+    {id:"review",label:"Review Sampling",layer:"arbitration",r:14,sec:"Spec §10.3",desc:"Every closed case, disputed or not, is drawn for independent review with probability R (5% at genesis, rising with case value), seeded by a block hash after close. Detection compounds: 1 − (1 − R)^n, 79% after 30 fraudulent cases at R = 5%."},
+    {id:"restit",label:"Restitution",layer:"economic",r:13,sec:"Spec §12",desc:"When review overturns a verdict, the harmed party to the case is repaid first from the seized bonds of the arbitrators who voted for it, to keys recorded at escalation. Non-participants are left to legal remedies supported by the BCAEN record."},
+    {id:"presign",label:"Acceptance-Time Pre-Signing",layer:"arbitration",r:15,sec:"Spec §3.2",desc:"When a responder accepts, the parties sign the incident transaction (broadcast at once, locking the deposit, reward and bounty in three outputs), one payout per ending of each pot locked to the oracle's attestation, and a refund valid after 90 days. The caller side is signed by a scoped key bound to a wallet-committed template. The oracle can then only choose among pre-signed payouts."},
+    {id:"momentum",label:"Dissent Momentum & Challenge",layer:"arbitration",r:14,sec:"Spec §10.4",desc:"Penalties escalate with recent, clear disagreements (isolation penalty × 2^D, D decaying 0.99 per case, cap 32×), so serving pays only above about 97% coherence. Penalties settle against the final ruling; vindicated dissenters are refunded and paid, and a dissenter can post a challenge bond to force a larger panel or review."}
+  ];
+  const edges=[
+    {source:"PoBL",target:"asym",type:"depends",strength:2},{source:"asym",target:"appeal",type:"funds",strength:1.5},{source:"asym",target:"calib",type:"enables",strength:2},
+    {source:"PoBL",target:"forf",type:"depends",strength:1.5},{source:"forf",target:"pool",type:"funds",strength:1.5},{source:"forf",target:"bcaen",type:"funds",strength:2},
+    {source:"PoBL",target:"closed",type:"enables",strength:1.5},{source:"PoBL",target:"calib",type:"enables",strength:1.5},{source:"PoBL",target:"canon",type:"enables",strength:1.5},{source:"canon",target:"calib",type:"enables",strength:2},{source:"canon",target:"closed",type:"enables",strength:1.5},{source:"PoBL",target:"attend",type:"enables",strength:1.2},
+    {source:"PoBL",target:"temp",type:"enables",strength:1.5},{source:"PoBL",target:"cell",type:"enables",strength:1.3},{source:"PoBL",target:"als",type:"enables",strength:1.5},{source:"PoBL",target:"tier",type:"enables",strength:1.2},
+    {source:"pool",target:"calib",type:"enables",strength:1.5},{source:"fee",target:"eject",type:"enables",strength:1.5},{source:"fee",target:"closed",type:"enables",strength:1},{source:"eject",target:"closed",type:"enables",strength:1},
+    {source:"insure",target:"PoBL",type:"enables",strength:1.5},{source:"appeal",target:"appealsc",type:"depends",strength:1.5},
+    {source:"hbu",target:"bcaen",type:"depends",strength:2},{source:"bcaen",target:"tier",type:"depends",strength:2},{source:"tier",target:"als",type:"depends",strength:1.5},{source:"bcaen",target:"retrieval",type:"depends",strength:1.5},{source:"als",target:"retrieval",type:"enables",strength:1},
+    {source:"closed",target:"calib",type:"depends",strength:2},{source:"calib",target:"blind",type:"enables",strength:1.5},{source:"blind",target:"calib",type:"enables",strength:1.5},
+    {source:"calib",target:"prob",type:"enables",strength:1.5},{source:"prob",target:"pool",type:"triggers",strength:1},{source:"attend",target:"blind",type:"triggers",strength:1},
+    {source:"attend",target:"appealsc",type:"triggers",strength:1},{source:"appealsc",target:"asym",type:"triggers",strength:1.5},
+    {source:"gossip",target:"h3",type:"depends",strength:2},{source:"anchor",target:"bcaen",type:"enables",strength:1.5},{source:"anchor",target:"calib",type:"enables",strength:1.5},
+    {source:"tor",target:"blind",type:"enables",strength:1.5},
+    {source:"temp",target:"calib",type:"enables",strength:2},{source:"temp",target:"closed",type:"enables",strength:1.5},
+    {source:"cell",target:"attend",type:"enables",strength:1.5},{source:"cell",target:"gossip",type:"enables",strength:1},
+    {source:"coerce",target:"blind",type:"enables",strength:1.5},{source:"coerce",target:"tor",type:"depends",strength:2},
+    {source:"als",target:"calib",type:"enables",strength:2},{source:"bcaen",target:"calib",type:"enables",strength:2},{source:"bcaen",target:"attend",type:"enables",strength:1.5},
+    {source:"retrieval",target:"calib",type:"enables",strength:1},{source:"anchor",target:"PoBL",type:"enables",strength:1.5},
+    {source:"PoBL",target:"caller",type:"enables",strength:1.2},{source:"PoBL",target:"responder",type:"enables",strength:1.5},{source:"PoBL",target:"arbiter",type:"enables",strength:1.5},{source:"PoBL",target:"archivist",type:"enables",strength:1.3},
+    {source:"caller",target:"attend",type:"triggers",strength:1.5},{source:"caller",target:"forf",type:"triggers",strength:1.2},
+    {source:"responder",target:"attend",type:"enables",strength:1.5},{source:"responder",target:"cell",type:"depends",strength:1.5},{source:"responder",target:"temp",type:"depends",strength:1.5},{source:"responder",target:"gossip",type:"enables",strength:1.3},
+    {source:"responder",target:"queue_weight",type:"enables",strength:1.5},{source:"queue_weight",target:"eject",type:"enables",strength:1.3},
+    {source:"arbiter",target:"closed",type:"depends",strength:1.5},{source:"arbiter",target:"calib",type:"measuredBy",strength:2},{source:"arbiter",target:"blind",type:"depends",strength:1.5},
+    {source:"archivist",target:"als",type:"measuredBy",strength:1.5},{source:"archivist",target:"bcaen",type:"enables",strength:2},{source:"archivist",target:"tier",type:"enables",strength:1.5},
+    {source:"attend",target:"arbiter",type:"triggers",strength:1.5},
+    {source:"dead_end",target:"gossip",type:"enables",strength:1.5},{source:"gossip",target:"dead_end",type:"measuredBy",strength:1.3},
+    {source:"inact_eject",target:"closed",type:"depends",strength:1.5},{source:"closed",target:"inact_eject",type:"enables",strength:1.2},
+    {source:"dlc_attest",target:"attend",type:"enables",strength:1.5},{source:"dlc_attest",target:"forf",type:"enables",strength:1.3},{source:"arbiter",target:"dlc_attest",type:"depends",strength:1.5},{source:"insure",target:"frost",type:"depends",strength:1.2},{source:"frost",target:"caller",type:"enables",strength:1},
+    {source:"insure",target:"responder",type:"funds",strength:1.5},{source:"attend",target:"forf",type:"triggers",strength:1.5},
+    {source:"responder",target:"acpt_thresh",type:"depends",strength:1.5},{source:"acpt_thresh",target:"gossip",type:"depends",strength:1.3},
+    {source:"h3",target:"cell",type:"enables",strength:1.5},{source:"tier",target:"retrieval",type:"enables",strength:1.2},
+    {source:"responder",target:"hbu",type:"enables",strength:1.3},{source:"responder",target:"bcaen",type:"enables",strength:1.3},
+    {source:"arbiter",target:"pool",type:"depends",strength:1.2},{source:"arbiter",target:"inact_eject",type:"depends",strength:1},
+    {source:"prob",target:"forf",type:"triggers",strength:1.2},{source:"dlc_attest",target:"appeal",type:"enables",strength:1.3},
+    {source:"archivist",target:"retrieval",type:"enables",strength:1.3},{source:"h3",target:"gossip",type:"enables",strength:1},
+    {source:"insure",target:"caller",type:"enables",strength:1},{source:"insure",target:"arbiter",type:"enables",strength:1},
+    {source:"caller",target:"eject",type:"triggers",strength:1},
+    {source:"fee",target:"arbiter",type:"funds",strength:1.5},{source:"pool",target:"arbiter",type:"funds",strength:1.3},{source:"forf",target:"responder",type:"funds",strength:1.3},
+    {source:"bcaen",target:"responder",type:"depends",strength:1.2},
+    /* ── Missing funding edges (audit fix) ── */
+    {source:"caller",target:"responder",type:"funds",strength:1.8},   /* §3,§11.1: three-tier bounty — caller deposit IS the bounty that compensates responder attendance */
+    {source:"attend",target:"responder",type:"funds",strength:1.3},   /* §14.1,§3: attend vote releases/allocates the bounty to intervener(70%) + documenter(30%) */
+    {source:"bcaen",target:"archivist",type:"funds",strength:1.3},    /* §13,§11.5: upload fees + stream fees + slot hosting payments sustain archivists */
+    {source:"forf",target:"archivist",type:"funds",strength:1},       /* §10.6,§13.2: forfeiture redundancy subsidy pool supplements archivist base-slot revenue */
+    {source:"bcaen",target:"archivist",type:"depends",strength:1.5},  /* BCAEN Storage depends on Archivist Role to operate */
+    {source:"insure",target:"archivist",type:"enables",strength:1},
+    /* ── Session 2026-10-12: stake above exposure, blind taking, review sampling, restitution ── */
+    {source:"PoBL",target:"stake_exp",type:"enables",strength:1.5},
+    {source:"responder",target:"stake_exp",type:"depends",strength:1.5},
+    {source:"acpt_thresh",target:"stake_exp",type:"depends",strength:1.3},
+    {source:"arbiter",target:"stake_exp",type:"depends",strength:1.5},
+    {source:"insure",target:"stake_exp",type:"enables",strength:1.0},
+    {source:"stake_exp",target:"blind_take",type:"enables",strength:1.3},
+    {source:"arbiter",target:"blind_take",type:"depends",strength:1.5},
+    {source:"blind_take",target:"appealsc",type:"enables",strength:1.5},
+    {source:"blind_take",target:"blind",type:"enables",strength:1.2},
+    {source:"review",target:"calib",type:"enables",strength:1.5},
+    {source:"review",target:"pool",type:"triggers",strength:1.2},
+    {source:"review",target:"forf",type:"triggers",strength:1.3},
+    {source:"anchor",target:"review",type:"enables",strength:1.2},
+    {source:"bcaen",target:"review",type:"enables",strength:1.2},
+    {source:"forf",target:"restit",type:"funds",strength:1.5},
+    {source:"restit",target:"stake_exp",type:"depends",strength:1.3},
+    {source:"dlc_attest",target:"restit",type:"enables",strength:1.2},
+    {source:"restit",target:"caller",type:"funds",strength:1.0},
+    {source:"restit",target:"responder",type:"funds",strength:1.0},
+    {source:"caller",target:"presign",type:"enables",strength:1.3},
+    {source:"responder",target:"presign",type:"enables",strength:1.3},
+    {source:"insure",target:"presign",type:"depends",strength:1.0},
+    {source:"archivist",target:"presign",type:"enables",strength:1.0},
+    {source:"stake_exp",target:"presign",type:"enables",strength:1.0},
+    {source:"presign",target:"dlc_attest",type:"enables",strength:1.5},
+    {source:"presign",target:"restit",type:"enables",strength:1.2},
+    {source:"asym",target:"momentum",type:"enables",strength:1.3},
+    {source:"momentum",target:"calib",type:"enables",strength:1.5},
+    {source:"momentum",target:"appealsc",type:"triggers",strength:1.2},
+    {source:"momentum",target:"review",type:"triggers",strength:1.2},
+    {source:"forf",target:"momentum",type:"funds",strength:1.0},
+    {source:"arbiter",target:"momentum",type:"measuredBy",strength:1.2}    /* IBS extends to archival bonds; threshold signalling applies to archivist role too */
+  ];
+  const attackPaths={
+    standard:{label:"Standard Emergency Response",defenses:["caller","responder","PoBL","gossip","h3","acpt_thresh","hbu","bcaen","tier","als","archivist","attend","cell","anchor"],desc:"The happy path: a caller posts an authenticated alert with deposit and bounty; the alert propagates through geofenced gossip to nearby bonded responders; a responder accepts based on their configured threshold, attends the incident, streams hash-before-upload evidence to BCAEN with tiered redundancy (base slots gated by archival labor score, maintained by archivists); the attending vote releases the bounty to the responder; both parties build cell-scoped labor history. No dispute, no arbitration, no forfeiture."},
+    disputed:{label:"Disputed Emergency Response",defenses:["caller","responder","PoBL","gossip","h3","acpt_thresh","hbu","bcaen","tier","archivist","attend","arbiter","blind","calib","asym","dlc_attest","closed","appealsc","cell","anchor","blind_take","presign"],desc:"The arbitration path: follows the standard flow until the attending vote splits on outcome or merit distribution; arbitrators review BCAEN evidence served by archivists under blind voting (commit-reveal); the 48-hour embargo begins with no settling attestation yet published; coherence scoring evaluates accuracy; asymmetric penalty (2x-4x fee) applies to incoherent dissent; appeals scale 3->7->15->31 if contested; the matching attestation triggers settlement. Panels form by blind taking; re-rolls continue past 31 with no fixed cap."},
+    sybil:{label:"Sybil Identity Flood",defenses:["PoBL","caller","responder","arbiter","archivist","closed","calib","als","temp","eject","fee","insure","acpt_thresh","stake_exp"],desc:"An attacker floods the network with bonded identities across all 4 roles. Must defeat: bond requirement (PoB+L+C) for every role, structural pool closure, coherence competition, archival labor gating, temporal seasoning, price-out ejection, fee market, insurance buffer, and per-node acceptance thresholds (distributed first-line filter that rises under flood pressure). Also: stake above exposure, which keeps every operator's own risk above what it could gain."},
+    suppression:{label:"Evidence Suppression",defenses:["hbu","bcaen","tier","als","retrieval","anchor","forf","archivist"],desc:"An attacker attempts to delete, alter, or prevent upload of incident footage. Must defeat: hash-before-upload, BCAEN storage, tiered redundancy (base slots gated by archival labor score — the first suppression barrier; marginal open-market slots — the second), authenticated retrieval, Bitcoin anchoring, forfeiture-funded subsidy, and archivist role as storage provider."},
+    capture:{label:"Arbitrator Pool Capture",defenses:["closed","calib","canon","blind","coerce","appealsc","asym","pool","arbiter","dlc_attest","inact_eject","blind_take","stake_exp","review","restit","presign","momentum"],desc:"An attacker acquires enough arbitrator seats to control verdict outcomes. Must defeat: structural closure, coherence competition, blind voting commit-reveal, non-coercibility property, appeal scaling, asymmetric penalty, 100-pool retroactive review, verdict attestation (no custody to seize, only an attestation a quorum must agree on), inactive arbitrator ejection (maintains pool quality), and the arbiter role as pseudonymous Tor identity. Also: blind taking (panels cannot be targeted), stake above exposure (each arbitrator's own bond exceeds the case value), review sampling of closed cases, and restitution that repays the harmed party from seized bonds."},
+    fake:{label:"Fake Incident Spam",defenses:["attend","eject","fee","prob","PoBL","insure","caller","responder","queue_weight","acpt_thresh","review"],desc:"An attacker generates false incidents to extract bounties or manipulate queues. Must defeat: attending vote with intervener/documenter split (both caller and responder roles involved), price-out ejection, fee market, probation strike system, personal bond requirement for both roles, insurance buffer loss, responder legitimacy queue weight, and per-node acceptance thresholds (rise automatically under flood pressure). Also: review sampling of undisputed cases, compounding detection over a fraudster's history."},
+    queue:{label:"Queue Depth Manipulation",defenses:["eject","fee","closed","insure","PoBL","responder","queue_weight","acpt_thresh"],desc:"An attacker floods the arbitration queue to trigger slot openings or fee spikes. Must defeat: price-out ejection, fee market compounding, 432-block sustained demand filter, insurance buffer economics, bond capital requirements, responder legitimacy queue weight (high-legitimacy cases get priority), per-node acceptance thresholds (distributed filter), and PoB+L+C for all roles involved."},
+    coerce:{label:"State Coercion of Arbitrators",defenses:["coerce","tor","blind","calib","dlc_attest","arbiter"],desc:"A nation-state attempts to identify and compel arbitrators to vote corruptly. Must defeat: additive coercion cost (surveillance + capital), Tor pseudonymity at scale, blind voting (coerced arbiter cannot observe others' votes), calibration coherence detection of pattern voting, verdict attestation (a compelled vote is one bounded attestation among a quorum, not a key with general spending power), and the arbiter role's lack of identity database."},
+    farm:{label:"Remote Labor Farming",defenses:["cell","gossip","h3","temp","PoBL","responder"],desc:"An attacker manufactures case history in low-value cells to wield in high-value disputes. Must defeat: cell-scoped labor (no transfer between cells), geofenced gossip propagation limits, H3 grid cell boundaries, temporal seasoning minimum, bond capital per cell, and the responder role's geographic binding."}
+  };
+  const layerColors={economic:"#c44",evidence:"#2a8",arbitration:"#27c",network:"#75b",cross:"#b71",role:"#d8cda6"};
+  const edgeStyles={
+    depends:{color:"#888",dash:"none",width:1.5},
+    enables:{color:"#38c",dash:"6,3",width:1.8},
+    funds:{color:"#c84",dash:"4,2,2,2",width:3},
+    triggers:{color:"#c44",dash:"4,2",width:1.5},
+    measuredBy:{color:"#75b",dash:"3,3",width:1.5}
+  };
+  const svg=d3.select("#mdg-svg");
+  const container=svg.node().parentElement;
+  const width=container.clientWidth, height=container.clientHeight;
+  svg.attr("viewBox",`0 0 ${width} ${height}`);
+  const defs=svg.append("defs");
+  const filter=defs.append("filter").attr("id","mdg-glow").attr("x","-50%").attr("y","-50%").attr("width","200%").attr("height","200%");
+  filter.append("feGaussianBlur").attr("stdDeviation","3").attr("result","coloredBlur");
+  const fm=filter.append("feMerge");fm.append("feMergeNode").attr("in","coloredBlur");fm.append("feMergeNode").attr("in","SourceGraphic");
+  const styleKeys=Object.keys(edgeStyles);
+  Object.values(edgeStyles).forEach((s,i)=>{
+    defs.append("marker").attr("id","arr-"+i).attr("viewBox","0 0 10 10").attr("refX",8).attr("refY",5).attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto")
+      .append("path").attr("d","M0,0 L10,5 L0,10 L2,5 Z").attr("fill",s.color);
+  });
+  const g=svg.append("g");
+  svg.call(d3.zoom().scaleExtent([0.3,3]).on("zoom",e=>g.attr("transform",e.transform)));
+  const sim=d3.forceSimulation(nodes)
+    .force("link",d3.forceLink(edges).id(d=>d.id).distance(d=>80/d.strength).strength(0.5))
+    .force("charge",d3.forceManyBody().strength(-220))
+    .force("center",d3.forceCenter(width/2,height/2))
+    .force("collision",d3.forceCollide().radius(d=>d.r+10))
+    .force("x",d3.forceX(width/2).strength(0.06))
+    .force("y",d3.forceY(height/2).strength(0.06));
+  const link=g.append("g").selectAll("line").data(edges).enter().append("line")
+    .attr("stroke",d=>(edgeStyles[d.type]||edgeStyles.depends).color)
+    .attr("stroke-width",d=>(edgeStyles[d.type]||edgeStyles.depends).width)
+    .attr("stroke-dasharray",d=>(edgeStyles[d.type]||edgeStyles.depends).dash)
+    .attr("marker-end",d=>"url(#arr-"+styleKeys.indexOf(d.type)+")")
+    .attr("opacity",0.5);
+  const node=g.append("g").selectAll("g").data(nodes).enter().append("g")
+    .style("cursor","pointer")
+    .call(d3.drag().on("start",dragstart).on("drag",dragged).on("end",dragend));
+  node.append("circle").attr("r",d=>d.r).attr("fill",d=>layerColors[d.layer]).attr("fill-opacity",0.78).attr("stroke","#fff").attr("stroke-width",1.5).attr("stroke-opacity",0.3);
+  node.append("text").attr("class","mdg-label").attr("dy",d=>d.r+14).attr("text-anchor","middle")
+    .style("font-family","var(--sans)").style("font-size","10px").style("fill","#ccc").style("pointer-events","none").style("font-weight","500")
+    .text(d=>d.label);
+  const tooltip=d3.select("#mdg-tooltip");
+  node.on("click",function(event,d){
+    event.stopPropagation();
+    const c=new Set([d.id]);
+    edges.forEach(e=>{if(e.source.id===d.id)c.add(e.target.id);if(e.target.id===d.id)c.add(e.source.id);});
+    node.selectAll("circle").attr("opacity",n=>c.has(n.id)?1:0.12).attr("stroke-opacity",n=>c.has(n.id)?0.9:0.08);
+    node.selectAll("text").attr("opacity",n=>c.has(n.id)?1:0.15);
+    link.attr("opacity",e=>((e.source.id===d.id||e.target.id===d.id)?0.9:0.04)).attr("stroke-width",e=>((e.source.id===d.id||e.target.id===d.id)?2.8:1));
+  });
+  node.on("mouseover",function(event,d){
+    tooltip.style("display","block").html(`<strong style="color:${layerColors[d.layer]};">${d.label}</strong><br><em style="color:#888;font-size:0.72rem;">${d.sec}</em><br><br>${d.desc}`);
+  }).on("mousemove",function(event){
+    const rect=container.getBoundingClientRect();let x=event.clientX-rect.left+15,y=event.clientY-rect.top+15;
+    if(x+280>rect.width)x-=295;if(y+120>rect.height)y-=130;
+    tooltip.style("left",x+"px").style("top",y+"px");
+  }).on("mouseout",()=>tooltip.style("display","none"));
+  svg.on("click",()=>{node.selectAll("circle").attr("opacity",1).attr("stroke-opacity",0.3);node.selectAll("text").attr("opacity",1);link.attr("opacity",0.5).attr("stroke-width",d=>(edgeStyles[d.type]||edgeStyles.depends).width);applyAttackMode();});
+  sim.on("tick",()=>{link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);node.attr("transform",d=>`translate(${d.x},${d.y})`);});
+  function dragstart(e,d){if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}
+  function dragged(e,d){d.fx=e.x;d.fy=e.y;}
+  function dragend(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}
+  function applyAttackMode(){
+    const mode=document.getElementById("mdg-attack-select").value;
+    if(mode==="none"){node.selectAll("circle").attr("opacity",1).attr("stroke-opacity",0.3);node.selectAll("text").attr("opacity",1);link.attr("opacity",0.5).attr("stroke-width",d=>(edgeStyles[d.type]||edgeStyles.depends).width);return;}
+    const path=attackPaths[mode];if(!path)return;
+    const ds=new Set(path.defenses);
+    node.selectAll("circle").attr("opacity",n=>ds.has(n.id)?1:0.08).attr("stroke-opacity",n=>ds.has(n.id)?1:0.04);
+    node.selectAll("text").attr("opacity",n=>ds.has(n.id)?1:0.12);
+    link.attr("opacity",e=>(ds.has(e.source.id)&&ds.has(e.target.id))?0.85:0.02).attr("stroke-width",e=>(ds.has(e.source.id)&&ds.has(e.target.id))?2.8:1);
+  }
+  document.getElementById("mdg-attack-select").addEventListener("change",applyAttackMode);
+  document.getElementById("mdg-labels").addEventListener("change",function(){node.selectAll("text").style("display",this.checked?"block":"none");});
+  setTimeout(()=>sim.alpha(0.5).restart(),500);
+})();
+</script>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;@context&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@vocab&quot;</span><span class="fu">:</span> <span class="st">&quot;https://bitaid.org/vocab/&quot;</span><span class="fu">,</span></span>
