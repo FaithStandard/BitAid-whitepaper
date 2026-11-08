@@ -8,7 +8,7 @@ Bitaid lets a person in danger summon capable people nearby and pay them, with n
 
 Violence is decided in the minutes between an attack and the response to it. Self-defence is always there, but one person against several is outmatched; what turns the outcome is a second and third capable person arriving within minutes.
 
-Today nobody who happens to be near is paid to be that person. A bystander has no reason to step in and no cover if he does. Private security bills idle hours, so it guards places for those who can afford them. The police are a monopoly: no prices, no rival, no customer who can leave, so they cannot learn what protection is worth or to whom.
+Today insurance pays after the harm is done, and the rescue you can buy comes from one company's crews, however far away they are. Nothing lets you pay whoever capable can get there first. A bystander has no reason to step in and no cover if he does. Private security bills idle hours, so it guards places for those who can afford them. The police are a monopoly: no prices, no rival, no customer who can leave, so they cannot learn what protection is worth or to whom.
 
 ## The insurance lever
 
