@@ -12,14 +12,14 @@ L = {
    nav=[('Whitepaper', 'index.html'), ('Specification', 'bitaid_v6_specification.html'), ('Foundations', 'bitaid_v6_foundations.html')],
    people='1,000 people paying $2 a month', offer='the offer each of them can summon',
    figcap='Escrowed offers cost nothing until used, and emergencies rarely strike the same people at once: one pooled stake stands behind many offers.',
-   key=('caller','drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled','offer escrowed','bond posted'), block='block'),
+   down='Read', key=('caller','drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled','offer escrowed','bond posted'), block='block'),
  'es': dict(path='brief/es/index.html', up='../../', other='../', other_label='English', lang='es',
    title='Bitaid en dos páginas',
    desc='Ayuda en emergencias, pagada de persona a persona en Bitcoin: el problema, la palanca del seguro, cómo se resuelve un caso, por qué hacer trampa no compensa y lo que ya funciona en la signet pública de Bitcoin.',
    nav=[('Whitepaper', 'index.html'), ('Especificación', 'bitaid_v6_specification.html'), ('Fundamentos', 'bitaid_v6_foundations.html')],
    people='1.000 personas pagando 2 $ al mes', offer='la oferta que cada una puede pedir',
    figcap='Las ofertas en depósito no cuestan nada hasta que se usan, y las emergencias rara vez golpean a las mismas personas a la vez: un mismo depósito respalda muchas ofertas.',
-   key=('quien llama','dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados','oferta depositada','fianza depositada'), block='bloque'),
+   down='Leer', key=('quien llama','dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados','oferta depositada','fianza depositada'), block='bloque'),
 }
 
 CSS = r'''
@@ -27,13 +27,15 @@ CSS = r'''
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#171b38;--text:#e7e7f3;--muted:#a3a6c6;--rule:#2d3466;--row:#1e2346}}
 :root[data-theme="dark"]{--paper:#171b38;--text:#e7e7f3;--muted:#a3a6c6;--rule:#2d3466;--row:#1e2346}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scrollbar-width:thin;scrollbar-color:#3a4386 transparent;scroll-behavior:smooth}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#3a4386;border-radius:8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--text);font-family:"Literata",Georgia,serif;font-size:19px;line-height:1.62;font-optical-sizing:auto}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:2px}
 .skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:9;background:var(--amber);color:#141a3a;padding:.4em .8em}
 /* hero: the night map */
-.hero{position:relative;min-height:min(100svh,940px);background:var(--night);color:var(--ink);overflow:hidden;display:flex;flex-direction:column}
+.hero{position:relative;min-height:min(100svh,940px);background:radial-gradient(ellipse 70% 60% at 68% 42%,#232b63 0%,rgba(35,43,99,0) 70%),linear-gradient(180deg,#1a2050 0%,#141a3a 55%,#0f1330 100%);color:var(--ink);overflow:hidden;display:flex;flex-direction:column}
 .hero svg.map{position:absolute;inset:0;width:100%;height:100%}
 .hero nav{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.3em 1.4em;padding:22px 28px;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:17px;letter-spacing:.02em}
 .hero nav a{text-decoration:none;color:var(--soft)}.hero nav a:hover{color:var(--ink)}
@@ -43,6 +45,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offs
 .hero .lead{font-size:clamp(17px,1.6vw,21px);line-height:1.55;max-width:56ch;color:var(--soft);margin:0}
 .hero .by{margin-top:1.4em;font-family:"Big Shoulders Display",sans-serif;font-size:18px;color:var(--soft)}
 .hero .by a{color:var(--amber2)}
+a.down{transition:opacity .4s;position:absolute;z-index:3;left:50%;bottom:18px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--soft);text-decoration:none;font:600 15px "Big Shoulders Display",sans-serif;padding:6px 12px}
+a.down:hover{color:var(--ink)}a.down svg{width:22px;height:14px;animation:nudge 2.4s ease-in-out 3s 3}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){a.down svg{animation:none}}
 .hero .key{display:flex;flex-wrap:wrap;gap:.4em 1.2em;align-items:center;margin-top:1.1em;font:600 15px "Big Shoulders Display",sans-serif;color:var(--soft)}
 .hero .key span{display:inline-flex;align-items:center;gap:.4em}
 .hero .key svg{width:12px;height:12px}
@@ -50,21 +56,36 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offs
 .hero.ready .words>*{opacity:1;transform:none}
 .hero.ready .words>*:nth-child(2){transition-delay:.15s}.hero.ready .words>*:nth-child(3){transition-delay:.3s}.hero.ready .words>*:nth-child(4){transition-delay:.45s}
 /* the text */
-main{max-width:720px;margin:0 auto;padding:64px 24px 96px}
-main h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,4.4vw,46px);line-height:1;margin:2.2em 0 .5em;letter-spacing:-.005em}
-main h2:first-child{margin-top:0}
+main{max-width:1100px;margin:0 auto;padding:104px 32px 120px}
+main section{display:grid;grid-template-columns:250px minmax(0,690px);gap:0 64px;padding:64px 0;border-top:1px solid var(--rule)}
+main section:first-child{border-top:0;padding-top:0}
+main section>h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,3.6vw,46px);line-height:.98;margin:0;position:sticky;top:28px;align-self:start;text-wrap:balance}
 main p{margin:0 0 1em;hyphens:auto}
-main ol{padding-left:0;list-style:none;counter-reset:step;margin:1.2em 0}
-main ol li{counter-increment:step;position:relative;padding-left:3.1em;margin:0 0 1em}
-main ol li::before{content:counter(step);position:absolute;left:0;top:-.08em;font:800 1.75em/1 "Big Shoulders Display",sans-serif;color:var(--amber);width:1.4em;text-align:right}
-main ul{padding-left:1.1em;margin:1em 0}main ul li{margin:0 0 .75em}main ul li::marker{color:var(--amber)}
 main strong{font-weight:650}
-.tablewrap{overflow-x:auto;margin:1.6em -24px;padding:0 24px}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:15.5px;line-height:1.45}
-th{font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:17px;text-align:left;padding:.5em .7em;border-bottom:2px solid var(--text)}
-td{padding:.65em .7em;border-bottom:1px solid var(--rule);vertical-align:top}
-tbody tr:first-child td{background:var(--row)}
-td:last-child{white-space:nowrap}
+main section:first-child .body>p:first-child{font-size:1.32em;line-height:1.45}
+/* the steps, as a route of numbered cells */
+ol.steps{list-style:none;padding:0;margin:.4em 0 0;counter-reset:step}
+ol.steps li{counter-increment:step;position:relative;padding:0 0 1.5em 66px;min-height:52px}
+ol.steps li::before{content:counter(step);position:absolute;left:0;top:-4px;width:44px;height:50px;display:grid;place-items:center;font:800 22px/1 "Big Shoulders Display",sans-serif;color:#141a3a;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+ol.steps li::after{content:"";position:absolute;left:21px;top:50px;bottom:4px;border-left:2px dotted var(--amber);opacity:.55}
+ol.steps li:last-child::after{display:none}
+/* the claims, side by side */
+ul.claims{list-style:none;padding:0;margin:.4em 0 0;display:grid;grid-template-columns:1fr 1fr;gap:30px 40px}
+ul.claims li{margin:0}
+ul.claims li strong{display:block;font:800 23px/1.05 "Big Shoulders Display",sans-serif;margin-bottom:.35em;letter-spacing:.005em}
+main ul{padding-left:1.1em;margin:.4em 0 1em}main ul li{margin:0 0 .75em}main ul li::marker{color:var(--amber)}
+/* what already runs: each run with its score */
+ol.runs{list-style:none;padding:0;margin:1.2em 0 0;border-top:2px solid var(--text)}
+ol.runs li{display:grid;grid-template-columns:150px 1fr;gap:6px 28px;padding:22px 0;border-bottom:1px solid var(--rule)}
+ol.runs .score{font:800 58px/.9 "Big Shoulders Display",sans-serif;text-decoration:none}
+ol.runs .score small{display:block;margin-top:6px;font:600 16px/1.15 "Big Shoulders Display",sans-serif;color:var(--muted)}
+ol.runs .score.text{font-size:24px;line-height:1.05}
+ol.runs .score.pending{color:var(--amber)}
+ol.runs a.score:hover small{color:var(--text)}
+ol.runs .meta{font:700 17px/1.25 "Big Shoulders Display",sans-serif;color:var(--muted);margin-bottom:.3em}
+ol.runs .what{font-size:.95em;line-height:1.5}
+@media (max-width:900px){main{padding:72px 24px 96px}main section{grid-template-columns:1fr;padding:48px 0}main section>h2{position:static;margin-bottom:.55em}}
+@media (max-width:620px){ul.claims{grid-template-columns:1fr;gap:22px}ol.runs li{grid-template-columns:1fr}ol.runs .score{font-size:46px}main{padding:56px 16px 80px}}
 /* the lever figure */
 figure.lever{margin:2em 0 2.2em;padding:28px;background:var(--night);color:var(--ink);border-radius:4px}
 figure.lever .row{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}
@@ -76,19 +97,18 @@ figure.lever .offer svg{width:96px;height:96px;margin:0 auto}
 figure.lever .offer .big{font:800 54px/1 "Big Shoulders Display",sans-serif;color:var(--amber)}
 figure.lever .offer .k{color:var(--amber2);font-size:17px}
 figure.lever figcaption{margin-top:18px;font-size:15.5px;line-height:1.5;color:var(--soft)}
-.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,940px) - 112px);width:92px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
-.chain .b{flex:none;position:relative;width:92px;height:92px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #3a4386;background:#171d45;border-radius:3px;padding:7px 8px;margin-top:18px}
+.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,940px) - 112px);width:112px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
+.chain .b{flex:none;position:relative;width:112px;height:112px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #3a4386;background:#171d45;border-radius:3px;padding:7px 8px;margin-top:18px}
 .chain .b::before{content:"";position:absolute;left:50%;top:-19px;height:18px;border-left:1px solid #3a4386}
 .chain .b{overflow:visible}
 .chain .b .h{color:#7c82b3;font-weight:600;letter-spacing:.02em}
-.chain .b .e{color:var(--ink);font-size:14px;line-height:1.1}
+.chain .b .e{color:var(--ink);font-size:15px;line-height:1.1}
 .chain .b.reg{border-color:#5d6bb8}
 .chain .b.reg .e{color:var(--strobe)}
 .chain .b.ev{border-color:var(--amber)}
 .chain .b.ev .e{color:var(--amber2)}
 @media (max-width:900px){.hero .chain{display:none}}
-@media (max-width:620px){body{font-size:17.5px}.hero nav{padding:18px 16px}.hero .words{padding:0 16px 64px}main{padding:48px 16px 80px}.tablewrap{margin:1.4em -16px;padding:0 16px}figure.lever{padding:20px}figure.lever .row{grid-template-columns:1fr}figure.lever .offer{width:auto}}
-@media (max-width:620px){table{min-width:0}thead{display:none}table,tbody,tr,td{display:block}tr{padding:.9em 0;border-bottom:1px solid var(--rule)}td{border:0;padding:.1em 0}tbody tr:first-child td{background:none}tbody tr:first-child{background:var(--row);margin:0 -16px;padding:.9em 16px}td:nth-child(1),td:nth-child(2){display:inline;font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:16px;color:var(--muted)}td:nth-child(1)::after{content:" \2014 "}td:last-child{white-space:normal;font-weight:650;margin-top:.3em}.tablewrap{overflow:visible}}
+@media (max-width:620px){body{font-size:17.5px}.hero nav{padding:18px 16px}.hero .words{padding:0 16px 64px}figure.lever{padding:20px}figure.lever .row{grid-template-columns:1fr}figure.lever .offer{width:auto}}
 @media (prefers-reduced-motion:reduce){.words>*{transition:none}}
 footer{max-width:720px;margin:0 auto;padding:0 24px 64px;color:var(--muted);font-size:15px}
 '''
@@ -122,7 +142,7 @@ function shape(kind,x,y){
   return el('circle',{cx:0,cy:0,r:4.5,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
 }
 const chain=document.querySelector('.chain'),EV=chain.dataset.events.split('|'),BL=chain.dataset.block;
-let height=329840,queue=[],btimer=null;
+let height=329840,queue=[],btimer=null,lastEv=false;
 function block(ev,animate){
   if(getComputedStyle(chain).display==='none')return;
   const b=document.createElement('div');b.className='b'+(ev==null?'':ev<3?' ev':' reg');
@@ -139,12 +159,15 @@ function register(){
   m.animate([{opacity:0},{opacity:.6,offset:.25},{opacity:.6,offset:.7},{opacity:0}],{duration:3200,fill:'forwards'});
   setTimeout(()=>m.remove(),3300);return k==='caller'?3:4}
 function tick(){clearTimeout(btimer);if(!running||!visible||document.hidden)return;
-  let ev=queue.length?queue.shift():null;
-  if(ev==null&&Math.random()<.55)ev=register();
-  block(ev,true);btimer=setTimeout(tick,rand(1700,2300))}
+  // most blocks carry nothing of Bitaid's; never two events in a row
+  let ev=null;if(!lastEv){if(queue.length&&Math.random()<.7)ev=queue.shift();else if(!queue.length&&Math.random()<.22)ev=register()}
+  lastEv=ev!=null;block(ev,true);btimer=setTimeout(tick,rand(1300,1800))}
 function oneCase(){
   if(!free.length)return;
-  const c=free[Math.floor(Math.random()*free.length)];
+  // weighted toward the middle of the open area, so wide screens are not all right-side
+  const xs=free.map(f=>f.x),lo=Math.min(...xs),hi=Math.max(...xs),mid=lo+(hi-lo)*.42,spread=Math.max(R*3,(hi-lo)*.32);
+  const w=free.map(f=>Math.exp(-(((f.x-mid)/spread)**2))),tot=w.reduce((a,b)=>a+b,0);let rr=Math.random()*tot,c=free[0];
+  for(let k=0;k<free.length;k++){rr-=w[k];if(rr<=0){c=free[k];break}}
   const cell=el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':0,stroke:AMBER,'stroke-opacity':0},gMarks);
   const halo=el('circle',{cx:c.x,cy:c.y,r:R*0.4,fill:'none',stroke:AMBER,'stroke-width':2,opacity:0},gMove);
   // the alert: the cell lights, a pulse rings out through the neighbouring cells
@@ -174,7 +197,7 @@ function oneCase(){
 }
 function loop(){clearTimeout(timer);if(!running||!visible||document.hidden)return;oneCase();
   timer=setTimeout(loop,first?7600:rand(5800,7800));first=false}
-function start(){build();chain.innerHTML='';queue=[];height=329840;[4,null,3,null,4].forEach(e=>block(e,false));
+function start(){build();chain.innerHTML='';queue=[];height=329840;[4,null,null,3,null,null].forEach(e=>block(e,false));
   if(reduce){ // a still frame: one alert with help on its way, no motion
     hero.classList.add('ready');const c=free[Math.floor(free.length/2)]||cells[0];
     el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':.8},gMarks);
@@ -185,6 +208,7 @@ new IntersectionObserver(es=>{const was=visible;visible=es[0].isIntersecting;if(
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);clearTimeout(btimer)}else if(running&&visible){timer=setTimeout(loop,800);btimer=setTimeout(tick,1200)}});
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(hero.clientWidth-W)>40){clearTimeout(timer);clearTimeout(btimer);start()}},300)});
 start();
+const dn=document.querySelector('a.down');addEventListener('scroll',()=>{dn.style.opacity=scrollY>40?0:1},{passive:true});
 })();
 '''
 
@@ -212,7 +236,28 @@ def build(k):
     by = md_(byline_md)[3:-4]
     lead = md_(lead_md)[3:-4]
     body = md_(body_md)
-    body = body.replace('<table>', '<div class="tablewrap"><table>').replace('</table>', '</table></div>')
+    # what already runs: the table becomes a list of runs, each led by its score
+    rows = [r for r in body_md.split('\n') if r.startswith('|')][2:]
+    items = []
+    for r in rows:
+        date, where, what, res = [x.strip() for x in r.strip('|').split('|')]
+        link = re.match(r'\[(.+?)\]\((.+?)\)', res)
+        text, href = (link.group(1), link.group(2)) if link else (res, None)
+        n = re.match(r'(\d+) (passed|superadas), (0 (?:failed|fallidas))', text)
+        if n:
+            inner = f'{n.group(1)}<small>{n.group(2)}, {n.group(3)}</small>'; cls = 'score'
+        else:
+            inner = text; cls = 'score text' + (' pending' if text in ('Running now', 'En curso') else '')
+        score = f'<a class="{cls}" href="{href}">{inner}</a>' if href else f'<div class="{cls}">{inner}</div>'
+        items.append(f'<li>{score}<div><div class="meta">{date}, {where}</div><div class="what">{md_(what)[3:-4]}</div></div></li>')
+    body = re.sub(r'<table>.*?</table>', '<ol class="runs">' + ''.join(items) + '</ol>', body, flags=re.S)
+    body = body.replace('<ol>', '<ol class="steps">', 1)
+    # the claims (the list of the section on cheating) side by side
+    sec = body.split('<h2>')
+    for i, part in enumerate(sec):
+        if part.startswith(('Why cheating', 'Por qué hacer trampa')):
+            sec[i] = part.replace('<ul>', '<ul class="claims">', 1)
+    body = '<h2>'.join(sec)
     # the lever figure after the paragraph with the numbers
     fig = (f'<figure class="lever"><div class="row"><div>{lever_svg()}<div class="k"><b>{c["people"]}</b></div></div>'
            f'<div class="offer"><svg viewBox="0 0 100 100" width="96" height="96" aria-hidden="true"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="#f3a73b"/></svg>'
@@ -220,6 +265,9 @@ def build(k):
            f'<figcaption>{c["figcap"]}</figcaption></figure>')
     m = re.search(r'<p>[^<]*(?:\$8,000|8\.000 \$)[^<]*</p>', body)
     body = body[:m.end()] + fig + body[m.end():]
+    # each section: its heading in the left column, its text in the right
+    parts = body.split('<h2>')[1:]
+    body = ''.join('<section><h2>' + x.replace('</h2>', '</h2><div class="body">', 1) + '</div></section>' for x in parts)
     up = c['up']
     nav = ''.join(f'<a href="{up}{h}">{t}</a>' for t, h in c['nav']) + f'<a class="lang" href="{c["other"]}" hreflang="{"es" if k == "en" else "en"}">{c["other_label"]}</a>'
     url = 'https://bitaid-whitepaper.pages.dev/' + c['path'].replace('index.html', '')
@@ -257,6 +305,7 @@ def build(k):
 <div class="key" aria-hidden="true"><span><svg viewBox="-6 -6 12 12"><circle r="4.2" fill="none" stroke="#f3a73b" stroke-width="1.8"/></svg>{c['key'][0]}</span><span><svg viewBox="-6 -7 12 12"><polygon points="0,-6 5.5,4 -5.5,4" fill="#a9c4ff"/></svg>{c['key'][1]}</span><span><svg viewBox="-6 -6 12 12"><circle r="4.5" fill="#a9c4ff"/></svg>{c['key'][2]}</span><span><svg viewBox="-6 -6 12 12"><rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#a9c4ff"/></svg>{c['key'][3]}</span></div>
 </div>
 
+<a class="down" href="#text">{c['down']}<svg viewBox="0 0 22 14" aria-hidden="true"><polyline points="2,2 11,11 20,2" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></a>
 </header>
 <main id="text">
 {body}
