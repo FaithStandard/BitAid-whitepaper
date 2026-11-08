@@ -15,6 +15,7 @@ This repository holds the documents and serves them as the site above.
 | **Whitepaper** | [Read](https://bitaid-whitepaper.pages.dev/) | The argument: why the protocol works and why it matters. Start here. |
 | **Specification** | [Read](https://bitaid-whitepaper.pages.dev/bitaid_v6_specification.html) | Precisely how it works, for implementers and auditors: scripts, messages, parameters, and the record of what has been tested. |
 | **Foundations** | [Read](https://bitaid-whitepaper.pages.dev/bitaid_v6_foundations.html) | The case at full length — the market, judgment without authority, bootstrapping, resilience, evolution without governance — with the theoretical foundations and the objections answered. |
+| **Brief** | [Read](https://bitaid-whitepaper.pages.dev/brief/) · [Español](https://bitaid-whitepaper.pages.dev/brief/es/) | Bitaid in two pages: the problem, the insurance lever, how a case runs, and what already runs on real chains. Start here if you have five minutes. |
 | **A Palatable Guide** | [Read](https://bitaid-whitepaper.pages.dev/BitaidGuide/) | The protocol problem by problem, for a general reader. |
 
 All three main documents are version 6.0.
@@ -27,6 +28,7 @@ All three main documents are version 6.0.
 | `bitaid_v6_specification.html` | the Specification |
 | `bitaid_v6_foundations.html` | the Foundations |
 | `BitaidGuide/index.html` | the Guide |
+| `brief/index.html`, `brief/es/index.html` | the two-page brief, in English and Spanish |
 | `bitaid_v5_24.md` | the earlier single-document version 5.24, as plain text prepared for review by AI models; kept for reference |
 
 Each page is self-contained: one HTML file with its figures inline. The site is served as-is, with no build step.
