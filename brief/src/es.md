@@ -2,19 +2,19 @@
 
 Noviembre de 2026 · [@fiatstandard](https://x.com/fiatstandard)
 
-Bitaid permite que una persona en peligro llame a gente capaz que está cerca y le pague, sin centralita, sin empresa y sin token. Cada pago en que puede terminar el caso se firma antes de que nadie tenga motivo para disputarlo, así que quien decide el resultado puede elegir uno, pero nunca quedarse el dinero. Ya funciona de principio a fin en la red pública de pruebas de Bitcoin, a través de Tor, entre un PC, un móvil y una tableta.
+Bitaid permite que una persona en peligro llame a gente capaz que está cerca y le pague, sin centralita, sin token y sin ninguna empresa en medio. Cada pago en que puede terminar el caso se firma antes de que nadie tenga motivo para disputarlo, así que quien decide el resultado puede elegir uno, pero nunca quedarse el dinero. Ya funciona de principio a fin en la red pública de pruebas de Bitcoin, a través de Tor, entre un PC, un móvil y una tableta.
 
 ## El problema
 
 La violencia se decide en los minutos entre el ataque y la respuesta. La defensa propia siempre está, pero una persona contra varias está en desventaja; lo que cambia el desenlace es que lleguen una segunda y una tercera persona capaces en cuestión de minutos.
 
-Hoy nadie cobra por ser esa persona. Un transeúnte no tiene motivo para intervenir ni respaldo si lo hace. La seguridad privada factura horas muertas, así que protege lugares de quien puede pagarlas. La policía es un monopolio: sin precios, sin rivales y sin clientes que puedan irse, no puede saber cuánto vale la protección ni para quién.
+Hoy nadie que esté cerca cobra por ser esa persona. Un transeúnte no tiene motivo para intervenir ni respaldo si lo hace. La seguridad privada factura horas muertas, así que protege lugares de quien puede pagarlas. La policía es un monopolio: sin precios, sin rivales y sin clientes que puedan irse, no puede saber cuánto vale la protección ni para quién.
 
 ## La palanca del seguro
 
 Una oferta de Bitaid queda en depósito por adelantado y no cuesta nada hasta que se usa: el dinero espera como bitcoin sin gastar, sin pagar sueldos por horas muertas. Y como las emergencias rara vez golpean a las mismas personas a la vez, una aseguradora puede respaldar muchas ofertas con un mismo depósito.
 
-Mil personas pagando dos dólares al mes pueden, cada una, pedir ayuda con una oferta de 8.000 $: un apalancamiento de unos trescientos a uno. Recompensas de ese tamaño atraen a los respondedores más capaces y financian los equipos, drones y médicos que compiten por llegar primero.
+Mil personas pagando dos dólares al mes pueden, cada una, pedir ayuda con una oferta de 8.000 $: un apalancamiento de unos trescientos a uno. Ese apalancamiento descansa en que las emergencias son raras y dispersas, y en que la aseguradora mantiene reservas propias para los años malos; la prima pone precio a ambas cosas. Suscribirlo permite que el capital en bitcoin rinda bitcoin asumiendo riesgos reales, sin prestarlo. Recompensas de ese tamaño atraen a los respondedores más capaces y financian los equipos, drones y médicos que compiten por llegar primero.
 
 Y entonces manda el propio interés de la aseguradora. Con suficiente capital comprometido, le compensa mantener sus propios vigilantes y patrullas cerca de sus clientes: disuaden las emergencias que sus ofertas tendrían que pagar y, cuando ocurre una, son los primeros en llegar y recuperan la recompensa que ella misma depositó. Menos siniestros permiten primas más bajas, que atraen más clientes, cuyas primas financian más patrullas. Ese círculo virtuoso convierte a las aseguradoras en proveedoras de seguridad que compiten en precio y en rapidez, pagadas por resultados y no por horas muertas.
 
@@ -32,9 +32,9 @@ Bitaid no decreta un derecho a la seguridad ni convence a nadie de pagarla; sube
 
 ## Por qué hacer trampa no compensa
 
-- **Quien decide nunca tiene el dinero.** Elige entre pagos firmados de antemano, cada uno solo a las partes. Ningún resultado le paga a él.
+- **Quien decide nunca tiene el dinero.** Elige entre pagos firmados de antemano, cada uno solo a las partes. Ningún resultado le paga a él. Un fallo equivocado aún puede elegir el pago equivocado, y para eso están las fianzas, las revisiones y la restitución.
 - **Cada rol deposita una fianza mayor que lo que podría ganar haciendo trampa.** Un árbitro que vota contra el fallo final pierde parte de ella.
-- **Falsear la escena es lo difícil.** Grabaciones coherentes desde varias cámaras independientes, con su hash desde el momento de tomarlas, quedan fuera del alcance práctico.
+- **Falsear la escena es lo difícil.** Una grabación con su hash desde el momento de tomarla no se puede editar después, y una escena montada tiene que sostenerse ante varias cámaras independientes y ante quienes estuvieron allí.
 - **El peso se gana, no se compra.** El voto de un respondedor cuenta según el trabajo pagado que hizo en esa zona; el puesto de un árbitro, según los casos que ya juzgó. Ambos maduran con un tiempo de calendario que nadie puede comprar.
 - **Cualquier caso se puede reabrir.** Si tres paneles nuevos revocan un veredicto, se incauta toda la fianza del caso a quienes lo votaron, y con ella se indemniza a los perjudicados.
 - **Nada que capturar.** Sin token, sin empresa, sin administrador, sin votaciones de gobierno. El orden y la firmeza vienen de Bitcoin.
