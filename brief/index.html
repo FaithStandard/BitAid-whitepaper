@@ -38,11 +38,12 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offs
 .hero .lead{font-size:clamp(17px,1.6vw,21px);line-height:1.55;max-width:56ch;color:var(--soft);margin:0}
 .hero .by{margin-top:1.4em;font-family:"Big Shoulders Display",sans-serif;font-size:18px;color:var(--soft)}
 .hero .by a{color:var(--amber2)}
-.hero button.replay{position:absolute;z-index:2;right:24px;bottom:24px;background:none;border:1px solid var(--grid);color:var(--soft);font:600 15px "Big Shoulders Display",sans-serif;padding:.35em .9em;border-radius:3px;cursor:pointer}
-.hero button.replay:hover{color:var(--ink);border-color:var(--soft)}
+.hero .key{display:flex;flex-wrap:wrap;gap:.4em 1.2em;align-items:center;margin-top:1.1em;font:600 15px "Big Shoulders Display",sans-serif;color:var(--soft)}
+.hero .key span{display:inline-flex;align-items:center;gap:.4em}
+.hero .key svg{width:12px;height:12px}
 .words>*{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform .9s ease}
 .hero.ready .words>*{opacity:1;transform:none}
-.hero.ready .words>*:nth-child(2){transition-delay:.15s}.hero.ready .words>*:nth-child(3){transition-delay:.3s}
+.hero.ready .words>*:nth-child(2){transition-delay:.15s}.hero.ready .words>*:nth-child(3){transition-delay:.3s}.hero.ready .words>*:nth-child(4){transition-delay:.45s}
 /* the text */
 main{max-width:720px;margin:0 auto;padding:64px 24px 96px}
 main h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,4.4vw,46px);line-height:1;margin:2.2em 0 .5em;letter-spacing:-.005em}
@@ -85,8 +86,9 @@ footer{max-width:720px;margin:0 auto;padding:0 24px 64px;color:var(--muted);font
 <h1>Emergency help, paid peer to peer on Bitcoin</h1>
 <p class="lead">Bitaid lets a person in danger summon capable people nearby and pay them, with no dispatcher, no company and no token. Every payout the case can end in is signed before anyone has a reason to dispute, so whoever decides the outcome can pick one but never take the money. It now runs end to end on Bitcoin's public test network, over Tor, between a PC, a phone and a tablet.</p>
 <p class="by">November 2026 · <a href="https://x.com/fiatstandard">@fiatstandard</a></p>
+<div class="key" aria-hidden="true"><span><svg viewBox="-6 -7 12 12"><polygon points="0,-6 5.5,4 -5.5,4" fill="#a9c4ff"/></svg>drone</span><span><svg viewBox="-6 -6 12 12"><circle r="4.5" fill="#a9c4ff"/></svg>responder</span><span><svg viewBox="-6 -6 12 12"><rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#a9c4ff"/></svg>team</span></div>
 </div>
-<button class="replay" type="button">Replay</button>
+
 </header>
 <main id="text">
 <h2>The problem</h2>
@@ -192,44 +194,70 @@ footer{max-width:720px;margin:0 auto;padding:0 24px 64px;color:var(--muted);font
 (function(){
 const svg=document.querySelector('svg.map'),hero=document.querySelector('.hero'),NS='http://www.w3.org/2000/svg';
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let W,H,R,cx,cy,cells=[],timers=[];
-function hex(x,y,r){let p=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);p.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1))}return p.join(' ')}
-function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e}
+const AMBER='#f3a73b',STROBE='#a9c4ff',GRID='#2b3470';
+let W,H,R,dx,dy,cells=[],free=[],gCells,gMarks,gMove,running=false,visible=true,timer=null,first=true;
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function hexPts(x,y,r){let p=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);p.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1))}return p.join(' ')}
+function rand(a,b){return a+Math.random()*(b-a)}
+// areas the text covers, so alerts never sit under words
+function blocked(){const h=hero.getBoundingClientRect(),out=[];
+  hero.querySelectorAll('nav,.words>*').forEach(e=>{const r=e.getBoundingClientRect();if(r.width)out.push({l:r.left-h.left-R,t:r.top-h.top-R,r:r.right-h.left+R,b:r.bottom-h.top+R})});return out}
 function build(){
-  svg.innerHTML='';cells=[];W=hero.clientWidth;H=hero.clientHeight;R=Math.max(26,Math.min(44,W/34));
-  svg.setAttribute('viewBox','0 0 '+W+' '+H);
-  const dx=Math.sqrt(3)*R,dy=1.5*R;
-  // the alert: upper right on wide screens, upper middle on phones
-  const ax=W>760?W*0.68:W*0.8,ay=W>760?H*0.36:Math.min(130,H*0.16);let best=1e9,ac=null;
-  const g=el('g',{});svg.appendChild(g);
-  for(let r=-1,y=0;y<H+R;r++,y=r*dy){for(let c=-1;;c++){const x=c*dx+(r%2?dx/2:0);if(x>W+R)break;
-    const p=el('polygon',{points:hex(x,y,R*0.94),fill:'none',stroke:'#2b3470','stroke-width':1});g.appendChild(p);
-    const d=Math.hypot(x-ax,y-ay);cells.push({p,x,y,d});if(d<best){best=d;ac={x,y,p}}}}
-  cx=ac.x;cy=ac.y;
-  const halo=el('circle',{cx,cy,r:R*0.4,fill:'#f3a73b',opacity:0});svg.appendChild(halo);
-  ac.p.setAttribute('fill','#f3a73b');ac.p.setAttribute('fill-opacity','0');
-  // three responders, from three directions, a few cells out
-  const starts=(W>760?[[-7,3],[6,4],[-2,-5]]:[[-5,4],[1,5],[-6,-1]]).map(([i,j])=>({x:cx+i*dx*0.5*(W>760?1.6:1),y:cy+j*dy*0.55}));
-  const dots=starts.map(s=>{const d=el('circle',{cx:s.x,cy:s.y,r:5,fill:'#a9c4ff',opacity:0});svg.appendChild(d);return {d,s}});
-  return {ac,halo,dots};
+  svg.innerHTML='';cells=[];W=hero.clientWidth;H=hero.clientHeight;R=Math.max(24,Math.min(42,W/34));
+  dx=Math.sqrt(3)*R;dy=1.5*R;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  gCells=el('g',{},svg);gMarks=el('g',{},svg);gMove=el('g',{},svg);
+  for(let r=-1;r*dy<H+R;r++)for(let c=-1;;c++){const x=c*dx+(r%2?dx/2:0),y=r*dy;if(x>W+R)break;
+    cells.push({x,y,p:el('polygon',{points:hexPts(x,y,R*0.94),fill:'none',stroke:GRID,'stroke-width':1},gCells)})}
+  const bl=blocked();
+  free=cells.filter(c=>c.x>R&&c.x<W-R&&c.y>R&&c.y<H-R&&!bl.some(b=>c.x>b.l&&c.x<b.r&&c.y>b.t&&c.y<b.b));
 }
-function run(){
-  timers.forEach(clearTimeout);timers=[];hero.classList.remove('ready');
-  const {ac,halo,dots}=build();
-  if(reduce){ac.p.setAttribute('fill-opacity','.85');dots.forEach(o=>{o.d.setAttribute('cx',cx+(o.s.x-cx)*.12);o.d.setAttribute('cy',cy+(o.s.y-cy)*.12);o.d.setAttribute('opacity',1)});hero.classList.add('ready');return}
-  const t0=performance.now();
-  // the pulse: cells light by distance from the alert, then fade
-  cells.forEach(c=>{const delay=300+c.d*1.6;if(delay>2600)return;timers.push(setTimeout(()=>{c.p.animate([{stroke:'#f3a73b',strokeOpacity:0.9},{stroke:'#2b3470',strokeOpacity:1}],{duration:1100,easing:'ease-out',fill:'forwards'})},delay))});
-  ac.p.animate([{fillOpacity:0},{fillOpacity:.95},{fillOpacity:.55},{fillOpacity:.85}],{duration:1600,delay:150,fill:'forwards'});
-  halo.animate([{r:R*0.4,opacity:.55},{r:R*4.2,opacity:0}],{duration:1700,delay:200,easing:'ease-out',iterations:2});
-  // responders converge
-  dots.forEach((o,i)=>{const fx=cx+(o.s.x-cx)*.12,fy=cy+(o.s.y-cy)*.12;
-    o.d.animate([{opacity:0,cx:o.s.x,cy:o.s.y},{opacity:1,cx:o.s.x,cy:o.s.y,offset:.18},{opacity:1,cx:fx,cy:fy}],{duration:2300,delay:900+i*220,easing:'cubic-bezier(.3,.1,.2,1)',fill:'forwards'})});
-  timers.push(setTimeout(()=>hero.classList.add('ready'),1500));
+// responder shapes: person (dot), drone (small fast triangle), team (larger square)
+function shape(kind,x,y){
+  if(kind==='drone')return el('polygon',{points:'0,-6 5.5,4 -5.5,4',fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
+  if(kind==='team')return el('rect',{x:-5.5,y:-5.5,width:11,height:11,rx:2,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
+  return el('circle',{cx:0,cy:0,r:4.5,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
 }
-document.querySelector('button.replay').addEventListener('click',run);
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(hero.clientWidth-W)>40)run()},300)});
-run();
+function oneCase(){
+  if(!free.length)return;
+  const c=free[Math.floor(Math.random()*free.length)];
+  const cell=el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':0,stroke:AMBER,'stroke-opacity':0},gMarks);
+  const halo=el('circle',{cx:c.x,cy:c.y,r:R*0.4,fill:'none',stroke:AMBER,'stroke-width':2,opacity:0},gMove);
+  // the alert: the cell lights, a pulse rings out through the neighbouring cells
+  cell.animate([{fillOpacity:0},{fillOpacity:.95,offset:.15},{fillOpacity:.75}],{duration:1400,fill:'forwards'});
+  halo.animate([{r:R*0.5,opacity:.9},{r:R*4.5,opacity:0}],{duration:1700,easing:'ease-out',iterations:2});
+  cells.forEach(o=>{const d=Math.hypot(o.x-c.x,o.y-c.y);if(d<R*6)o.p.animate([{stroke:AMBER,strokeOpacity:.85},{stroke:GRID,strokeOpacity:1}],{duration:1100,delay:d*1.8,easing:'ease-out'})});
+  // help arrives: a drone first, then people and sometimes a team, from different directions
+  const kinds=['drone','person','person'];if(Math.random()<.6)kinds.push('team');
+  const base=rand(0,Math.PI*2),movers=[];
+  kinds.forEach((k,i)=>{const a=base+i*(Math.PI*2/kinds.length)+rand(-.4,.4),dist=R*(k==='drone'?rand(5,7):rand(3.2,5));
+    const sx=c.x+Math.cos(a)*dist,sy=c.y+Math.sin(a)*dist,fx=c.x+Math.cos(a)*R*.42,fy=c.y+Math.sin(a)*R*.42;
+    const m=shape(k,sx,sy),rot=k==='drone'?` rotate(${(a*180/Math.PI)-90})`:'';
+    const dur=k==='drone'?1500:k==='team'?2600:2300,delay=700+(k==='drone'?0:500+i*260);
+    m.animate([{opacity:0,transform:`translate(${sx}px,${sy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`},
+               {opacity:1,offset:.12,transform:`translate(${sx}px,${sy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`},
+               {opacity:1,transform:`translate(${fx}px,${fy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`}],
+              {duration:dur,delay,easing:'cubic-bezier(.3,.1,.2,1)',fill:'forwards'});
+    movers.push(m)});
+  // the case closes: help leaves, the cell settles into a faint resolved mark that stays
+  setTimeout(()=>{movers.forEach(m=>m.animate([{opacity:1},{opacity:0}],{duration:900,fill:'forwards'}));
+    cell.animate([{fillOpacity:.75,strokeOpacity:0},{fillOpacity:.07,strokeOpacity:.35}],{duration:1400,fill:'forwards',easing:'ease-out'});
+    setTimeout(()=>{movers.forEach(m=>m.remove());halo.remove()},1000);
+    // keep only the last dozen resolved marks
+    while(gMarks.childNodes.length>12)gMarks.firstChild.remove();
+  },5200);
+}
+function loop(){clearTimeout(timer);if(!running||!visible||document.hidden)return;oneCase();
+  timer=setTimeout(loop,first?7600:rand(5800,7800));first=false}
+function start(){build();
+  if(reduce){ // a still frame: one alert with help on its way, no motion
+    hero.classList.add('ready');const c=free[Math.floor(free.length/2)]||cells[0];
+    el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':.8},gMarks);
+    [['drone',-1.2],['person',.9],['person',2.6]].forEach(([k,a])=>{const m=shape(k,c.x+Math.cos(a)*R*1.3,c.y+Math.sin(a)*R*1.3);m.setAttribute('opacity',1)});return}
+  running=true;first=true;setTimeout(()=>hero.classList.add('ready'),1500);loop()}
+new IntersectionObserver(es=>{const was=visible;visible=es[0].isIntersecting;if(visible&&!was&&running)loop();else if(!visible)clearTimeout(timer)}).observe(hero);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTimeout(timer);else if(running&&visible)timer=setTimeout(loop,800)});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(hero.clientWidth-W)>40){clearTimeout(timer);start()}},300)});
+start();
 })();
 </script>
 </body>
