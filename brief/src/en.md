@@ -45,7 +45,7 @@ A working prototype in Rust runs every role: callers, responders, archivists, th
 
 | Date | Where | What ran | Result |
 | --- | --- | --- | --- |
-| Nov 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a bond forfeiture, the timelocked fallback | Running now |
+| Nov 8, 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a wrong attestation refused by the network, a bond forfeiture, the timelocked fallback | [15 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | Nov 7, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | The staged review: three fresh panels overturn a verdict; the wrong arbitrators lose their stakes, which repay the wronged responder and the dissenter who was right | [74 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
 | Nov 7, 2026 | Same run, plus a hostile stranger | Floods, garbage, oversized and replayed messages, fake block heights, connection storms aimed at the network while the case ran. The case finished, and every node refused the fake height | Undisturbed |
 | Nov 6, 2026 | Bitcoin public signet, over Tor | A full disputed case: a split vote, two arbitration tiers, an appeal, missed deadlines replaced, penalties, all payouts on chain | [71 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_2026-11-06.txt) |

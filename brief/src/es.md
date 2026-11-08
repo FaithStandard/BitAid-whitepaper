@@ -45,7 +45,7 @@ Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, arc
 
 | Fecha | Dónde | Qué se probó | Resultado |
 | --- | --- | --- | --- |
-| nov. 2026 | Liquid testnet | Los depósitos: financiación, un incidente cofirmado por el grupo, los pagos prefirmados, la pérdida de una fianza, la salida por bloqueo temporal | En curso |
+| 8 nov. 2026 | Liquid testnet | Los depósitos: financiación, un incidente cofirmado por el grupo, los pagos prefirmados, una atestación equivocada rechazada por la red, la pérdida de una fianza, la salida por bloqueo temporal | [15 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | 7 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | La revisión escalonada: tres paneles nuevos revocan un veredicto; los árbitros equivocados pierden su fianza, que indemniza al respondedor perjudicado y al disidente que acertó | [74 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
 | 7 nov. 2026 | La misma prueba, con un extraño hostil | Avalanchas de mensajes, basura, mensajes enormes y repetidos, alturas de bloque falsas y tormentas de conexiones contra la red mientras corría el caso. El caso terminó y todos los nodos rechazaron la altura falsa | Sin alteraciones |
 | 6 nov. 2026 | Signet pública de Bitcoin, por Tor | Un caso disputado completo: voto dividido, dos niveles de arbitraje, una apelación, plazos incumplidos reemplazados, sanciones, todos los pagos en cadena | [71 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_2026-11-06.txt) |
