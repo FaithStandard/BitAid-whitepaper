@@ -2,19 +2,19 @@
 
 November 2026 · [@fiatstandard](https://x.com/fiatstandard)
 
-Bitaid lets a person in danger summon capable people nearby and pay them, with no dispatcher, no company and no token. Every payout the case can end in is signed before anyone has a reason to dispute, so whoever decides the outcome can pick one but never take the money. It now runs end to end on Bitcoin's public test network, over Tor, between a PC, a phone and a tablet.
+Bitaid lets a person in danger summon capable people nearby and pay them, with no dispatcher, no token and no company in the middle. Every payout the case can end in is signed before anyone has a reason to dispute, so whoever decides the outcome can pick one but never take the money. It now runs end to end on Bitcoin's public test network, over Tor, between a PC, a phone and a tablet.
 
 ## The problem
 
 Violence is decided in the minutes between an attack and the response to it. Self-defence is always there, but one person against several is outmatched; what turns the outcome is a second and third capable person arriving within minutes.
 
-Today nobody is paid to be that person. A bystander has no reason to step in and no cover if he does. Private security bills idle hours, so it guards places for those who can afford them. The police are a monopoly: no prices, no rival, no customer who can leave, so they cannot learn what protection is worth or to whom.
+Today insurance pays after the harm is done, and the rescue you can buy comes from one company's crews, however far away they are. Nothing lets you pay whoever capable can get there first. A bystander has no reason to step in and no cover if he does. Private security bills idle hours, so it guards places for those who can afford them. The police are a monopoly: no prices, no rival, no customer who can leave, so they cannot learn what protection is worth or to whom.
 
 ## The insurance lever
 
 A Bitaid offer is escrowed in advance and costs nothing until it is used: the money waits as unspent bitcoin, paying no wages for idle hours. And because emergencies rarely strike the same people at once, an insurer can stand one stake behind many offers.
 
-A thousand people paying two dollars a month can each summon help with an offer of $8,000: leverage of some three hundred to one. Bounties that size draw the most capable responders, and fund the teams, drones and medics that compete to arrive first.
+A thousand people paying two dollars a month can each summon help with an offer of $8,000: leverage of some three hundred to one. That leverage rests on emergencies being rare and spread out, and on the insurer holding reserves of its own for the bad years; the premium prices both. Underwriting it lets bitcoin capital earn bitcoin from real risk, without lending it out. Bounties that size draw the most capable responders, and fund the teams, drones and medics that compete to arrive first.
 
 Then the insurer's own interest takes over. With enough capital committed, it pays to keep its own guards and patrols near its clients: they deter the emergencies its offers would otherwise pay for, and when one happens they are first on the scene, earning back the bounty it escrowed. Fewer claims mean lower premiums, which bring more clients, whose premiums fund more patrols. That flywheel turns insurers into security providers that compete on price and on how fast they arrive, paid for results rather than idle hours.
 
@@ -32,9 +32,9 @@ Bitaid does not declare a right to security or persuade anyone to pay for it; it
 
 ## Why cheating does not pay
 
-- **Those who decide never hold the money.** They choose among payouts signed in advance, each paying only the parties. No outcome pays them.
+- **Those who decide never hold the money.** They choose among payouts signed in advance, each paying only the parties. No outcome pays them. A wrong ruling can still pick the wrong payout, which is what the bonds, reviews and restitution are for.
 - **Every role stakes a bond larger than what cheating could win.** An arbitrator who votes against the final ruling forfeits part of it.
-- **Faking the scene is the hard part.** Consistent footage from several independent cameras, hashed the moment it was taken, is beyond practical reach.
+- **Faking the scene is the hard part.** Footage hashed the moment it is taken cannot be edited afterwards, and a staged scene must hold up across several independent cameras and the people who were there.
 - **Weight is earned, not bought.** A responder's vote counts by the paid work done in that area; an arbitrator's seat by the cases already judged. Both season over calendar time no one can buy.
 - **Any case can be reopened.** Three fresh panels that overturn a verdict seize the whole case stake of those who voted for it, and repay the wronged.
 - **Nothing to capture.** No token, no company, no administrator, no governance vote. Ordering and finality come from Bitcoin.
@@ -45,7 +45,7 @@ A working prototype in Rust runs every role: callers, responders, archivists, th
 
 | Date | Where | What ran | Result |
 | --- | --- | --- | --- |
-| Nov 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a bond forfeiture, the timelocked fallback | Running now |
+| Nov 8, 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a wrong attestation refused by the network, a bond forfeiture, the timelocked fallback | [15 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | Nov 7, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | The staged review: three fresh panels overturn a verdict; the wrong arbitrators lose their stakes, which repay the wronged responder and the dissenter who was right | [74 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
 | Nov 7, 2026 | Same run, plus a hostile stranger | Floods, garbage, oversized and replayed messages, fake block heights, connection storms aimed at the network while the case ran. The case finished, and every node refused the fake height | Undisturbed |
 | Nov 6, 2026 | Bitcoin public signet, over Tor | A full disputed case: a split vote, two arbitration tiers, an appeal, missed deadlines replaced, penalties, all payouts on chain | [71 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_2026-11-06.txt) |
