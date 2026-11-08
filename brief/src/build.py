@@ -59,16 +59,26 @@ a.down:hover{color:var(--ink)}a.down svg{width:22px;height:14px;animation:nudge 
 main{max-width:1100px;margin:0 auto;padding:104px 32px 120px}
 main section{display:grid;grid-template-columns:250px minmax(0,690px);gap:0 64px;padding:64px 0;border-top:1px solid var(--rule)}
 main section:first-child{border-top:0;padding-top:0}
-main section>h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,3.6vw,46px);line-height:.98;margin:0;position:sticky;top:28px;align-self:start;text-wrap:balance}
+main section>.side{position:sticky;top:28px;align-self:start}
+main section>.side h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,3.6vw,46px);line-height:.98;margin:0;text-wrap:balance}
 main p{margin:0 0 1em;hyphens:auto}
+.wrench{display:block;width:170px;height:auto;margin-top:34px;color:var(--text)}
+.wrench .tag{fill:var(--amber)}
+.wrench text{font:800 15px "Big Shoulders Display",sans-serif;fill:#141a3a}
+@media (max-width:900px){.wrench{width:120px;margin:14px 0 6px}}
+p.statement{font:800 clamp(30px,3.4vw,44px)/1.05 "Big Shoulders Display",sans-serif;margin:1.4em 0 .2em;padding-left:22px;border-left:5px solid var(--amber);text-wrap:balance;hyphens:manual}
 main strong{font-weight:650}
 main section:first-child .body>p:first-child{font-size:1.32em;line-height:1.45}
 /* the steps, as a route of numbered cells */
 ol.steps{list-style:none;padding:0;margin:.4em 0 0;counter-reset:step}
 ol.steps li{counter-increment:step;position:relative;padding:0 0 1.5em 66px;min-height:52px}
 ol.steps li::before{content:counter(step);position:absolute;left:0;top:-4px;width:44px;height:50px;display:grid;place-items:center;font:800 22px/1 "Big Shoulders Display",sans-serif;color:#141a3a;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
-ol.steps li::after{content:"";position:absolute;left:21px;top:50px;bottom:4px;border-left:2px dotted var(--amber);opacity:.55}
-ol.steps li:last-child::after{display:none}
+ol.steps{position:relative}
+ol.steps .route{position:absolute;left:21px;top:30px;bottom:44px;width:2px;background:repeating-linear-gradient(to bottom,var(--amber) 0 3px,transparent 3px 7px);opacity:.4}
+ol.steps .fill{position:absolute;left:21px;top:30px;width:2px;height:0;background:var(--amber)}
+ol.steps li{z-index:1}
+ol.steps li::before{transition:filter .5s,opacity .5s}
+.js ol.steps li:not(.on)::before{filter:saturate(.15);opacity:.45}
 /* the claims, side by side */
 ul.claims{list-style:none;padding:0;margin:.4em 0 0;display:grid;grid-template-columns:1fr 1fr;gap:30px 40px}
 ul.claims li{margin:0}
@@ -84,9 +94,11 @@ ol.runs .score.pending{color:var(--amber)}
 ol.runs a.score:hover small{color:var(--text)}
 ol.runs .meta{font:700 17px/1.25 "Big Shoulders Display",sans-serif;color:var(--muted);margin-bottom:.3em}
 ol.runs .what{font-size:.95em;line-height:1.5}
-@media (max-width:900px){main{padding:72px 24px 96px}main section{grid-template-columns:1fr;padding:48px 0}main section>h2{position:static;margin-bottom:.55em}}
+@media (max-width:900px){main{padding:72px 24px 96px}main section{grid-template-columns:1fr;padding:48px 0}main section>.side{position:static;margin-bottom:.55em}}
 @media (max-width:620px){ul.claims{grid-template-columns:1fr;gap:22px}ol.runs li{grid-template-columns:1fr}ol.runs .score{font-size:46px}main{padding:56px 16px 80px}}
 /* the lever figure */
+figure.lever .offer svg polygon{transition:opacity .7s .9s,transform .7s .9s;transform-origin:50% 50%;transform-box:fill-box}
+.js figure.lever:not(.on) .offer svg polygon{opacity:.15;transform:scale(.7)}
 figure.lever{margin:2em 0 2.2em;padding:28px;background:var(--night);color:var(--ink);border-radius:4px}
 figure.lever .row{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}
 figure.lever svg{width:100%;height:auto;display:block}
@@ -213,13 +225,49 @@ const dn=document.querySelector('a.down');addEventListener('scroll',()=>{dn.styl
 '''
 
 
+WRENCH = (
+    '<svg class="wrench" viewBox="0 0 200 150" role="img" aria-label="a $5 wrench">'
+    '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
+    '<path d="M48 104 L132 40"/><path d="M56 114 L140 50"/>'
+    '<path d="M48 104 C30 104 18 114 20 128 L34 122 L42 132 L30 142 C46 146 60 132 56 114"/>'
+    '<path d="M132 40 C130 26 142 14 156 16 C170 18 178 32 172 46 C166 58 150 60 140 50"/>'
+    '<circle cx="156" cy="35" r="9"/>'
+    '<path d="M150 58 C146 72 140 80 128 88" stroke-width="1.6"/>'
+    '</g>'
+    '<g transform="rotate(-12 116 102)"><path class="tag" d="M100 88 L136 88 L146 100 L136 112 L100 112 Z"/>'
+    '<circle cx="134" cy="100" r="3" fill="#141a3a"/>'
+    '<text x="104" y="106">$5</text></g>'
+    '</svg>')
+
+JS2 = r'''
+(function(){
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.documentElement.classList.add('js');
+const ol=document.querySelector('ol.steps'),fill=ol&&ol.querySelector('.fill'),lis=ol?[...ol.querySelectorAll('li')]:[];
+function route(){if(!ol)return;const r=ol.getBoundingClientRect(),y=innerHeight*0.6;
+  const rt=ol.querySelector('.route'),total=rt.offsetHeight;let h=Math.max(0,Math.min(total,y-r.top-30));
+  if(reduce)h=total;fill.style.height=h+'px';lis.forEach(li=>{li.classList.toggle('on',reduce||li.getBoundingClientRect().top<y)})}
+addEventListener('scroll',route,{passive:true});addEventListener('resize',route);route();
+const fig=document.querySelector('figure.lever'),sweep=fig&&fig.querySelector('.sweep');
+const nums=[...document.querySelectorAll('ol.runs .score')].map(e=>{const t=e.firstChild;const n=t&&t.nodeType===3?parseInt(t.textContent,10):NaN;return isNaN(n)?null:{e,t,n}}).filter(Boolean);
+if(reduce){if(fig)fig.classList.add('on');return}
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);
+  if(en.target===fig){fig.classList.add('on');const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1400);sweep.setAttribute('width',(400*(1-Math.pow(1-k,3))).toFixed(1));if(k<1)requestAnimationFrame(f)})(t0)}
+  else{const o=nums.find(o=>o.e===en.target);if(!o)return;const t0=performance.now();
+    (function f(t){const k=Math.min(1,(t-t0)/900);o.t.textContent=Math.round(o.n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)}}),{threshold:.35});
+if(fig){sweep.setAttribute('width','0');io.observe(fig)}
+nums.forEach(o=>{o.t.textContent='0';io.observe(o.e)});
+})();
+'''
+
+
 def lever_svg():
     # 1,000 people: 40 x 25 dots
-    s = ['<svg viewBox="0 0 400 250" role="img" aria-hidden="true">']
+    s = ['<svg viewBox="0 0 400 250" role="img" aria-hidden="true"><defs><clipPath id="sw"><rect class="sweep" x="0" y="0" height="250" width="400"/></clipPath></defs><g clip-path="url(#sw)">']
     for i in range(1000):
         x, y = 5 + (i % 40) * 10, 5 + (i // 40) * 10
         s.append(f'<circle cx="{x}" cy="{y}" r="2.6" fill="#a9c4ff"/>')
-    s.append('</svg>')
+    s.append('</g></svg>')
     return ''.join(s)
 
 
@@ -267,7 +315,12 @@ def build(k):
     body = body[:m.end()] + fig + body[m.end():]
     # each section: its heading in the left column, its text in the right
     parts = body.split('<h2>')[1:]
-    body = ''.join('<section><h2>' + x.replace('</h2>', '</h2><div class="body">', 1) + '</div></section>' for x in parts)
+    def side(x, i):
+        art = WRENCH if i == 0 else ''
+        return '<section><div class="side"><h2>' + x.replace('</h2>', '</h2>' + art + '</div><div class="body">', 1) + '</div></section>'
+    body = ''.join(side(x, i) for i, x in enumerate(parts))
+    body = re.sub(r'<p>(Bitaid (?:does not declare|no decreta)[^<]*)</p>', r'<p class="statement">\1</p>', body)
+    body = body.replace('<ol class="steps">', '<ol class="steps"><span class="route" aria-hidden="true"></span><span class="fill" aria-hidden="true"></span>', 1)
     up = c['up']
     nav = ''.join(f'<a href="{up}{h}">{t}</a>' for t, h in c['nav']) + f'<a class="lang" href="{c["other"]}" hreflang="{"es" if k == "en" else "en"}">{c["other_label"]}</a>'
     url = 'https://bitaid-whitepaper.pages.dev/' + c['path'].replace('index.html', '')
@@ -311,6 +364,7 @@ def build(k):
 {body}
 </main>
 <script>{JS}</script>
+<script>{JS2}</script>
 </body>
 </html>
 '''
