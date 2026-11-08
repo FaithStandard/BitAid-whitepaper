@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitaid en dos páginas</title>
+<meta name="description" content="Ayuda en emergencias, pagada de persona a persona en Bitcoin: cómo funciona, por qué hacer trampa no compensa, la palanca del seguro y lo que ya funciona en la signet pública de Bitcoin.">
+<meta property="og:title" content="Bitaid en dos páginas">
+<meta property="og:description" content="Ayuda en emergencias, pagada de persona a persona en Bitcoin: cómo funciona, por qué hacer trampa no compensa, la palanca del seguro y lo que ya funciona en la signet pública de Bitcoin.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bitaid-whitepaper.pages.dev/brief/es/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@fiatstandard">
+<link rel="alternate" hreflang="en" href="https://bitaid-whitepaper.pages.dev/brief/">
+<link rel="alternate" hreflang="es" href="https://bitaid-whitepaper.pages.dev/brief/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--serif:"EB Garamond",Georgia,"Times New Roman",serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+--text:#1a1a18;--muted:#5a5a56;--rule:#d8d6ce;--accent:#8b0000;--bg:#faf9f6;--paper:#ffffff;--code:#f4f2ec;--row:#fafaf5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--text:#e8e6df;--muted:#a8a69e;--rule:#3a3a36;--accent:#e07070;--bg:#141413;--paper:#1c1c1a;--code:#262623;--row:#222220}}
+:root[data-theme="dark"]{--text:#e8e6df;--muted:#a8a69e;--rule:#3a3a36;--accent:#e07070;--bg:#141413;--paper:#1c1c1a;--code:#262623;--row:#222220}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--text)}
+body{margin:0;font-family:var(--serif);font-size:18px;line-height:1.6;background:var(--bg)}
+.page{max-width:760px;margin:0 auto;padding:3rem 2.2rem 6rem;background:var(--paper);box-shadow:0 0 0 1px var(--rule)}
+nav.docs{font-family:var(--sans);font-size:.78rem;text-align:center;margin-bottom:1.5rem;color:var(--muted)}
+nav.docs a{color:var(--muted);margin:0 .5rem}
+nav.docs a.cur{color:var(--text);font-weight:600;text-decoration:none}
+h1{font-size:1.9rem;text-align:center;line-height:1.25;margin:.5rem 0 .4rem;font-weight:600}
+h1+p{text-align:center;color:var(--muted);font-family:var(--sans);font-size:.8rem;margin-bottom:2rem}
+h2{font-size:1.35rem;margin:2.6rem 0 .8rem;padding-bottom:.25rem;border-bottom:1px solid var(--rule);font-weight:600}
+h3{font-size:1.12rem;margin:1.9rem 0 .6rem;font-weight:600}
+h4{font-family:var(--sans);font-size:.88rem;margin:1.6rem 0 .5rem;text-transform:none;font-weight:600}
+p{margin:0 0 1rem;text-align:justify;hyphens:auto}
+a{color:var(--accent)}
+ul,ol{padding-left:1.5rem;margin:0 0 1rem}
+li{margin:.25rem 0}
+code{font-family:var(--mono);font-size:.82em;background:var(--code);padding:.05em .3em;border-radius:3px}
+pre{background:var(--code);padding:.9rem 1rem;overflow-x:auto;border-radius:4px;font-size:.8rem;line-height:1.45}
+pre code{background:none;padding:0;font-size:1em}
+table{border-collapse:collapse;width:100%;margin:.8rem 0 1.2rem;font-family:var(--sans);font-size:.78rem;line-height:1.45;display:block;overflow-x:auto}
+th,td{border:1px solid var(--rule);padding:.35rem .6rem;vertical-align:top;text-align:left}
+thead th{background:var(--row);font-weight:600}
+tbody tr:nth-child(odd){background:var(--row)}
+blockquote{margin:1rem 0;padding:.2rem 1rem;border-left:3px solid var(--rule);color:var(--muted)}
+#TOC{font-family:var(--sans);font-size:.82rem;border:1px solid var(--rule);padding:1rem 1.2rem;margin:1.5rem 0 2rem;background:var(--row)}
+#TOC ul{list-style:none;padding-left:1rem;margin:0}#TOC>ul{padding-left:0}
+#TOC a{color:var(--text);text-decoration:none}#TOC a:hover{text-decoration:underline}
+.abstract p{font-size:.95em}
+.fig{margin:1.4rem 0 .4rem}.fig svg{width:100%;height:auto;display:block}.fig+p em{display:block;text-align:center;font-size:.86em;color:var(--muted)}.fig+p{text-align:center}
+@media (max-width:640px){.fig[style]{margin:1rem 0!important}body{font-size:16.5px}.page{padding:1.5rem 16px 4rem}p{text-align:left}}
+@media print{.page{box-shadow:none;max-width:none}nav.docs{display:none}}
+</style>
+<style>
+.brief table{font-family:var(--sans);font-size:.86em;border-collapse:collapse;width:100%;display:block;overflow-x:auto}
+.brief th,.brief td{text-align:left;vertical-align:top;padding:.45em .6em;border-bottom:1px solid rgba(127,127,127,.3)}
+.brief .byline{color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+<div class="page brief">
+<nav class="docs"><a href="../../index.html">Whitepaper</a> · <a href="../../bitaid_v6_specification.html">Specification</a> · <a href="../../bitaid_v6_foundations.html">Foundations</a> · <a href="../index.html">Brief (English)</a> · <a href="index.html" class="cur">Español</a></nav>
+<h1>Bitaid: ayuda en emergencias, pagada de persona a persona en Bitcoin</h1>
+<p class="byline">Noviembre de 2026 · <a href="https://x.com/fiatstandard">@fiatstandard</a></p>
+<p>Bitaid permite que una persona en peligro llame a gente capaz que está cerca y le pague, sin centralita, sin empresa y sin token. Cada pago en que puede terminar el caso se firma antes de que nadie tenga motivo para disputarlo, así que quien decide el resultado puede elegir uno, pero nunca quedarse el dinero. Ya funciona de principio a fin en la red pública de pruebas de Bitcoin, a través de Tor, entre un PC, un móvil y una tableta.</p>
+<h2>El problema</h2>
+<p>La violencia se decide en los minutos entre el ataque y la respuesta. La defensa propia siempre está, pero una persona contra varias está en desventaja; lo que cambia el desenlace es que lleguen una segunda y una tercera persona capaces en cuestión de minutos.</p>
+<p>Hoy nadie cobra por ser esa persona. Un transeúnte no tiene motivo para intervenir ni respaldo si lo hace. La seguridad privada factura horas muertas, así que protege lugares de quien puede pagarlas. La policía es un monopolio: sin precios, sin rivales y sin clientes que puedan irse, no puede saber cuánto vale la protección ni para quién.</p>
+<h2>La palanca del seguro</h2>
+<p>Una oferta de Bitaid queda en depósito por adelantado y no cuesta nada hasta que se usa: el dinero espera como bitcoin sin gastar, sin pagar sueldos por horas muertas. Y como las emergencias rara vez golpean a las mismas personas a la vez, una aseguradora puede respaldar muchas ofertas con un mismo depósito.</p>
+<p>Mil personas pagando dos dólares al mes pueden, cada una, pedir ayuda con una oferta de 8.000 $: un apalancamiento de unos trescientos a uno. Recompensas de ese tamaño atraen a los respondedores más capaces y financian los equipos, drones y médicos que compiten por llegar primero. Bitaid no decreta un derecho a la seguridad ni convence a nadie de pagarla; sube el precio que se paga por salvar vidas y bienes, y deja que el mercado responda.</p>
+<h2>Cómo se resuelve un caso</h2>
+<ol>
+<li><strong>Antes de cualquier emergencia</strong>, quien llama (o su aseguradora) deja una oferta en depósito en bitcoin. Queda en un script que nadie puede gastar a solas; si la emergencia nunca llega, vuelve a su dueño.</li>
+<li><strong>La alerta</strong> llega a los respondedores con fianza de la zona. Cada uno que acepta deposita su propia fianza.</li>
+<li><strong>En cerca de un minuto</strong>, los dispositivos de las partes firman cada pago en que puede terminar el caso: en la red pública de pruebas, 39 pagos posibles para tres respondedores. Después no se puede añadir ninguno.</li>
+<li><strong>Todos graban.</strong> Quien reclama un pago debe probar lo que hizo con su propia grabación, así que cada escena queda filmada desde varios ángulos. Cada grabación se resume en un hash y se ancla en Bitcoin.</li>
+<li><strong>Votan los que estuvieron allí</strong>, a ciegas y punto por punto: quién acudió, quién ayudó, qué pasó. Si coinciden, queda resuelto.</li>
+<li><strong>Si no coinciden</strong>, árbitros seudónimos sorteados responden preguntas de hecho concretas sobre las grabaciones. Cada uno arriesga su fianza si se equivoca. Una parte puede pagar un panel mayor, y una muestra de veredictos la revisan de nuevo tres paneles nuevos.</li>
+<li><strong>Una atestación elige uno de los pagos ya firmados</strong> y se emite. El dinero va directo del depósito a quienes se lo ganaron.</li>
+</ol>
+<h2>Por qué hacer trampa no compensa</h2>
+<ul>
+<li><strong>Quien decide nunca tiene el dinero.</strong> Elige entre pagos firmados de antemano, cada uno solo a las partes. Ningún resultado le paga a él.</li>
+<li><strong>Cada rol deposita una fianza mayor que lo que podría ganar haciendo trampa.</strong> Un árbitro que vota contra el fallo final pierde parte de ella.</li>
+<li><strong>Falsear la escena es lo difícil.</strong> Grabaciones coherentes desde varias cámaras independientes, con su hash desde el momento de tomarlas, quedan fuera del alcance práctico.</li>
+<li><strong>El peso se gana, no se compra.</strong> El voto de un respondedor cuenta según el trabajo pagado que hizo en esa zona; el puesto de un árbitro, según los casos que ya juzgó. Ambos maduran con un tiempo de calendario que nadie puede comprar.</li>
+<li><strong>Cualquier caso se puede reabrir.</strong> Si tres paneles nuevos revocan un veredicto, se incauta toda la fianza del caso a quienes lo votaron, y con ella se indemniza a los perjudicados.</li>
+<li><strong>Nada que capturar.</strong> Sin token, sin empresa, sin administrador, sin votaciones de gobierno. El orden y la firmeza vienen de Bitcoin.</li>
+</ul>
+<h2>Lo que ya funciona</h2>
+<p>Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, archivistas, el grupo oráculo de firma por umbral y los árbitros. Cada comprobación de abajo es un script que pasa o falla en una cadena real, con los registros publicados.</p>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Dónde</th>
+<th>Qué se probó</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nov. 2026</td>
+<td>Liquid testnet</td>
+<td>Los depósitos: financiación, un incidente cofirmado por el grupo, los pagos prefirmados, la pérdida de una fianza, la salida por bloqueo temporal</td>
+<td>En curso</td>
+</tr>
+<tr>
+<td>7 nov. 2026</td>
+<td>Signet pública de Bitcoin, por Tor, PC + móvil + tableta</td>
+<td>La revisión escalonada: tres paneles nuevos revocan un veredicto; los árbitros equivocados pierden su fianza, que indemniza al respondedor perjudicado y al disidente que acertó</td>
+<td><a href="https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt">74 superadas, 0 fallidas</a></td>
+</tr>
+<tr>
+<td>7 nov. 2026</td>
+<td>La misma prueba, con un extraño hostil</td>
+<td>Avalanchas de mensajes, basura, mensajes enormes y repetidos, alturas de bloque falsas y tormentas de conexiones contra la red mientras corría el caso</td>
+<td>El caso terminó sin alteraciones; todos los nodos rechazaron la altura falsa</td>
+</tr>
+<tr>
+<td>6 nov. 2026</td>
+<td>Signet pública de Bitcoin, por Tor</td>
+<td>Un caso disputado completo: voto dividido, dos niveles de arbitraje, una apelación, plazos incumplidos reemplazados, sanciones, todos los pagos en cadena</td>
+<td><a href="https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_2026-11-06.txt">71 superadas, 0 fallidas</a></td>
+</tr>
+<tr>
+<td>29 oct. 2026</td>
+<td>Signet privada, por Tor</td>
+<td>El mismo caso en una red de pruebas privada</td>
+<td><a href="https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_signet_tor_2026-10-29.txt">84 superadas, 0 fallidas</a></td>
+</tr>
+<tr>
+<td>oct. 2026</td>
+<td>Simulaciones económicas</td>
+<td>Ocho experimentos, miles de casos cada uno: el trabajo honesto da beneficio; los veredictos perezosos, comprados o montados pierden con las reglas adoptadas</td>
+<td><a href="https://github.com/FaithStandard/Bitaid-prototype/tree/main/sim">Reproducibles con un solo comando</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Lo que aún falta</h2>
+<ul>
+<li><strong>Todos los nodos son nuestros por ahora.</strong> Los tramposos de estas pruebas hacen trampa porque un script se lo indica. Operadores independientes, con sus propias estrategias, son el siguiente hito.</li>
+<li><strong>Los plazos se estiraron</strong> para encajar en bloques de diez minutos y móviles por Tor. Pasar cada plazo a alturas de bloque, como ya exige la especificación, es lo siguiente.</li>
+<li><strong>Aún no hay revisión externa</strong> de la criptografía (FROST, MuSig2, los scripts) ni de los incentivos.</li>
+<li><strong>Solo monedas de prueba.</strong> El prototipo no debe custodiar fondos reales.</li>
+</ul>
+<h2>Cómo ayudar</h2>
+<ul>
+<li><strong>Opera un nodo</strong> en el piloto de pruebas que viene, e intenta romperlo. Los ataques que funcionan son lo más útil que alguien puede enviar.</li>
+<li><strong>Revisa la criptografía</strong>: el oráculo por umbral (FROST con ROAST), los conjuntos de pagos prefirmados (MuSig2) y los scripts Taproot.</li>
+<li><strong>Ataca los incentivos</strong>: las simulaciones son abiertas; cambia un supuesto y mira qué se rompe.</li>
+<li><strong>Pruébalo en un piloto</strong>: aseguradoras, empresas de seguridad y comunidades donde la ayuda llega tarde o no llega.</li>
+</ul>
+<p>Issues y pull requests son bienvenidos en ambos repositorios.</p>
+<h2>Para leer más (en inglés)</h2>
+<ul>
+<li><a href="https://bitaid-whitepaper.pages.dev/">Whitepaper</a>: el argumento completo</li>
+<li><a href="https://bitaid-whitepaper.pages.dev/bitaid_v6_specification.html">Especificación</a>: scripts, mensajes, parámetros y el registro de cada prueba</li>
+<li><a href="https://github.com/FaithStandard/Bitaid-prototype">Prototipo</a>: el código en Rust, los registros de pruebas y las simulaciones</li>
+</ul>
+</div>
+</body>
+</html>
