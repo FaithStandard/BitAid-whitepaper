@@ -12,14 +12,14 @@ L = {
    nav=[('Whitepaper', 'index.html'), ('Specification', 'bitaid_v6_specification.html'), ('Foundations', 'bitaid_v6_foundations.html')],
    people='1,000 people paying $2 a month', offer='the offer each of them can summon',
    figcap='Escrowed offers cost nothing until used, and emergencies rarely strike the same people at once: one pooled stake stands behind many offers.',
-   key=('drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled'), block='block'),
+   key=('caller','drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled','offer escrowed','bond posted'), block='block'),
  'es': dict(path='brief/es/index.html', up='../../', other='../', other_label='English', lang='es',
    title='Bitaid en dos páginas',
    desc='Ayuda en emergencias, pagada de persona a persona en Bitcoin: el problema, la palanca del seguro, cómo se resuelve un caso, por qué hacer trampa no compensa y lo que ya funciona en la signet pública de Bitcoin.',
    nav=[('Whitepaper', 'index.html'), ('Especificación', 'bitaid_v6_specification.html'), ('Fundamentos', 'bitaid_v6_foundations.html')],
    people='1.000 personas pagando 2 $ al mes', offer='la oferta que cada una puede pedir',
    figcap='Las ofertas en depósito no cuestan nada hasta que se usan, y las emergencias rara vez golpean a las mismas personas a la vez: un mismo depósito respalda muchas ofertas.',
-   key=('dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados'), block='bloque'),
+   key=('quien llama','dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados','oferta depositada','fianza depositada'), block='bloque'),
 }
 
 CSS = r'''
@@ -76,12 +76,14 @@ figure.lever .offer svg{width:96px;height:96px;margin:0 auto}
 figure.lever .offer .big{font:800 54px/1 "Big Shoulders Display",sans-serif;color:var(--amber)}
 figure.lever .offer .k{color:var(--amber2);font-size:17px}
 figure.lever figcaption{margin-top:18px;font-size:15.5px;line-height:1.5;color:var(--soft)}
-.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,940px) - 112px);width:150px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
-.chain .b{flex:none;position:relative;border:1px solid #3a4386;background:#171d45;border-radius:3px;padding:7px 9px;margin-top:18px;overflow:hidden}
+.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,940px) - 112px);width:92px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
+.chain .b{flex:none;position:relative;width:92px;height:92px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #3a4386;background:#171d45;border-radius:3px;padding:7px 8px;margin-top:18px}
 .chain .b::before{content:"";position:absolute;left:50%;top:-19px;height:18px;border-left:1px solid #3a4386}
 .chain .b{overflow:visible}
 .chain .b .h{color:#7c82b3;font-weight:600;letter-spacing:.02em}
-.chain .b .e{color:var(--ink);font-size:14px;margin-top:2px}
+.chain .b .e{color:var(--ink);font-size:14px;line-height:1.1}
+.chain .b.reg{border-color:#5d6bb8}
+.chain .b.reg .e{color:var(--strobe)}
 .chain .b.ev{border-color:var(--amber)}
 .chain .b.ev .e{color:var(--amber2)}
 @media (max-width:900px){.hero .chain{display:none}}
@@ -102,7 +104,7 @@ function hexPts(x,y,r){let p=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-3
 function rand(a,b){return a+Math.random()*(b-a)}
 // areas the text covers, so alerts never sit under words
 function blocked(){const h=hero.getBoundingClientRect(),out=[];
-  hero.querySelectorAll('nav,.words>*,.chain').forEach(e=>{const r=e.getBoundingClientRect();if(r.width)out.push({l:r.left-h.left-R,t:r.top-h.top-R,r:r.right-h.left+R,b:r.bottom-h.top+R})});return out}
+  hero.querySelectorAll('nav,.words>*,.chain').forEach(e=>{const r=e.getBoundingClientRect();if(r.width)out.push({l:r.left-h.left-R*1.4,t:r.top-h.top-R*1.5,r:r.right-h.left+R*1.4,b:r.bottom-h.top+R*1.4})});return out}
 function build(){
   svg.innerHTML='';cells=[];W=hero.clientWidth;H=hero.clientHeight;R=Math.max(24,Math.min(42,W/34));
   dx=Math.sqrt(3)*R;dy=1.5*R;svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -116,21 +118,30 @@ function build(){
 function shape(kind,x,y){
   if(kind==='drone')return el('polygon',{points:'0,-6 5.5,4 -5.5,4',fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
   if(kind==='team')return el('rect',{x:-5.5,y:-5.5,width:11,height:11,rx:2,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
+  if(kind==='caller')return el('circle',{cx:0,cy:0,r:4.2,fill:'none',stroke:AMBER,'stroke-width':1.8,transform:`translate(${x},${y})`,opacity:0},gMove);
   return el('circle',{cx:0,cy:0,r:4.5,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
 }
 const chain=document.querySelector('.chain'),EV=chain.dataset.events.split('|'),BL=chain.dataset.block;
 let height=329840,queue=[],btimer=null;
 function block(ev,animate){
   if(getComputedStyle(chain).display==='none')return;
-  const b=document.createElement('div');b.className='b'+(ev!=null?' ev':'');
+  const b=document.createElement('div');b.className='b'+(ev==null?'':ev<3?' ev':' reg');
   b.innerHTML='<div class="h">'+BL+' '+(height++).toLocaleString(document.documentElement.lang)+'</div>'+(ev!=null?'<div class="e">'+EV[ev]+'</div>':'');
   chain.appendChild(b);
   if(animate){const h=b.offsetHeight;b.animate([{marginTop:(-h)+'px',opacity:0},{marginTop:'18px',opacity:1}],{duration:700,easing:'cubic-bezier(.3,.1,.2,1)'});
-    if(ev!=null)b.animate([{boxShadow:'0 0 0 3px rgba(243,167,59,.55)'},{boxShadow:'0 0 0 0 rgba(243,167,59,0)'}],{duration:1600,delay:300})}
+    if(ev!=null&&ev<3)b.animate([{boxShadow:'0 0 0 3px rgba(243,167,59,.55)'},{boxShadow:'0 0 0 0 rgba(243,167,59,0)'}],{duration:1600,delay:300})}
   while(chain.children.length>9)chain.firstChild.remove();
 }
+function register(){
+  if(!free.length)return null;const c=free[Math.floor(Math.random()*free.length)];
+  const k=['caller','caller','person','person','drone','team'][Math.floor(Math.random()*6)];
+  const m=shape(k,c.x+rand(-R*.4,R*.4),c.y+rand(-R*.4,R*.4));
+  m.animate([{opacity:0},{opacity:.6,offset:.25},{opacity:.6,offset:.7},{opacity:0}],{duration:3200,fill:'forwards'});
+  setTimeout(()=>m.remove(),3300);return k==='caller'?3:4}
 function tick(){clearTimeout(btimer);if(!running||!visible||document.hidden)return;
-  block(queue.length?queue.shift():null,true);btimer=setTimeout(tick,rand(1700,2300))}
+  let ev=queue.length?queue.shift():null;
+  if(ev==null&&Math.random()<.55)ev=register();
+  block(ev,true);btimer=setTimeout(tick,rand(1700,2300))}
 function oneCase(){
   if(!free.length)return;
   const c=free[Math.floor(Math.random()*free.length)];
@@ -163,12 +174,12 @@ function oneCase(){
 }
 function loop(){clearTimeout(timer);if(!running||!visible||document.hidden)return;oneCase();
   timer=setTimeout(loop,first?7600:rand(5800,7800));first=false}
-function start(){build();chain.innerHTML='';queue=[];height=329840;[null,null,null,null,null].forEach(e=>block(e,false));
+function start(){build();chain.innerHTML='';queue=[];height=329840;[4,null,3,null,4].forEach(e=>block(e,false));
   if(reduce){ // a still frame: one alert with help on its way, no motion
     hero.classList.add('ready');const c=free[Math.floor(free.length/2)]||cells[0];
     el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':.8},gMarks);
     [['drone',-1.2],['person',.9],['person',2.6]].forEach(([k,a])=>{const m=shape(k,c.x+Math.cos(a)*R*1.3,c.y+Math.sin(a)*R*1.3);m.setAttribute('opacity',1)});
-    [null,0,null,1,null,2].forEach(e=>block(e,false));return}
+    [3,4,0,null,1,2].forEach(e=>block(e,false));return}
   running=true;first=true;setTimeout(()=>hero.classList.add('ready'),1500);loop();btimer=setTimeout(tick,1200)}
 new IntersectionObserver(es=>{const was=visible;visible=es[0].isIntersecting;if(visible&&!was&&running){loop();tick()}else if(!visible){clearTimeout(timer);clearTimeout(btimer)}}).observe(hero);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);clearTimeout(btimer)}else if(running&&visible){timer=setTimeout(loop,800);btimer=setTimeout(tick,1200)}});
@@ -243,7 +254,7 @@ def build(k):
 <h1>{title_main}</h1>
 <p class="lead">{lead}</p>
 <p class="by">{by}</p>
-<div class="key" aria-hidden="true"><span><svg viewBox="-6 -7 12 12"><polygon points="0,-6 5.5,4 -5.5,4" fill="#a9c4ff"/></svg>{c['key'][0]}</span><span><svg viewBox="-6 -6 12 12"><circle r="4.5" fill="#a9c4ff"/></svg>{c['key'][1]}</span><span><svg viewBox="-6 -6 12 12"><rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#a9c4ff"/></svg>{c['key'][2]}</span></div>
+<div class="key" aria-hidden="true"><span><svg viewBox="-6 -6 12 12"><circle r="4.2" fill="none" stroke="#f3a73b" stroke-width="1.8"/></svg>{c['key'][0]}</span><span><svg viewBox="-6 -7 12 12"><polygon points="0,-6 5.5,4 -5.5,4" fill="#a9c4ff"/></svg>{c['key'][1]}</span><span><svg viewBox="-6 -6 12 12"><circle r="4.5" fill="#a9c4ff"/></svg>{c['key'][2]}</span><span><svg viewBox="-6 -6 12 12"><rect x="-5.5" y="-5.5" width="11" height="11" rx="2" fill="#a9c4ff"/></svg>{c['key'][3]}</span></div>
 </div>
 
 </header>
