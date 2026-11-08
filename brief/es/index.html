@@ -30,13 +30,16 @@ a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:2px}
 .skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:9;background:var(--amber);color:#141a3a;padding:.4em .8em}
 /* hero: the night map */
-.hero{position:relative;min-height:min(100svh,940px);background:radial-gradient(ellipse 70% 60% at 68% 42%,#232b63 0%,rgba(35,43,99,0) 70%),linear-gradient(180deg,#1a2050 0%,#141a3a 55%,#0f1330 100%);color:var(--ink);overflow:hidden;display:flex;flex-direction:column}
+.hero{position:relative;min-height:min(100svh,1200px);background:radial-gradient(ellipse 70% 60% at 68% 42%,#232b63 0%,rgba(35,43,99,0) 70%),linear-gradient(180deg,#1a2050 0%,#141a3a 55%,#0f1330 100%);color:var(--ink);overflow:hidden;display:flex;flex-direction:column}
 .hero svg.map{position:absolute;inset:0;width:100%;height:100%}
 .hero nav{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.3em 1.4em;padding:22px 28px;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:17px;letter-spacing:.02em}
 .hero nav a{text-decoration:none;color:var(--soft)}.hero nav a:hover{color:var(--ink)}
 .hero nav .lang{margin-left:auto;color:var(--amber2)}
 .hero .words{position:relative;z-index:2;margin-top:auto;padding:0 28px 56px;max-width:1080px}
-.hero h1{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(52px,9.4vw,132px);line-height:.9;letter-spacing:-.005em;margin:0 0 .28em;max-width:11ch;text-wrap:balance}
+.hero h1{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(44px,min(9vw,10.5vh),128px);line-height:.9;letter-spacing:-.005em;margin:0 0 .28em;max-width:12ch;text-wrap:balance}
+html[lang="es"] .hero h1{max-width:16ch;font-size:clamp(40px,min(8vw,9vh),116px)}
+@media (max-height:700px) and (min-width:621px){.hero nav{padding-top:14px;padding-bottom:10px}.hero .words{padding-bottom:30px!important}.hero .key{margin-top:.6em}.hero .by{margin-top:.6em!important}}
+@media (max-height:820px) and (min-width:621px){.hero .lead{font-size:16.5px;line-height:1.5}.hero .words{padding-bottom:44px}.hero .by{margin-top:1em}}
 .hero .lead{font-size:clamp(17px,1.6vw,21px);line-height:1.55;max-width:56ch;color:var(--soft);margin:0}
 .hero .by{margin-top:1.4em;font-family:"Big Shoulders Display",sans-serif;font-size:18px;color:var(--soft)}
 .hero .by a{color:var(--amber2)}
@@ -104,7 +107,7 @@ figure.lever .offer svg{width:96px;height:96px;margin:0 auto}
 figure.lever .offer .big{font:800 54px/1 "Big Shoulders Display",sans-serif;color:var(--amber)}
 figure.lever .offer .k{color:var(--amber2);font-size:17px}
 figure.lever figcaption{margin-top:18px;font-size:15.5px;line-height:1.5;color:var(--soft)}
-.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,940px) - 112px);width:112px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
+.hero .chain{position:absolute;z-index:1;right:28px;top:84px;height:calc(min(100svh,1200px) - 112px);width:112px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font:600 13px/1.2 "Big Shoulders Display",sans-serif;color:var(--soft);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}
 .chain .b{flex:none;position:relative;width:112px;height:112px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #3a4386;background:#171d45;border-radius:3px;padding:7px 8px;margin-top:18px}
 .chain .b::before{content:"";position:absolute;left:50%;top:-19px;height:18px;border-left:1px solid #3a4386}
 .chain .b{overflow:visible}
