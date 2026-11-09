@@ -12,14 +12,16 @@ L = {
    nav=[('Whitepaper', 'index.html'), ('Specification', 'bitaid_v6_specification.html'), ('Foundations', 'bitaid_v6_foundations.html')],
    people='1,000 people paying $2 a month', offer='the offer each of them can summon',
    figcap='Escrowed offers cost nothing until used, and emergencies rarely strike the same people at once: one pooled stake stands behind many offers.',
-   down='Read', key=('caller','drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled','offer escrowed','bond posted'), block='block'),
+   down='Read', key=('caller','drone','person','team'), skip='Skip to the brief', events=('incident signed','evidence anchored','payouts settled','offer escrowed','bond posted'), block='block',
+   quote='Give me a place to stand, and I will move the earth.', cite='Archimedes'),
  'es': dict(path='brief/es/index.html', up='../../', other='../', other_label='English', lang='es',
    title='Bitaid en dos páginas',
    desc='Ayuda en emergencias, pagada de persona a persona en Bitcoin: el problema, la palanca del seguro, cómo se resuelve un caso, por qué hacer trampa no compensa y lo que ya funciona en la signet pública de Bitcoin.',
    nav=[('Whitepaper', 'index.html'), ('Especificación', 'bitaid_v6_specification.html'), ('Fundamentos', 'bitaid_v6_foundations.html')],
    people='1.000 personas pagando 2 $ al mes', offer='la oferta que cada una puede pedir',
    figcap='Las ofertas en depósito no cuestan nada hasta que se usan, y las emergencias rara vez golpean a las mismas personas a la vez: un mismo depósito respalda muchas ofertas.',
-   down='Leer', key=('quien llama','dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados','oferta depositada','fianza depositada'), block='bloque'),
+   down='Leer', key=('quien llama','dron','persona','equipo'), skip='Ir al texto', events=('incidente firmado','pruebas ancladas','pagos liquidados','oferta depositada','fianza depositada'), block='bloque',
+   quote='Dadme un punto de apoyo y moveré el mundo.', cite='Arquímedes'),
 }
 
 CSS = r'''
@@ -65,10 +67,13 @@ main section:first-child{border-top:0;padding-top:0}
 main section>.side{position:sticky;top:28px;align-self:start}
 main section>.side h2{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(34px,3.6vw,46px);line-height:.98;margin:0;text-wrap:balance}
 main p{margin:0 0 1em;hyphens:auto}
-.wrench{display:block;width:170px;height:auto;margin-top:34px;color:var(--text)}
+.wrench,.archimedes svg{display:block;width:170px;height:auto;margin-top:34px;color:var(--text)}
+.archimedes{margin:0}.archimedes .globe{stroke:var(--amber)}
+.archimedes blockquote{margin:16px 0 0;font-style:italic;font-size:16px;line-height:1.45;color:var(--muted);max-width:22ch}
+.archimedes cite{display:block;margin-top:6px;font:700 15px "Big Shoulders Display",sans-serif;font-style:normal;color:var(--muted)}
 .wrench .tag{fill:var(--amber)}
 .wrench text{font:800 15px "Big Shoulders Display",sans-serif;fill:#141a3a}
-@media (max-width:900px){.wrench{width:120px;margin:14px 0 6px}}
+@media (max-width:900px){.wrench,.archimedes svg{width:120px;margin:14px 0 6px}.archimedes blockquote{max-width:none;margin-top:8px}}
 p.statement{font:800 clamp(30px,3.4vw,44px)/1.05 "Big Shoulders Display",sans-serif;margin:1.4em 0 .2em;padding-left:22px;border-left:5px solid var(--amber);text-wrap:balance;hyphens:manual}
 main strong{font-weight:650}
 main section:first-child .body>p:first-child{font-size:1.32em;line-height:1.45}
@@ -255,6 +260,20 @@ WRENCH = (
     '<text x="104" y="106">$5</text></g>'
     '</svg>')
 
+# Archimedes' lever, in the wrench's line: a long beam pressed down at the left, a fulcrum near the
+# right, and the earth (in amber, as the wrench's tag) on the short end
+LEVER = (
+    '<svg viewBox="2 14 196 118" role="img" aria-label="a lever moving the earth">'
+    '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
+    '<path d="M10 126 C40 122 70 128 100 124 C130 120 160 127 192 124"/>'
+    '<path d="M18 54 L176 116"/><path d="M15 61 L173 123" stroke-width="1.6"/>'
+    '<path d="M137 125 L149 106 L161 125"/>'
+    '<path d="M18 22 L18 44 M11 36 L18 45 L25 36" stroke-width="2.2"/>'
+    '</g>'
+    '<g class="globe" fill="none" stroke-width="3"><circle cx="164" cy="84" r="25"/>'
+    '<ellipse cx="164" cy="84" rx="11" ry="25" stroke-width="1.8"/><path d="M139 84 L189 84 M143 71 L185 71 M143 97 L185 97" stroke-width="1.8"/></g>'
+    '</svg>')
+
 JS2 = r'''
 (function(){
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -332,7 +351,7 @@ def build(k):
     # each section: its heading in the left column, its text in the right
     parts = body.split('<h2>')[1:]
     def side(x, i):
-        art = WRENCH if i == 0 else ''
+        art = WRENCH if i == 0 else (f'<figure class="archimedes">{LEVER}<blockquote>{c["quote"]}<cite>{c["cite"]}</cite></blockquote></figure>' if i == 1 else '')
         return '<section><div class="side"><h2>' + x.replace('</h2>', '</h2>' + art + '</div><div class="body">', 1) + '</div></section>'
     body = ''.join(side(x, i) for i, x in enumerate(parts))
     body = re.sub(r'<p>(Bitaid (?:does not declare|no decreta)[^<]*)</p>', r'<p class="statement">\1</p>', body)
