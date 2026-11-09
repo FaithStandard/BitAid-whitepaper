@@ -170,12 +170,17 @@ function block(ev,animate){
 function register(){
   if(!free.length)return null;const c=free[Math.floor(Math.random()*free.length)];
   const k=['caller','caller','person','person','drone','team'][Math.floor(Math.random()*6)];
-  const m=shape(k,c.x+rand(-R*.4,R*.4),c.y+rand(-R*.4,R*.4));
-  m.animate([{opacity:0},{opacity:.6,offset:.25},{opacity:.6,offset:.7},{opacity:0}],{duration:3200,fill:'forwards'});
-  setTimeout(()=>m.remove(),3300);return k==='caller'?3:4}
+  const x=c.x+rand(-R*.4,R*.4),y=c.y+rand(-R*.4,R*.4);
+  // someone joins: an outline gathers, then becomes a caller or a responder, its deposit posted
+  const ring=el('circle',{cx:0,cy:0,r:9,fill:'none',stroke:k==='caller'?AMBER:STROBE,'stroke-width':1.2,opacity:0},gMove);
+  ring.animate([{opacity:0,transform:`translate(${x}px,${y}px) scale(2.2)`},{opacity:.55,offset:.5,transform:`translate(${x}px,${y}px) scale(1.2)`},
+                {opacity:0,transform:`translate(${x}px,${y}px) scale(.5)`}],{duration:1300,easing:'ease-in',fill:'forwards'});
+  const m=shape(k,x,y);
+  m.animate([{opacity:0},{opacity:.7,offset:.15},{opacity:.7,offset:.7},{opacity:0}],{duration:3800,delay:1000,fill:'forwards'});
+  setTimeout(()=>{ring.remove();m.remove()},4900);return k==='caller'?3:4}
 function tick(){clearTimeout(btimer);if(!running||!visible||document.hidden)return;
   // most blocks carry nothing of Bitaid's; never two events in a row
-  let ev=null;if(!lastEv){if(queue.length&&Math.random()<.7)ev=queue.shift();else if(!queue.length&&Math.random()<.22)ev=register()}
+  let ev=null;if(!lastEv){if(queue.length&&Math.random()<.7)ev=queue.shift();else if(!queue.length&&Math.random()<.3)ev=register()}
   lastEv=ev!=null;block(ev,true);btimer=setTimeout(tick,rand(1300,1800))}
 function oneCase(){
   if(!free.length)return;
@@ -193,10 +198,11 @@ function oneCase(){
   // help arrives: a drone first, then people and sometimes a team, from different directions
   const kinds=['drone','person','person'];if(Math.random()<.6)kinds.push('team');
   const base=rand(0,Math.PI*2),movers=[];
-  kinds.forEach((k,i)=>{const a=base+i*(Math.PI*2/kinds.length)+rand(-.4,.4),dist=R*(k==='drone'?rand(5,7):rand(3.2,5));
+  // each starts wherever it happened to be, near or far; the nearest arrive first
+  kinds.forEach((k,i)=>{const a=base+i*(Math.PI*2/kinds.length)+rand(-.4,.4),dist=R*(k==='drone'?rand(2.5,7):k==='team'?rand(2.2,6):rand(1.1,5.5));
     const sx=c.x+Math.cos(a)*dist,sy=c.y+Math.sin(a)*dist,fx=c.x+Math.cos(a)*R*.42,fy=c.y+Math.sin(a)*R*.42;
     const m=shape(k,sx,sy),rot=k==='drone'?` rotate(${(a*180/Math.PI)-90})`:'';
-    const dur=k==='drone'?1500:k==='team'?2600:2300,delay=700+(k==='drone'?0:500+i*260);
+    const dur=Math.max(650,dist/(k==='drone'?R/230:k==='team'?R/520:R/560)),delay=700+(k==='drone'?0:rand(250,900));
     m.animate([{opacity:0,transform:`translate(${sx}px,${sy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`},
                {opacity:1,offset:.12,transform:`translate(${sx}px,${sy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`},
                {opacity:1,transform:`translate(${fx}px,${fy}px)${rot.replace(/\(([-\d.]+)\)/,'($1deg)')}`}],
