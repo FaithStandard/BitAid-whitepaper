@@ -133,7 +133,7 @@ JS = r'''
 const svg=document.querySelector('svg.map'),hero=document.querySelector('.hero'),NS='http://www.w3.org/2000/svg';
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const AMBER='#f3a73b',STROBE='#a9c4ff',GRID='#2b3470';
-let W,H,R,dx,dy,cells=[],free=[],gCells,gMarks,gMove,running=false,visible=true,timer=null,first=true;
+let W,H,R,dx,dy,cells=[],free=[],gCells,gMarks,gUsers,gMove,running=false,visible=true,timer=null,rtimer=null,first=true;
 function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
 function hexPts(x,y,r){let p=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);p.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1))}return p.join(' ')}
 function rand(a,b){return a+Math.random()*(b-a)}
@@ -143,7 +143,7 @@ function blocked(){const h=hero.getBoundingClientRect(),out=[];
 function build(){
   svg.innerHTML='';cells=[];W=hero.clientWidth;H=hero.clientHeight;R=Math.max(24,Math.min(42,W/34));
   dx=Math.sqrt(3)*R;dy=1.5*R;svg.setAttribute('viewBox','0 0 '+W+' '+H);
-  gCells=el('g',{},svg);gMarks=el('g',{},svg);gMove=el('g',{},svg);
+  gCells=el('g',{},svg);gMarks=el('g',{},svg);gUsers=el('g',{},svg);gMove=el('g',{},svg);
   for(let r=-1;r*dy<H+R;r++)for(let c=-1;;c++){const x=c*dx+(r%2?dx/2:0),y=r*dy;if(x>W+R)break;
     cells.push({x,y,p:el('polygon',{points:hexPts(x,y,R*0.94),fill:'none',stroke:GRID,'stroke-width':1},gCells)})}
   const bl=blocked();
@@ -157,7 +157,7 @@ function shape(kind,x,y){
   return el('circle',{cx:0,cy:0,r:4.5,fill:STROBE,transform:`translate(${x},${y})`,opacity:0},gMove);
 }
 const chain=document.querySelector('.chain'),EV=chain.dataset.events.split('|'),BL=chain.dataset.block;
-let height=329840,queue=[],btimer=null,lastEv=false;
+let height=329840,queue=[],regq=[],btimer=null,lastEv=false;
 function block(ev,animate){
   if(getComputedStyle(chain).display==='none')return;
   const b=document.createElement('div');b.className='b'+(ev==null?'':ev<3?' ev':' reg');
@@ -167,20 +167,27 @@ function block(ev,animate){
     if(ev!=null&&ev<3)b.animate([{boxShadow:'0 0 0 3px rgba(243,167,59,.55)'},{boxShadow:'0 0 0 0 rgba(243,167,59,0)'}],{duration:1600,delay:300})}
   while(chain.children.length>9)chain.firstChild.remove();
 }
-function register(){
-  if(!free.length)return null;const c=free[Math.floor(Math.random()*free.length)];
-  const k=['caller','caller','person','person','drone','team'][Math.floor(Math.random()*6)];
-  const x=c.x+rand(-R*.4,R*.4),y=c.y+rand(-R*.4,R*.4);
-  // someone joins: an outline gathers, then becomes a caller or a responder, its deposit posted
-  const ring=el('circle',{cx:0,cy:0,r:9,fill:'none',stroke:k==='caller'?AMBER:STROBE,'stroke-width':1.2,opacity:0},gMove);
-  ring.animate([{opacity:0,transform:`translate(${x}px,${y}px) scale(2.2)`},{opacity:.55,offset:.5,transform:`translate(${x}px,${y}px) scale(1.2)`},
-                {opacity:0,transform:`translate(${x}px,${y}px) scale(.5)`}],{duration:1300,easing:'ease-in',fill:'forwards'});
-  const m=shape(k,x,y);
-  m.animate([{opacity:0},{opacity:.7,offset:.15},{opacity:.7,offset:.7},{opacity:0}],{duration:3800,delay:1000,fill:'forwards'});
-  setTimeout(()=>{ring.remove();m.remove()},4900);return k==='caller'?3:4}
+// someone joins, before any emergency: a caller escrows an offer, a responder posts a bond. The cell
+// outline lights blue (alerts light amber), the icon pops in, and then stays on the map as one of the
+// people already there, fading slowly; the deposit lands in the chain column
+function register(k,already){
+  if(!free.length)return;const c=free[Math.floor(Math.random()*free.length)];
+  const x=c.x+rand(-R*.3,R*.3),y=c.y+rand(-R*.3,R*.3);
+  const m=shape(k,x,y);gUsers.appendChild(m);
+  if(already){const d=rand(12000,26000);m.animate([{opacity:.35},{opacity:0}],{duration:d,fill:'forwards'});setTimeout(()=>m.remove(),d+200);return}
+  c.p.animate([{stroke:STROBE,strokeOpacity:.9},{stroke:GRID,strokeOpacity:1}],{duration:2200,easing:'ease-out'});
+  m.animate([{opacity:0,transform:`translate(${x}px,${y}px) scale(0)`},{opacity:1,offset:.06,transform:`translate(${x}px,${y}px) scale(1.5)`},
+             {opacity:1,offset:.12,transform:`translate(${x}px,${y}px) scale(1)`},{opacity:.9,offset:.2,transform:`translate(${x}px,${y}px) scale(1)`},
+             {opacity:.35,offset:.32,transform:`translate(${x}px,${y}px) scale(1)`},{opacity:0,transform:`translate(${x}px,${y}px) scale(1)`}],
+            {duration:28000,easing:'linear',fill:'forwards'});
+  setTimeout(()=>m.remove(),28200);
+  while(gUsers.childNodes.length>18)gUsers.firstChild.remove();
+}
+function joins(){clearTimeout(rtimer);if(!running||!visible||document.hidden)return;
+  if(regq.length<2)regq.push(['caller','caller','person','person','person','drone','team'][Math.floor(Math.random()*7)]);rtimer=setTimeout(joins,rand(2200,4200))}
 function tick(){clearTimeout(btimer);if(!running||!visible||document.hidden)return;
   // most blocks carry nothing of Bitaid's; never two events in a row
-  let ev=null;if(!lastEv){if(queue.length&&Math.random()<.7)ev=queue.shift();else if(!queue.length&&Math.random()<.3)ev=register()}
+  let ev=null;if(!lastEv){if(queue.length&&Math.random()<.7)ev=queue.shift();else if(regq.length){const k=regq.shift();register(k);ev=k==='caller'?3:4}}
   lastEv=ev!=null;block(ev,true);btimer=setTimeout(tick,rand(1300,1800))}
 function oneCase(){
   if(!free.length)return;
@@ -218,16 +225,16 @@ function oneCase(){
 }
 function loop(){clearTimeout(timer);if(!running||!visible||document.hidden)return;oneCase();
   timer=setTimeout(loop,first?7600:rand(5800,7800));first=false}
-function start(){build();chain.innerHTML='';queue=[];height=329840;[4,null,null,3,null,null].forEach(e=>block(e,false));
+function start(){build();chain.innerHTML='';queue=[];regq=[];['caller','person','person','drone','team','caller'].forEach(k=>register(k,true));height=329840;[4,null,null,3,null,null].forEach(e=>block(e,false));
   if(reduce){ // a still frame: one alert with help on its way, no motion
     hero.classList.add('ready');const c=free[Math.floor(free.length/2)]||cells[0];
     el('polygon',{points:hexPts(c.x,c.y,R*0.94),fill:AMBER,'fill-opacity':.8},gMarks);
     [['drone',-1.2],['person',.9],['person',2.6]].forEach(([k,a])=>{const m=shape(k,c.x+Math.cos(a)*R*1.3,c.y+Math.sin(a)*R*1.3);m.setAttribute('opacity',1)});
     [3,4,0,null,1,2].forEach(e=>block(e,false));return}
-  running=true;first=true;setTimeout(()=>hero.classList.add('ready'),1500);loop();btimer=setTimeout(tick,1200)}
-new IntersectionObserver(es=>{const was=visible;visible=es[0].isIntersecting;if(visible&&!was&&running){loop();tick()}else if(!visible){clearTimeout(timer);clearTimeout(btimer)}}).observe(hero);
-document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);clearTimeout(btimer)}else if(running&&visible){timer=setTimeout(loop,800);btimer=setTimeout(tick,1200)}});
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(hero.clientWidth-W)>40){clearTimeout(timer);clearTimeout(btimer);start()}},300)});
+  running=true;first=true;setTimeout(()=>hero.classList.add('ready'),1500);loop();btimer=setTimeout(tick,1200);rtimer=setTimeout(joins,600)}
+new IntersectionObserver(es=>{const was=visible;visible=es[0].isIntersecting;if(visible&&!was&&running){loop();tick();joins()}else if(!visible){clearTimeout(timer);clearTimeout(btimer);clearTimeout(rtimer)}}).observe(hero);
+document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);clearTimeout(btimer);clearTimeout(rtimer)}else if(running&&visible){timer=setTimeout(loop,800);btimer=setTimeout(tick,1200);rtimer=setTimeout(joins,600)}});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(hero.clientWidth-W)>40){clearTimeout(timer);clearTimeout(btimer);clearTimeout(rtimer);start()}},300)});
 start();
 const dn=document.querySelector('a.down');addEventListener('scroll',()=>{dn.style.opacity=scrollY>40?0:1},{passive:true});
 })();
