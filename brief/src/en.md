@@ -55,7 +55,7 @@ A working prototype in Rust runs every role: callers, responders, archivists, th
 ## What is not done yet
 
 - **Every node so far is ours.** The cheaters in these tests cheat because a script tells them to. Independent operators, choosing their own strategies, are the next milestone.
-- **The timers were stretched** to fit ten-minute blocks and phones on Tor. Moving every deadline onto block heights, as the specification already requires, is next.
+- **The deadlines now count blocks**, as the specification requires, but so far only on a local test chain. The next public-signet run checks them on the real one.
 - **No outside review yet** of the cryptography (FROST, MuSig2, the scripts) or of the incentives.
 - **Test coins only.** The prototype must not hold real funds.
 
