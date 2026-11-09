@@ -55,7 +55,7 @@ Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, arc
 ## Lo que aún falta
 
 - **Todos los nodos son nuestros por ahora.** Los tramposos de estas pruebas hacen trampa porque un script se lo indica. Operadores independientes, con sus propias estrategias, son el siguiente hito.
-- **Los plazos se estiraron** para encajar en bloques de diez minutos y móviles por Tor. Pasar cada plazo a alturas de bloque, como ya exige la especificación, es lo siguiente.
+- **Los plazos ya cuentan bloques**, como exige la especificación, pero de momento solo en una cadena de pruebas local. La próxima prueba en la signet pública los comprobará en la real.
 - **Aún no hay revisión externa** de la criptografía (FROST, MuSig2, los scripts) ni de los incentivos.
 - **Solo monedas de prueba.** El prototipo no debe custodiar fondos reales.
 
