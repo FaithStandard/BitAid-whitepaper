@@ -326,7 +326,7 @@ def build(k):
         date, where, what, res = [x.strip() for x in r.strip('|').split('|')]
         link = re.match(r'\[(.+?)\]\((.+?)\)', res)
         text, href = (link.group(1), link.group(2)) if link else (res, None)
-        n = re.match(r'(\d+) (passed|superadas), (0 (?:failed|fallidas))', text)
+        n = re.match(r'(\d+) (passed|superadas), (\d+ (?:failed|fallidas?))', text)
         if n:
             inner = f'{n.group(1)}<small>{n.group(2)}, {n.group(3)}</small>'; cls = 'score'
         else:

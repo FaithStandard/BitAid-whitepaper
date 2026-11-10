@@ -45,6 +45,7 @@ Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, arc
 
 | Fecha | Dónde | Qué se probó | Resultado |
 | --- | --- | --- | --- |
+| 9 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | Todos los plazos contados en bloques. El veredicto de un panel capturado quedó sin apelar; tres paneles de revisión nuevos lo revocaron, y los dos árbitros que lo respaldaron perdieron toda su fianza a favor de los perjudicados | [81 superadas, 1 fallida](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_blocks_2026-11-09.txt) |
 | 8 nov. 2026 | Liquid testnet | Los depósitos: financiación, un incidente cofirmado por el grupo, los pagos prefirmados, una atestación equivocada rechazada por la red, la pérdida de una fianza, la salida por bloqueo temporal | [15 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | 7 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | La revisión escalonada: tres paneles nuevos revocan un veredicto; los árbitros equivocados pierden su fianza, que indemniza al respondedor perjudicado y al disidente que acertó | [74 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
 | 7 nov. 2026 | La misma prueba, con un extraño hostil | Avalanchas de mensajes, basura, mensajes enormes y repetidos, alturas de bloque falsas y tormentas de conexiones contra la red mientras corría el caso. El caso terminó y todos los nodos rechazaron la altura falsa | Sin alteraciones |
@@ -55,7 +56,7 @@ Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, arc
 ## Lo que aún falta
 
 - **Todos los nodos son nuestros por ahora.** Los tramposos de estas pruebas hacen trampa porque un script se lo indica. Operadores independientes, con sus propias estrategias, son el siguiente hito.
-- **Los plazos ya cuentan bloques**, como exige la especificación, pero de momento solo en una cadena de pruebas local. La próxima prueba en la signet pública los comprobará en la real.
+- **Una moneda de comisión de menos.** En la última prueba a un respondedor le faltó una moneda para pagar la comisión de un pago; otra parte lo emitió y todos los depósitos se liquidaron. La corrección espera a la próxima prueba.
 - **Aún no hay revisión externa** de la criptografía (FROST, MuSig2, los scripts) ni de los incentivos.
 - **Solo monedas de prueba.** El prototipo no debe custodiar fondos reales.
 

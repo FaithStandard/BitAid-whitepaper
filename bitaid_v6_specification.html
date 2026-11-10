@@ -2458,22 +2458,26 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <td>33/0, 51/0, 49/0 and 65/0: deemed consent at a height; a dissenter’s challenge halfway through the appeal window (commitment in block 173, challenge at 176, final at 179); stalled seats forfeited at their deadline block and replaced; a late commit refused by the pool; a captured verdict overturned by three review panels and its units seized</td>
 </tr>
 <tr class="odd">
+<td>Public signet, deadlines in blocks (2026-11-09; PC, tablet, phone over Tor): commit, reveal and dispute at 3 blocks each, the staged review at 100%, a hostile peer two hours in</td>
+<td>81 passed, 1 failed: tier 1 committed in block 330113, final at 330116 unappealed; drawn for review; three review panels in turn found I,D at 80% (declining reviewers paid blind-drawn replacements, a silent one replaced, a missed reveal charged); the two arbitrators behind the overturned verdict lost their whole units, distributed to the wronged; every node refused the forged height. The failure: a responder without a confirmed fee coin could not broadcast a payout another party broadcast later (fixed)</td>
+</tr>
+<tr class="even">
 <td>Holding output with an archivist committee (M3, B.1, <a href="#s10-8">§10.8</a>): after a captured pool was found able to seize any registered arbitrator’s entry bond into an output its key alone could spend</td>
 <td>On regtest: the oracle pool alone, the pool with 1 of 3 committee archivists, and 3 of 3 archivists without the pool were refused; the pool with 2 of 3 moved it; the arbitrator’s cold key alone was refused one block after the seizure and accepted 12,960 blocks after. In the review network (the same corrupt pair capturing two cases, 26 arbitrators): the second confirmed overturn seized both entry bonds by their pre-signatures, and each was moved out of the holding output only with the committee archivist’s signature after its own replay; 78 checks passed, 0 failed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Seizure output (Rust core): an arbitrator bond’s pre-signed forfeiture paying restitution directly and the rest to the case’s seizure output; distribution and fallback</td>
 <td>Oracle pool alone refused; 3 of 5 archivists without the oracle refused; oracle with 2 of 5 refused; oracle + 3 of 5 pay reviewers, panel, retention and the excess to the harmed party; the harmed party’s key alone refused before the relative timelock and accepted after (8/8)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Oracle at 101 and 301 members, 70% online: attestation from the first t verified shares; simulated latency for attestation and for ROAST-coordinated FROST co-signing with 10–30% stalling members</td>
 <td>equals the adaptor point (0.7 s to combine 151 shares); 0.4–0.5 s; median 6 s, always terminates</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sliced pots, 8 seats, 10 slices: incident with three pot outputs; cooperative close at an arbitrary split; bounty fan-out without the oracle; ten slices attested and paid 30/20/20/10/10/10/0/0; one seat’s attestation on another seat’s payout; early reward fan-out then cooperative close of the slices; slice refund before its timelock</td>
 <td>confirmed; valid; confirmed; confirmed; rejected; confirmed; refused</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Event log: 2,000 random sets in 5 orders each; same-height withdrawal and alert; backdated and late events; checkpoint anchored on regtest</td>
 <td>identical state; alert unbacked; refused; root matches</td>
 </tr>

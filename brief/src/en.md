@@ -45,6 +45,7 @@ A working prototype in Rust runs every role: callers, responders, archivists, th
 
 | Date | Where | What ran | Result |
 | --- | --- | --- | --- |
+| Nov 9, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | Every deadline counted in blocks. A captured panel's verdict stood unappealed; three fresh review panels overturned it, and the two arbitrators who backed it lost their whole stakes to the wronged | [81 passed, 1 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_blocks_2026-11-09.txt) |
 | Nov 8, 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a wrong attestation refused by the network, a bond forfeiture, the timelocked fallback | [15 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | Nov 7, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | The staged review: three fresh panels overturn a verdict; the wrong arbitrators lose their stakes, which repay the wronged responder and the dissenter who was right | [74 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
 | Nov 7, 2026 | Same run, plus a hostile stranger | Floods, garbage, oversized and replayed messages, fake block heights, connection storms aimed at the network while the case ran. The case finished, and every node refused the fake height | Undisturbed |
@@ -55,7 +56,7 @@ A working prototype in Rust runs every role: callers, responders, archivists, th
 ## What is not done yet
 
 - **Every node so far is ours.** The cheaters in these tests cheat because a script tells them to. Independent operators, choosing their own strategies, are the next milestone.
-- **The deadlines now count blocks**, as the specification requires, but so far only on a local test chain. The next public-signet run checks them on the real one.
+- **One fee coin short.** In the latest run a responder ran out of coins to pay a payout's fee; another party broadcast it and every pot settled. The fix waits for the next run.
 - **No outside review yet** of the cryptography (FROST, MuSig2, the scripts) or of the incentives.
 - **Test coins only.** The prototype must not hold real funds.
 
