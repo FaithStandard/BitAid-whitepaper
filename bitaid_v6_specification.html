@@ -280,7 +280,7 @@ Bitaid Specification
 </ul>
 <p>Nobody judges anything at signing time: the outcomes are the protocol’s bounded set (<a href="#s11">§11</a>), and continuous splits such as bounty shares by vote weight are rounded into a fixed number of buckets. Because each pot sits in its own output, each needs payouts only for its own endings, so the counts of the three pots add rather than multiply (<a href="#s11">§11</a>, From predicates to payouts). The incident transaction is broadcast at once, so that from acceptance on the funds cannot leave except by those three routes; the payouts and refund are held, not broadcast. A normal incident closes cooperatively and the payout set is never used. If a dispute opens, arbitration runs, the oracle attests the final outcome once per pot (<a href="#s3-3">§3.3</a>), and whoever benefits completes the matching payout in each. The losing party does not need to sign or even be reachable, and the oracle can only select among payouts the parties signed: it cannot create a route.</p>
 <p><em>Who signs for the caller.</em> The caller is in an emergency and may lose the phone, so the caller’s side is signed with a <strong>scoped signing key</strong> that the caller’s wallet authorises at registration and that can sign only this escrow’s protocol transactions. Any of three holders may carry it: the phone, the caller’s Core (<a href="#s7">§7</a>, an always-on server, not necessarily at home), or bonded <strong>BCAEN signing delegates</strong> for callers who run no server. At registration the wallet also commits a <strong>template</strong> of the caller-side outputs — the recovery descriptor, from which each case derives a fresh address, and anything else owed to the caller — and the scoped-key leaf also requires the oracle’s co-signature, which the oracle gives only for an incident transaction that matches the template and whose incident outputs are held by the caller and responders whose acceptance is on the log; it likewise attests only payout sets that match the template. A holder of the scoped key can add responder keys but cannot redirect the caller’s funds, and a stolen scoped key moves nothing on its own. The co-signature is a threshold signature: any qualifying subset of the pool produces it, so acceptance depends on a threshold of members being online, not on any one of them. A delegate’s bond must exceed the value of the escrows it signs for (stake above exposure, <a href="#s2-3">§2.3</a>), and delegates earn a small fee. Insurer clients sign for their buffer layers the same way.</p>
-<p><em>Delivery.</em> The signature packages are encrypted to the parties and relayed and held by peers and BCAEN until each side collects them, so a weak connection delays the exchange without breaking it; only the incident transaction is broadcast. Responders who accept within the joining window (<a href="#s5-2">§5.2</a>) sign together as one incident set. A responder who accepts later is added automatically: when their device reports a position within the scene radius, the signers’ apps or delegates co-sign a new incident transaction that adds them, with a fresh payout set under a fresh oracle nonce, so nobody on the scene stops to sign; the oracle attests only under the newest nonce, so an earlier set can never complete. The set holds five signing seats by default, and more for larger offers (sliced pots, <a href="#s11-11">§11.11</a>). Seats fill by proximity as responders arrive and are then kept until the case closes or the holder withdraws: a responder who leaves the scene in pursuit keeps their seat, and nobody can be pushed out by a closer arrival, real or spoofed; later arrivals fill only empty seats. <strong>Seat classes.</strong> The caller’s policy, in practice the insurer’s, may reserve some seats for units that meet a stated bar (a minimum bond, labor score or record of resolved cases, or an insurer standing behind them) and leave the rest open to anyone bonded. The classes are part of the template, fixed at registration, so every responder knows the terms before accepting. A reserved seat is held only for a qualifying unit that has accepted and is on its way: if none accepts within the joining window, or one that accepted does not arrive within the time it stated, the seat opens to anyone. A reserved seat that stays empty leaves its share to the seats that were filled, never back to the caller, so reserving more seats than the scene needs buys nothing. No holder is ever displaced. Seats follow units, not people: a firm takes one seat under one firm key and divides its share by its own contracts, so a few seats hold several teams as well as the first neighbours on the scene. Each re-sign uses a nonce, which the reserve of <a href="#b-3">Appendix B.3</a> is sized to absorb, and because the set changes only when a seat is filled or given up, re-signs are few. A responder beyond the signing seats attends as a documenter outside the escrow: their bond’s forfeitures are pre-signed toward the signers when they accept, and re-signed automatically whenever a seat changes hands, so they answer for their conduct on the scene; they cannot be repaid from it. Jamming that cuts position, radio and internet across a scene leaves the set as it was, and what happens next is settled by arbitration on the evidence. On Bitcoin L1 the new incident transaction takes one of two forms, because version 3 transactions allow no unconfirmed grandchildren: before the first incident transaction confirms, the new one replaces it, spending the funding output again with the larger set and a higher fee; after it confirms, the new one spends the three incident outputs into three new ones. Either way every payout of the earlier set loses its input (tested, <a href="#b-9">Appendix B.9</a>). A signing delegate cannot move the funding output alone, since the scoped-key leaf also needs the oracle’s co-signature (<a href="#b-4">Appendix B.4</a>).</p>
+<p><em>Delivery.</em> The signature packages are encrypted to the parties and relayed and held by peers and BCAEN until each side collects them, so a weak connection delays the exchange without breaking it; only the incident transaction is broadcast. Responders who accept within the joining window (<a href="#s5-2">§5.2</a>) sign together as one incident set. A responder who accepts later is added automatically: when their device reports a position within the scene radius, the signers’ apps or delegates co-sign a new incident transaction that adds them, with a fresh payout set under a fresh oracle nonce, so nobody on the scene stops to sign; the oracle attests only under the newest nonce, so an earlier set can never complete. The set holds five signing seats by default, and more for larger offers (sliced pots, <a href="#s11-11">§11.11</a>). Seats fill by proximity as responders arrive and are then kept until the case closes or the holder withdraws: a responder who leaves the scene in pursuit keeps their seat, and nobody can be pushed out by a closer arrival, real or spoofed; later arrivals fill only empty seats. <strong>Seat classes.</strong> The caller’s policy, in practice the insurer’s, may reserve some seats for units that meet a stated bar (a minimum bond, labor score or record of resolved cases, or an insurer standing behind them) and leave the rest open to anyone bonded. The classes are part of the template, fixed at registration, so every responder knows the terms before accepting. A reserved seat is held only for a qualifying unit that has accepted and is on its way: if none accepts within the joining window, or one that accepted does not arrive within the time it stated, the seat opens to anyone. A reserved seat that stays empty leaves its share to the seats that were filled, never back to the caller, so reserving more seats than the scene needs buys nothing. No holder is ever displaced. Seats follow units, not people: a firm takes one seat under one firm key and divides its share by its own contracts, so a few seats hold several teams as well as the first neighbours on the scene. Each re-sign uses a nonce, which the reserve of <a href="#b-3">Appendix B.3</a> is sized to absorb, and because the set changes only when a seat is filled or given up, re-signs are few. A responder beyond the signing seats attends as a documenter outside the escrow: their bond’s forfeitures are pre-signed toward the signers when they accept, and re-signed automatically whenever a seat changes hands, so they answer for their conduct on the scene; they cannot be repaid from it. Behind a seat the market organises freely: a seat may bring others in under its own contract and bond, paying them from its share; the escrow pays the seat, and the seat’s bond answers for everyone it brought. Jamming that cuts position, radio and internet across a scene leaves the set as it was, and what happens next is settled by arbitration on the evidence. On Bitcoin L1 the new incident transaction takes one of two forms, because version 3 transactions allow no unconfirmed grandchildren: before the first incident transaction confirms, the new one replaces it, spending the funding output again with the larger set and a higher fee; after it confirms, the new one spends the three incident outputs into three new ones. Either way every payout of the earlier set loses its input (tested, <a href="#b-9">Appendix B.9</a>). A signing delegate cannot move the funding output alone, since the scoped-key leaf also needs the oracle’s co-signature (<a href="#b-4">Appendix B.4</a>).</p>
 <p><em>What remains.</em> If no caller-side holder can sign before acceptance — phone, Core and delegates all unreachable — or fewer than a threshold of the oracle pool are online, the deposit is never locked, and that incident proceeds without escrow protection: responders can see this before setting off and decide whether to attend. Until the incident transaction has one confirmation, a conflicting spend of the funding output with a higher fee could still replace it, and the only conflicting spends possible need the oracle’s co-signature; an honest oracle gives none while an alert is open, so the window matters only if the pool is captured, and closes with the first confirmation (tested, <a href="#b-9">Appendix B.9</a>). Every accepted incident costs one on-chain transaction, the incident transaction (cheap on Liquid), and on Bitcoin L1 pre-signed transactions need anchor outputs so their fees can be raised when they are broadcast: they are relayed as zero-fee version-3 packages with a fee-paying child, which needs Bitcoin Core 29 or later (B.9). Only the pre-signed transaction is fee-free: it is never relayed alone, the pair must pay the market fee rate for both at broadcast, and the anchor holds no value and must be spent in the same package, so nothing unpaid is relayed and no dust is left in the coin set.</p>
 <p><em>Figure — Escrow spending paths (drawn in the HTML).</em> Funding output → withdrawal (wallet plus oracle co-signature, only when no alert is open), three incident outputs, one per pot (at acceptance, joined by any insurer buffer), or fallback (wallet alone after 365 days). Each incident output → cooperative close (all three together), an outcome payout (one pre-signed per ending of that pot, exactly one completed by the oracle’s attestation for that pot, whether deemed consent or a verdict), or the pre-signed refund of all three after 90 days. Before acceptance the funds are the caller’s; after it, every exit was signed in advance by the parties themselves.</p>
 <h3 id="s3-3">3.3 One Attestation per Pot</h3>
@@ -414,6 +414,8 @@ Bitaid Specification
 <p><strong>Node discovery.</strong> Kademlia[4]-based DHT adapted to operate over Tor Hidden Services. Each node has a persistent DHT identity derived from its keypair. Bootstrap nodes are hardcoded but replaceable via configuration. The DHT layer handles node discovery only; alert routing uses the geofenced gossip layer.</p>
 <p><strong>Grid cell system.</strong> H3[6] hexagonal cells (Uber’s hierarchical spatial indexing system, which partitions the globe into nested hexagons of configurable resolution) at resolution 7 (~5 km² per cell, ~1.4 km edge length). Alerts propagate to the same cell and all 6 adjacent hexagons. In low-density areas (fewer than 5 active Cores in the 7-cell ring), propagation expands to the next ring. Cell membership is deterministic from GPS coordinates.</p>
 <p><strong>Geofenced gossip.</strong> Alerts propagate only to Cores in the same cell and adjacent cells — bounding propagation to the geographic area where response is possible. Dead-end scoring propagates through the same layer: Cores that observe no onward propagation from a peer attest to that observation. Ratio above 0.3 over 200 attestations triggers deprioritisation; above 0.6 triggers exclusion. Only signed-receipt failures count; unreachable peers are not scored. Rolling window, recoverable through probation.</p>
+<p><strong>Bonded links.</strong> There is no free tier. A Core opens every incoming link with a fresh random challenge, and the peer has thirty seconds to sign it, together with the address it dialled, with a key that holds a stake on chain: an unspent, confirmed output committing that key. Until then the Core sends it nothing and drops whatever it sends. Any output the protocol already holds for that key counts, a caller’s escrowed offer or a responder’s or arbitrator’s bond, so a registered user locks nothing extra; a key with none yet locks the link stake. One key holds at most two links, and a stranger can displace only another stranger still unproven, never a staked peer. A key cut for abuse (flooding, junk, oversized messages) is refused for an hour, and coming back under a new key takes a new stake. Through Tor a Core cannot know who connects; it can know what each connection has put at risk.</p>
+<p>The link stake is a fidelity bond, not a forfeit. Link abuse is witnessed only by the Core that suffered it, and a Core’s word is not proof: stakes are slashed only for offences anyone can verify from signed evidence, which is where the role bonds already sit (<a href="#s10-4">§10.4</a>, <a href="#s12">§12</a>). Its size follows what the link can do: a link that only receives, a phone awaiting alerts, stakes little; a Core that relays for others stakes more, because it carries their traffic. There are no per-message fees: a stake answers spam without payment channels that fail at the margin, and without asking a person in danger to keep one open.</p>
 <h3 id="s7-2">7.2 The Anchored Event Log</h3>
 <p><strong>Bitcoin-anchored event log.</strong> Every application event is a signed message carrying: version, type, timestamp (Bitcoin block height), payload, sender pubkey, and signature. Gossip messages use CBOR canonical encoding. The message ID is the hash of (sender_pubkey, timestamp, payload_hash). Validation requires: signature verifies, timestamp within drift of local block height, type-specific payload well-formed, sender has unspent bond UTXO. Lagging nodes converge after the fact by fetching missing events and verifying their Bitcoin anchors. Anchor verification defaults to a local full node. Lightweight operators may substitute random P2P peer sampling for block-header verification; named explorers are available as an explicit opt-in fallback.</p>
 <p><strong>What is written on-chain.</strong> Ordering and finality are inherited only for what is actually committed to a chain. Three classes of event are on-chain, by construction or by commitment:</p>
@@ -1683,265 +1685,300 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <td>A reserved seat opens to anyone if no qualifying unit accepts within the joining window or arrives within its stated time; an empty one’s share goes to the filled seats</td>
 </tr>
 <tr class="even">
+<td>Link stake, receiving link</td>
+<td>20,000 sats, or any protocol output of the key</td>
+<td>per link key</td>
+<td>§7.1</td>
+<td>Prices an identity, not a message; a registered offer or bond already covers it</td>
+</tr>
+<tr class="odd">
+<td>Link stake, relaying Core</td>
+<td>1,000,000 sats</td>
+<td>per Core key</td>
+<td>§7.1</td>
+<td>A Core carries others’ traffic</td>
+</tr>
+<tr class="even">
+<td>Links per key</td>
+<td>2</td>
+<td>at once</td>
+<td>§7.1</td>
+<td>A connection storm needs a stake for every two links</td>
+</tr>
+<tr class="odd">
+<td>Proof window</td>
+<td>30 seconds</td>
+<td>from the challenge</td>
+<td>§7.1</td>
+<td>Long enough for a phone over Tor</td>
+</tr>
+<tr class="even">
+<td>Ban after link abuse</td>
+<td>1 hour</td>
+<td>per key</td>
+<td>§7.1</td>
+<td>Refused, not slashed: link abuse leaves no proof a third party can check</td>
+</tr>
+<tr class="odd">
 <td>Signing delegate bond</td>
 <td>&gt; value of escrows signed for</td>
 <td>per delegate</td>
 <td>§3</td>
 <td>Stake above exposure applied to BCAEN signing delegates</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Outcome buckets per split</td>
 <td>10% steps (≤3 signing responders), 20% steps (4–5)</td>
 <td>per continuous split</td>
 <td>§3</td>
 <td>At most 5 signing responders in the default layout; larger offers use sliced pots (<a href="#s11-11">§11.11</a>) with up to 10 seats by default, 12 on the caller’s request; see <a href="#b-6">Appendix B.6</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Re-entry lock after forfeiture</td>
 <td>30</td>
 <td>days</td>
 <td>§10.2</td>
 <td>After bond forfeiture before re-registration</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Bond withdrawal delay</td>
 <td>90</td>
 <td>days</td>
 <td>§10.8</td>
 <td>From last case close; extended by active retroactive review</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Early release minimum floor</td>
 <td>30</td>
 <td>days</td>
 <td>§10.8</td>
 <td>Minimum hold even if all cases audited and cleared</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>FEE MARKET</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Fee event adjustment</td>
 <td>±12.5%</td>
 <td>per case close</td>
 <td>§10.6</td>
 <td>+12.5% if queue &gt; 0 after close; −12.5% if queue = 0 after close</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Fee time adjustment</td>
 <td>+6.25%</td>
 <td>every 18 blocks (~3h)</td>
 <td>§10.6</td>
 <td>Fires only while queue &gt; 0; no downward time trigger</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Slot-open queue trigger</td>
 <td>432</td>
 <td>consecutive blocks (~72h)</td>
 <td>§10.6</td>
 <td>All cases in queue must be fundable at prevailing fee</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Price-out grace window</td>
 <td>36</td>
 <td>blocks (~6h)</td>
 <td>§10.7</td>
 <td>Top up deposit or case removed; deposit returned minus incurred costs</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Genesis starting fee</td>
 <td>0.0002 BTC per seat (provisional)</td>
 <td>BTC</td>
 <td>§10.6</td>
 <td>Calibrated genesis parameter; not a permanent constraint</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Priority fee</td>
 <td>Voluntary, non-refundable</td>
 <td>either party</td>
 <td>§10.6</td>
 <td>Affects queue order only; does not affect arbitrator selection</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>FORFEITURE FLOWS</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Retroactive review dissent threshold</td>
 <td>40% flag / 80% confirm</td>
 <td>flag rate / confirmation supermajority</td>
 <td>§10.3</td>
 <td>Triggers automatic re-review; no individual submitter</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Review sampling rate (undisputed)</td>
 <td>5% / 10% / 20% / 40% (provisional)</td>
 <td>per closed case</td>
 <td>§10.3</td>
 <td>Case value ≤0.01 / ≤0.1 / ≤1 / &gt;1 BTC; block-hash seeded; P(review ≥1 of n) = 1 − (1 − R)^n</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>All forfeiture: payout order</td>
 <td>Restitution, dissenters, premium, panel fees at normal case rate</td>
 <td>in that order</td>
 <td>§12</td>
 <td>Panel never enriched beyond normal per-case fee</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Caller misuse remainder</td>
 <td>Attending responders</td>
 <td>pro-rata by merit weight</td>
 <td>§12</td>
 <td>Compensation for wasted presence on false alert</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Responder misuse remainder</td>
 <td>Harmed party</td>
 <td>caller / competing responder / split</td>
 <td>§12</td>
 <td>Arbitration verdict specifies recipient; no victim → dispute fund</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Retroactive chain fraud remainder</td>
 <td>Retention of the cases’ evidence, excess to honest parties</td>
 <td>up to 20 years</td>
 <td>§12</td>
 <td>Paid from the case’s seizure output (pool + archivists)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Overturned verdict</td>
 <td>Restitution first</td>
 <td>harmed party to the case</td>
 <td>§12</td>
 <td>From seized arbitrator bonds, to keys recorded at escalation; then review pool premium, panel fees, evidence retention, excess to the harmed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Archival failure remainder</td>
 <td>Replacement slot costs → replacement node</td>
 <td>from the case’s seizure output</td>
 <td>§12</td>
 <td>Directly funds replacement node onboarding first</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Malicious content remainder</td>
 <td>Retention of the case’s evidence, excess to harmed parties</td>
 <td>up to 20 years</td>
 <td>§12</td>
 <td>Paid from the case’s seizure output (pool + archivists)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sponsorship cascade</td>
 <td>Sponsor’s buffer pays as the invitee’s forfeiture would</td>
 <td>restitution first</td>
 <td>§12</td>
 <td>Sponsor’s capital covers the misuse their invitees commit</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>NETWORK &amp; ROUTING</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Dead-end deprioritisation threshold</td>
 <td>&gt; 0.3</td>
 <td>ratio / 200 attestations</td>
 <td>§5.3</td>
 <td>Signed-receipt failures only; rolling window; probation</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Dead-end exclusion threshold</td>
 <td>&gt; 0.6</td>
 <td>ratio / 200 attestations</td>
 <td>§5.3</td>
 <td>Signed-receipt failures only; rolling window; probation</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Anchor verification default</td>
 <td>Local full node</td>
 <td>—</td>
 <td>§7</td>
 <td>Lightweight operators may use random P2P peer sampling of block headers; named explorers are an explicit opt-in fallback</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Grid cell size</td>
 <td>~5 km² (~1.4 km edge)</td>
 <td>H3 res 7</td>
 <td>§7</td>
 <td>Alerts propagate to same cell + 6 adjacent hexagons</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Labor weighting ring</td>
 <td>Incident cell + 6 adjacent</td>
 <td>H3 res 7</td>
 <td>§6</td>
 <td>Labor recorded per cell; weighed over the ring the alert reaches</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>EVIDENCE (BCAEN)</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Chunk size</td>
 <td>256</td>
 <td>KB</td>
 <td>§8</td>
 <td>Standard-definition footage intervals</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Seizure output fallback</td>
 <td>1</td>
 <td>year</td>
 <td>§12, B.1</td>
 <td>Undistributed seizure pays the harmed parties alone</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Pre-trigger buffer</td>
 <td>up to 60</td>
 <td>seconds</td>
 <td>§5.1</td>
 <td>Configurable rolling window; Feel Unsafe local-only until panic</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Offer-linked deterrence factor</td>
 <td>2× (default)</td>
 <td>max wrongful gain</td>
 <td>§2.3</td>
 <td>Default responder acceptance gate: personal bond + layer 0 buffer ≥ 2× the most the responder could capture; caller may raise, never below 1×</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Arbitrator commit deadline</td>
 <td>1,008 blocks (~1 week) from taking the seat; reveals within 144 blocks of the last commit</td>
 <td>per seat</td>
 <td>§10.4</td>
 <td>Missed commit: seat forfeited, payer refunded, seat redrawn; missed reveal: incoherent vote. Commit-to-seat time recorded and filterable</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Arbitrator case unit</td>
 <td>2× (default and minimum), no BTC floor</td>
 <td>case value</td>
 <td>§10.2</td>
 <td>One per seat, at least twice everything the verdict can move and the seat’s largest penalty; locked while the case is open, through the review draw and any review</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Bounty pool split</td>
 <td>70/30 (caller-configurable)</td>
 <td>intervener / documentation</td>
 <td>§11</td>
 <td>Intervener pool by contribution weight (key 2, contributing 1, none 0); documentation pool split equally; each bond paid from one pool; attendees credited as neither receive nothing</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Merit weight formula</td>
 <td>sqrt(stake_ratio) × (0.1 + labor × bounty_factor) × ballot_accuracy</td>
 <td>unitless</td>
