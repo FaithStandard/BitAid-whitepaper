@@ -414,6 +414,8 @@ Bitaid Specification
 <p><strong>Node discovery.</strong> Kademlia[4]-based DHT adapted to operate over Tor Hidden Services. Each node has a persistent DHT identity derived from its keypair. Bootstrap nodes are hardcoded but replaceable via configuration. The DHT layer handles node discovery only; alert routing uses the geofenced gossip layer.</p>
 <p><strong>Grid cell system.</strong> H3[6] hexagonal cells (Uber’s hierarchical spatial indexing system, which partitions the globe into nested hexagons of configurable resolution) at resolution 7 (~5 km² per cell, ~1.4 km edge length). Alerts propagate to the same cell and all 6 adjacent hexagons. In low-density areas (fewer than 5 active Cores in the 7-cell ring), propagation expands to the next ring. Cell membership is deterministic from GPS coordinates.</p>
 <p><strong>Geofenced gossip.</strong> Alerts propagate only to Cores in the same cell and adjacent cells — bounding propagation to the geographic area where response is possible. Dead-end scoring propagates through the same layer: Cores that observe no onward propagation from a peer attest to that observation. Ratio above 0.3 over 200 attestations triggers deprioritisation; above 0.6 triggers exclusion. Only signed-receipt failures count; unreachable peers are not scored. Rolling window, recoverable through probation.</p>
+<p><strong>Bonded links.</strong> There is no free tier. A Core opens every incoming link with a fresh random challenge, and the peer has thirty seconds to sign it, together with the address it dialled, with a key that holds a stake on chain: an unspent, confirmed output committing that key. Until then the Core sends it nothing and drops whatever it sends. Any output the protocol already holds for that key counts, a caller’s escrowed offer or a responder’s or arbitrator’s bond, so a registered user locks nothing extra; a key with none yet locks the link stake. One key holds at most two links, and a stranger can displace only another stranger still unproven, never a staked peer. A key cut for abuse (flooding, junk, oversized messages) is refused for an hour, and coming back under a new key takes a new stake. Through Tor a Core cannot know who connects; it can know what each connection has put at risk.</p>
+<p>The link stake is a fidelity bond, not a forfeit. Link abuse is witnessed only by the Core that suffered it, and a Core’s word is not proof: stakes are slashed only for offences anyone can verify from signed evidence, which is where the role bonds already sit (<a href="#s10-4">§10.4</a>, <a href="#s12">§12</a>). Its size follows what the link can do: a link that only receives, a phone awaiting alerts, stakes little; a Core that relays for others stakes more, because it carries their traffic. There are no per-message fees: a stake answers spam without payment channels that fail at the margin, and without asking a person in danger to keep one open.</p>
 <h3 id="s7-2">7.2 The Anchored Event Log</h3>
 <p><strong>Bitcoin-anchored event log.</strong> Every application event is a signed message carrying: version, type, timestamp (Bitcoin block height), payload, sender pubkey, and signature. Gossip messages use CBOR canonical encoding. The message ID is the hash of (sender_pubkey, timestamp, payload_hash). Validation requires: signature verifies, timestamp within drift of local block height, type-specific payload well-formed, sender has unspent bond UTXO. Lagging nodes converge after the fact by fetching missing events and verifying their Bitcoin anchors. Anchor verification defaults to a local full node. Lightweight operators may substitute random P2P peer sampling for block-header verification; named explorers are available as an explicit opt-in fallback.</p>
 <p><strong>What is written on-chain.</strong> Ordering and finality are inherited only for what is actually committed to a chain. Three classes of event are on-chain, by construction or by commitment:</p>
@@ -1683,265 +1685,300 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <td>A reserved seat opens to anyone if no qualifying unit accepts within the joining window or arrives within its stated time; an empty one’s share goes to the filled seats</td>
 </tr>
 <tr class="even">
+<td>Link stake, receiving link</td>
+<td>20,000 sats, or any protocol output of the key</td>
+<td>per link key</td>
+<td>§7.1</td>
+<td>Prices an identity, not a message; a registered offer or bond already covers it</td>
+</tr>
+<tr class="odd">
+<td>Link stake, relaying Core</td>
+<td>1,000,000 sats</td>
+<td>per Core key</td>
+<td>§7.1</td>
+<td>A Core carries others’ traffic</td>
+</tr>
+<tr class="even">
+<td>Links per key</td>
+<td>2</td>
+<td>at once</td>
+<td>§7.1</td>
+<td>A connection storm needs a stake for every two links</td>
+</tr>
+<tr class="odd">
+<td>Proof window</td>
+<td>30 seconds</td>
+<td>from the challenge</td>
+<td>§7.1</td>
+<td>Long enough for a phone over Tor</td>
+</tr>
+<tr class="even">
+<td>Ban after link abuse</td>
+<td>1 hour</td>
+<td>per key</td>
+<td>§7.1</td>
+<td>Refused, not slashed: link abuse leaves no proof a third party can check</td>
+</tr>
+<tr class="odd">
 <td>Signing delegate bond</td>
 <td>&gt; value of escrows signed for</td>
 <td>per delegate</td>
 <td>§3</td>
 <td>Stake above exposure applied to BCAEN signing delegates</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Outcome buckets per split</td>
 <td>10% steps (≤3 signing responders), 20% steps (4–5)</td>
 <td>per continuous split</td>
 <td>§3</td>
 <td>At most 5 signing responders in the default layout; larger offers use sliced pots (<a href="#s11-11">§11.11</a>) with up to 10 seats by default, 12 on the caller’s request; see <a href="#b-6">Appendix B.6</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Re-entry lock after forfeiture</td>
 <td>30</td>
 <td>days</td>
 <td>§10.2</td>
 <td>After bond forfeiture before re-registration</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Bond withdrawal delay</td>
 <td>90</td>
 <td>days</td>
 <td>§10.8</td>
 <td>From last case close; extended by active retroactive review</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Early release minimum floor</td>
 <td>30</td>
 <td>days</td>
 <td>§10.8</td>
 <td>Minimum hold even if all cases audited and cleared</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>FEE MARKET</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Fee event adjustment</td>
 <td>±12.5%</td>
 <td>per case close</td>
 <td>§10.6</td>
 <td>+12.5% if queue &gt; 0 after close; −12.5% if queue = 0 after close</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Fee time adjustment</td>
 <td>+6.25%</td>
 <td>every 18 blocks (~3h)</td>
 <td>§10.6</td>
 <td>Fires only while queue &gt; 0; no downward time trigger</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Slot-open queue trigger</td>
 <td>432</td>
 <td>consecutive blocks (~72h)</td>
 <td>§10.6</td>
 <td>All cases in queue must be fundable at prevailing fee</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Price-out grace window</td>
 <td>36</td>
 <td>blocks (~6h)</td>
 <td>§10.7</td>
 <td>Top up deposit or case removed; deposit returned minus incurred costs</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Genesis starting fee</td>
 <td>0.0002 BTC per seat (provisional)</td>
 <td>BTC</td>
 <td>§10.6</td>
 <td>Calibrated genesis parameter; not a permanent constraint</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Priority fee</td>
 <td>Voluntary, non-refundable</td>
 <td>either party</td>
 <td>§10.6</td>
 <td>Affects queue order only; does not affect arbitrator selection</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>FORFEITURE FLOWS</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Retroactive review dissent threshold</td>
 <td>40% flag / 80% confirm</td>
 <td>flag rate / confirmation supermajority</td>
 <td>§10.3</td>
 <td>Triggers automatic re-review; no individual submitter</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Review sampling rate (undisputed)</td>
 <td>5% / 10% / 20% / 40% (provisional)</td>
 <td>per closed case</td>
 <td>§10.3</td>
 <td>Case value ≤0.01 / ≤0.1 / ≤1 / &gt;1 BTC; block-hash seeded; P(review ≥1 of n) = 1 − (1 − R)^n</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>All forfeiture: payout order</td>
 <td>Restitution, dissenters, premium, panel fees at normal case rate</td>
 <td>in that order</td>
 <td>§12</td>
 <td>Panel never enriched beyond normal per-case fee</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Caller misuse remainder</td>
 <td>Attending responders</td>
 <td>pro-rata by merit weight</td>
 <td>§12</td>
 <td>Compensation for wasted presence on false alert</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Responder misuse remainder</td>
 <td>Harmed party</td>
 <td>caller / competing responder / split</td>
 <td>§12</td>
 <td>Arbitration verdict specifies recipient; no victim → dispute fund</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Retroactive chain fraud remainder</td>
 <td>Retention of the cases’ evidence, excess to honest parties</td>
 <td>up to 20 years</td>
 <td>§12</td>
 <td>Paid from the case’s seizure output (pool + archivists)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Overturned verdict</td>
 <td>Restitution first</td>
 <td>harmed party to the case</td>
 <td>§12</td>
 <td>From seized arbitrator bonds, to keys recorded at escalation; then review pool premium, panel fees, evidence retention, excess to the harmed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Archival failure remainder</td>
 <td>Replacement slot costs → replacement node</td>
 <td>from the case’s seizure output</td>
 <td>§12</td>
 <td>Directly funds replacement node onboarding first</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Malicious content remainder</td>
 <td>Retention of the case’s evidence, excess to harmed parties</td>
 <td>up to 20 years</td>
 <td>§12</td>
 <td>Paid from the case’s seizure output (pool + archivists)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sponsorship cascade</td>
 <td>Sponsor’s buffer pays as the invitee’s forfeiture would</td>
 <td>restitution first</td>
 <td>§12</td>
 <td>Sponsor’s capital covers the misuse their invitees commit</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>NETWORK &amp; ROUTING</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Dead-end deprioritisation threshold</td>
 <td>&gt; 0.3</td>
 <td>ratio / 200 attestations</td>
 <td>§5.3</td>
 <td>Signed-receipt failures only; rolling window; probation</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Dead-end exclusion threshold</td>
 <td>&gt; 0.6</td>
 <td>ratio / 200 attestations</td>
 <td>§5.3</td>
 <td>Signed-receipt failures only; rolling window; probation</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Anchor verification default</td>
 <td>Local full node</td>
 <td>—</td>
 <td>§7</td>
 <td>Lightweight operators may use random P2P peer sampling of block headers; named explorers are an explicit opt-in fallback</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Grid cell size</td>
 <td>~5 km² (~1.4 km edge)</td>
 <td>H3 res 7</td>
 <td>§7</td>
 <td>Alerts propagate to same cell + 6 adjacent hexagons</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Labor weighting ring</td>
 <td>Incident cell + 6 adjacent</td>
 <td>H3 res 7</td>
 <td>§6</td>
 <td>Labor recorded per cell; weighed over the ring the alert reaches</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>EVIDENCE (BCAEN)</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Chunk size</td>
 <td>256</td>
 <td>KB</td>
 <td>§8</td>
 <td>Standard-definition footage intervals</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Seizure output fallback</td>
 <td>1</td>
 <td>year</td>
 <td>§12, B.1</td>
 <td>Undistributed seizure pays the harmed parties alone</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Pre-trigger buffer</td>
 <td>up to 60</td>
 <td>seconds</td>
 <td>§5.1</td>
 <td>Configurable rolling window; Feel Unsafe local-only until panic</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Offer-linked deterrence factor</td>
 <td>2× (default)</td>
 <td>max wrongful gain</td>
 <td>§2.3</td>
 <td>Default responder acceptance gate: personal bond + layer 0 buffer ≥ 2× the most the responder could capture; caller may raise, never below 1×</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Arbitrator commit deadline</td>
 <td>1,008 blocks (~1 week) from taking the seat; reveals within 144 blocks of the last commit</td>
 <td>per seat</td>
 <td>§10.4</td>
 <td>Missed commit: seat forfeited, payer refunded, seat redrawn; missed reveal: incoherent vote. Commit-to-seat time recorded and filterable</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Arbitrator case unit</td>
 <td>2× (default and minimum), no BTC floor</td>
 <td>case value</td>
 <td>§10.2</td>
 <td>One per seat, at least twice everything the verdict can move and the seat’s largest penalty; locked while the case is open, through the review draw and any review</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Bounty pool split</td>
 <td>70/30 (caller-configurable)</td>
 <td>intervener / documentation</td>
 <td>§11</td>
 <td>Intervener pool by contribution weight (key 2, contributing 1, none 0); documentation pool split equally; each bond paid from one pool; attendees credited as neither receive nothing</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Merit weight formula</td>
 <td>sqrt(stake_ratio) × (0.1 + labor × bounty_factor) × ballot_accuracy</td>
 <td>unitless</td>
@@ -2458,22 +2495,26 @@ Slot-open trigger: 432 consecutive blocks with queue &gt; 0 → one pool slot op
 <td>33/0, 51/0, 49/0 and 65/0: deemed consent at a height; a dissenter’s challenge halfway through the appeal window (commitment in block 173, challenge at 176, final at 179); stalled seats forfeited at their deadline block and replaced; a late commit refused by the pool; a captured verdict overturned by three review panels and its units seized</td>
 </tr>
 <tr class="odd">
+<td>Public signet, deadlines in blocks (2026-11-09; PC, tablet, phone over Tor): commit, reveal and dispute at 3 blocks each, the staged review at 100%, a hostile peer two hours in</td>
+<td>81 passed, 1 failed: tier 1 committed in block 330113, final at 330116 unappealed; drawn for review; three review panels in turn found I,D at 80% (declining reviewers paid blind-drawn replacements, a silent one replaced, a missed reveal charged); the two arbitrators behind the overturned verdict lost their whole units, distributed to the wronged; every node refused the forged height. The failure: a responder without a confirmed fee coin could not broadcast a payout another party broadcast later (fixed)</td>
+</tr>
+<tr class="even">
 <td>Holding output with an archivist committee (M3, B.1, <a href="#s10-8">§10.8</a>): after a captured pool was found able to seize any registered arbitrator’s entry bond into an output its key alone could spend</td>
 <td>On regtest: the oracle pool alone, the pool with 1 of 3 committee archivists, and 3 of 3 archivists without the pool were refused; the pool with 2 of 3 moved it; the arbitrator’s cold key alone was refused one block after the seizure and accepted 12,960 blocks after. In the review network (the same corrupt pair capturing two cases, 26 arbitrators): the second confirmed overturn seized both entry bonds by their pre-signatures, and each was moved out of the holding output only with the committee archivist’s signature after its own replay; 78 checks passed, 0 failed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Seizure output (Rust core): an arbitrator bond’s pre-signed forfeiture paying restitution directly and the rest to the case’s seizure output; distribution and fallback</td>
 <td>Oracle pool alone refused; 3 of 5 archivists without the oracle refused; oracle with 2 of 5 refused; oracle + 3 of 5 pay reviewers, panel, retention and the excess to the harmed party; the harmed party’s key alone refused before the relative timelock and accepted after (8/8)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Oracle at 101 and 301 members, 70% online: attestation from the first t verified shares; simulated latency for attestation and for ROAST-coordinated FROST co-signing with 10–30% stalling members</td>
 <td>equals the adaptor point (0.7 s to combine 151 shares); 0.4–0.5 s; median 6 s, always terminates</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sliced pots, 8 seats, 10 slices: incident with three pot outputs; cooperative close at an arbitrary split; bounty fan-out without the oracle; ten slices attested and paid 30/20/20/10/10/10/0/0; one seat’s attestation on another seat’s payout; early reward fan-out then cooperative close of the slices; slice refund before its timelock</td>
 <td>confirmed; valid; confirmed; confirmed; rejected; confirmed; refused</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Event log: 2,000 random sets in 5 orders each; same-height withdrawal and alert; backdated and late events; checkpoint anchored on regtest</td>
 <td>identical state; alert unbacked; refused; root matches</td>
 </tr>
