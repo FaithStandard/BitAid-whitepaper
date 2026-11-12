@@ -90,7 +90,7 @@ Bitaid Specification
 <p><strong>BCAEN archival market —</strong> decentralised content-addressed storage with two archival classes: Class A (incident footage custody, paid by each uploader for the first year and by the arbitration layer after it, <a href="#s8-3">§8.3</a>) and Class B (Bitcoin-anchored application state records, retained indefinitely by operators, paid via Lightning micropayments from bootstrapping nodes). The SHA-256 hash is broadcast over gossip before upload completes, so suppressing a recording after the fact would mean suppressing every copy of its published hash; and every authenticated retrieval serves a dual purpose as both service delivery and evidence integrity verification.</p>
 <p><strong>Configurable arbitrator quality market —</strong> three independently adjustable panel parameters — coherence threshold (80%–99%), open seat fraction (0–⅓), and minimum arbitrator entry bond (0.1 BTC–uncapped) — embedded at escrow construction, enabling a tiered premium service market for adjudication quality. The ⅔ labor-qualified invariant is non-configurable; all three settings can only raise the Sybil defence. The bond minimum decays gradually if the panel cannot fill (×0.70 at 144 blocks, ×0.70 at 288 blocks, full default reset at 432 blocks).</p>
 <p><strong>Passive retroactive fraud detection —</strong> fabricated incident chains are surfaced automatically by statistical dissent across calibration queue reviews at a 40% threshold. No individual submitter required. Forfeiture repays the harmed first, then funds the review premium and panel fees (<a href="#s12">§12</a>); the remainder prepays retention of the fraud cases’ evidence and returns the excess to the harmed.</p>
-<p><strong>Event-driven arbitration fee market —</strong> dual-trigger: +12.5% per case close when queue &gt; 0, −12.5% per case close when queue = 0, plus +2.5% every 18 blocks (~3h) while queue &gt; 0 and −2.5% every 18 blocks while queue = 0, never below the reference fee (the median fee of the last 100 cleared cases) by time alone. Price-out ejection after 36-block grace window removes underfunded cases, preserving queue depth as a clean demand signal. No protocol floor below the reference: only cases cleared at an empty queue take the fee lower. Priority fee: voluntary express review, both parties, pro-arbitrator, pro-speed.</p>
+<p><strong>Event-driven arbitration fee market —</strong> the fee moves once every 18 blocks (~3h), by up to 2.5% in proportion to how far the funded backlog sits above or below one day of the pool’s capacity; the upward step halves for each further week of unbroken congestion, so no shortage lifts the fee past about 16× its level before it began; falling, it stops at the reference fee (the median of the last 100 cleared cases) unless the active queue is empty. A case posted below the prevailing fee, or priced out after a 36-block grace window, waits in a standby queue as a standing bid and is heard when the fee comes down to it, never past its refund height. Only the active queue counts as demand. Priority fee: voluntary express review, both parties, pro-arbitrator, pro-speed.</p>
 <p><strong>Cell-scoped labor —</strong> responder labor scores recorded per H3 cell, preventing remote-farming attacks without requiring global coordination. Labor earned is labor earned where it was demonstrated.</p>
 <p><strong>Bond withdrawal delay —</strong> 90-day hold of the entry bond from last case close, extended by any active retroactive review. Ensures malicious arbitrator bonds remain present for forfeiture. Early release path available via an arbitrator-requested audit at normal case fee.</p>
 <p><strong>Offer-linked integrity —</strong> every operator stakes more than it could gain: a responder accepts only with a personal bond plus layer 0 buffer of at least twice the most it could capture (by default), an arbitrator takes a seat only with a case unit of at least twice everything the verdict can move; every node computes the gates identically from the posted economics.</p>
@@ -550,16 +550,19 @@ documenter_weight = sqrt(stake_ratio) × (0.1 + documentation_labor × bounty_fa
 <p>Appeals are paid re-rolls (<a href="#s10-2">§10.2</a>): each forms a new, larger panel by blind taking. Panel sizes run 3 arbitrators at first instance, 7 on first appeal, 15 on second, 31 on third, and doubling beyond (63, 127 …) for as long as a party appeals and pays. There is no fixed final tier. Each tier has a 48-hour escalation window. Appeal fee: market-clearing arbitration fee + 25% base surcharge per tier, paid ad hoc by appellant. Panel fees always paid first at normal case rate; surplus feeds the penalty pool for coherent arbitrators. Every tier decides by the same ⅔ supermajority, so a small minority of a large panel cannot block correction of a lower tier’s verdict. A tier that reaches no ⅔ verdict decides nothing, and without a verdict it has no dissenters to penalise: the verdict below it stands and that verdict’s escalation window opens again, so either side may re-roll once more. A hung first panel leaves the case undecided, as a deadlocked attending vote does, so it goes on to the next tier with the fee paid, as for any escalation, by whichever party wants the case decided; if no party does, the incident output closes by its refund locktime (<a href="#s3">§3</a>). An escalation whose panel is never seated — too few eligible offers, or an escalator who never draws or pays it — lapses the same way: the verdict below stands and becomes final. Each re-roll costs more than the last, but draws from a larger share of the pool, diluting any polluted subset; a larger, unpolluted panel is what exposes and purges the arbitrators behind a corrupted smaller one.</p>
 <p>Frivolous appeals are self-deterring: a party that lost a unanimous 3-arbitrator verdict receives no subsidy and faces a 7-arbitrator panel whose dissenters — if any — will be penalised more harshly. Genuine recourse is preserved; manufactured escalation is expensive.</p>
 <h3 id="s10-6">10.6 Fee Market</h3>
-<p>The arbitration fee operates on a dual-trigger adjustment adapted from EIP-1559, extended with a time-based congestion trigger:</p>
-<p>Event trigger (each case close): queue &gt; 0 → fee × 1.125; queue = 0 → fee × 0.875<br />
-Time trigger (every 18 blocks, ~3h): queue &gt; 0 → fee × 1.025; queue = 0 → fee × 0.975, never below the reference fee<br />
+<p>The arbitration fee adjusts like EIP-1559’s base fee — to how far the work waiting sits from a target, not to each case — with one addition for long shortages:</p>
+<p>Step (every 18 blocks, ~3h): fee × (1 + 2.5% × clamp((B − T) / T, −1, 1)); B the active queue’s weighted backlog, T one day of the pool’s capacity<br />
+Long shortage: for each further 1,008 blocks with B &gt; T, the upward step halves; it resets when B falls below T<br />
+Floor of the fall: the reference fee (median of the last 100 cleared cases), unless the active queue is empty<br />
 Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the pool opens, at least one slot; every 52,560 blocks → another 0.06%, at least one, whatever the queue</p>
-<p>During congestion both triggers rise together. By a week of continuous congestion the time trigger alone multiplies the fee by about 4× (1.025^56); each case close while the queue is non-zero adds a further 12.5%, so with ten closes in that week the fee is about 13× its starting level. Once the queue empties, the fee falls with every case cleared and, on idle time, 2.5% every 18 blocks, but time alone never takes it below the <strong>reference fee</strong>: the median fee at which the last 100 cases actually cleared. A burst of demand should not leave the honest cases after it paying for it, and a quiet week should not hand the next attacker a cheap pool: the reference is set by cases that paid it, and moving it means clearing many real cases at the price one wants, which is the market working. Below the reference only cases cleared at an empty queue take the fee lower, so real oversupply still drives it down; there is no protocol floor beneath that.</p>
-<p><strong>Fee market robustness.</strong> Three properties make the fee market structurally resistant to manipulation. First, it affects <em>only the arbitration tier</em> — emergency coordination (alerts, responder dispatch, BCAEN evidence commitment, bounty payment) continues regardless of arbitration fee levels. A caller in physical danger still receives responders; only dispute resolution experiences delay. Second, sustained manipulation requires <em>exponential capital burn</em>: the dual-trigger compounding produces fee growth that dwarfs any plausible strategic benefit within days. The cost resembles the chessboard rice problem: one grain on the first square, doubled on each subsequent square; by the sixty-fourth square the pile exceeds centuries of the world’s harvest. Third, even at peak congestion — fees several times their base, queue backed up for 72 hours — the protocol still resolves disputes in <em>days</em>, not the months or years of conventional proceedings.</p>
+<p><strong>Why the backlog, and why not each case.</strong> A queue of real cases arriving at random is rarely empty even when the pool keeps up, so a fee that rises whenever anything waits climbs on honest noise alone, and a step per case closed compounds with volume until it runs away. Simulated against the earlier rule, with the pool working at 80% of its capacity and nothing changing, the old rule took a $300 tier-1 panel to a median of $2,000–5,600; a two-week spike to millions; a lasting doubling of demand to billions (Appendix B.11). Measured against a day of backlog, the fee holds still while the pool keeps up, rises only as far as it must to draw more work in, and stops: in the same runs a spike lifted the panel to about $400 at the median and $2,600 at worst, a lasting doubling to $760–1,500, and the halving keeps any shortage, however long, under about 16× the fee before it. What the protocol gives up is speed in bad weeks: cases wait a day or two at the median, up to two or three weeks for the slowest one in twenty while supply catches up. A ruling a week late costs little; one priced at fifty times its worth is not had at all.</p>
+<p><strong>The reference fee.</strong> Falling, the fee stops at the median fee at which the last 100 cases actually cleared, unless the active queue is empty. A burst of demand should not leave the honest cases after it paying for it, and a quiet week should not hand the next attacker a cheap pool: the reference is set by cases that paid it, and moving it means clearing many real cases at the price one wants, which is the market working.</p>
+<p><strong>Two queues.</strong> The active queue holds cases funded at the prevailing fee; it alone counts as demand, moves the fee and opens slots. The <strong>standby queue</strong> holds standing bids: a case whose escalator posted below the prevailing fee, by choice or because the fee rose past its posting. A party with a low time preference escalates into standby on purpose and waits for a cheaper hearing. When the fee falls to a case’s bid it enters the active queue and is seated at the prevailing fee, the rest of its posting returned; among standing bids the highest goes first, then responder legitimacy, then age. Any party to the case may top up to the prevailing fee at any time, so a patient escalator never holds the others hostage. Standby ends at the case’s refund height, less the time a hearing needs: a bid the fee never reaches ends the case by refund, as an unfunded case does, because the pots, the bonds and the evidence cannot stay locked for ever. Standing bids add nothing to the fee or to slot openings, so parking cheap bids buys an attacker nothing. Simulated with a third of parties bidding below the fee, standby lifted the share of escalations that reach a ruling from about 60% to 85–92% and calmed the fee’s daily moves from about 10% to 6–7%; the patient cases waited up to a month for it, as they chose.</p>
+<p><strong>Fee market robustness.</strong> Three properties make the fee market structurally resistant to manipulation. First, it affects <em>only the arbitration tier</em> — emergency coordination (alerts, responder dispatch, BCAEN evidence commitment, bounty payment) continues regardless of arbitration fee levels. A caller in physical danger still receives responders; only dispute resolution experiences delay. Second, sustained manipulation requires <em>funded</em> cases: only cases posted at the prevailing fee count, each weighted by the seasoned responders who attended it, and the fee each must carry rises with the backlog the attacker creates, about fourfold a week; a standing bid below it moves nothing. Third, even at peak congestion — fees several times their base, a backlog of a week — the protocol still resolves disputes in <em>days</em>, not the months or years of conventional proceedings, and a patient party can always wait in standby for a cheaper hearing.</p>
 <p><strong>Priority fee.</strong> Any party may attach an optional priority fee to their case, paid by that party to the panel with its fee. The fee affects only queue order; it does not influence arbitrator selection, panel composition, or verdict weighting. A Sybil caller who tips a fake case pays more to attract additional judicial attention to a case that will be reviewed anyway. For legitimate parties, it functions as express review. Both sides may bid independently.</p>
 <h3 id="s10-7">10.7 Price-Out Ejection and Queue Weight</h3>
 <p>Queue depth is only meaningful if every case can afford resolution at the prevailing fee. A case whose deposit cannot cover the current arbitration fee inflates apparent demand without being serviceable. A Sybil attacker could exploit this by posting many low-deposit cases, letting fees rise past their coverage, and manufacturing queue depth to trigger slot openings without funding real trials.</p>
-<p>The price-out mechanism closes this. At each time trigger interval, the protocol evaluates each queued case: a case waits in the queue only while the party who asked for the ruling has posted the first-instance fee at the prevailing rate; if <code>current_fee × min_panel_size</code> rises above what was posted, the case enters a 36-block grace window. If that party tops up, the case stays; if not, it leaves the queue and the posting is returned. Whoever escalated — caller or responder — is tested against their own posting, never against another party’s deposit. The 1,008-block slot-opening trigger fires only on genuine unresolvable demand. A Sybil attacker manufacturing queue depth must continuously top up deposits as fees rise — by the end of a week at about 4× base fee, each case must carry about 4× its original deposit or it is ejected.</p>
+<p>The price-out mechanism closes this. At each time trigger interval, the protocol evaluates each queued case: a case waits in the queue only while the party who asked for the ruling has posted the first-instance fee at the prevailing rate; if <code>current_fee × min_panel_size</code> rises above what was posted, the case enters a 36-block grace window. If that party tops up, the case stays; if not, it moves to the standby queue with its posting as a standing bid, to be heard when the fee comes down to it (§10.6). Whoever escalated — caller or responder — is tested against their own posting, never against another party’s deposit. The 1,008-block slot-opening trigger fires only on genuine unresolvable demand. A Sybil attacker manufacturing queue depth must keep every case funded at the prevailing fee as the backlog it creates raises it — by the end of a week at about 4× base fee, each case must carry about 4× its original deposit or it drops to standby, where it counts for nothing.</p>
 <p><strong>Responder legitimacy as queue weight.</strong> A case’s queue position is weighted not only by fee level but by the aggregate responder legitimacy of attending parties: <code>sum(responder_reputation × responder_stake) / count</code>, taken over the attending responders who have completed seasoning (<a href="#s6">§6</a>) only. Unseasoned responders neither add weight nor dilute it, so a crowd of honest newcomers on a case never pushes it below one attended by a single professional, and a case attended only by unseasoned identities carries no legitimacy weight at all. Cases with high-legitimacy professional responder attendance receive priority; cases with no responder acceptance are deprioritised. The market sorts serious incidents above suspected noise without administrative judgment. The queue is two-dimensional: fee level signals caller commitment; responder legitimacy signals incident reality.</p>
 <h3 id="s10-8">10.8 Bond Withdrawal and Exit</h3>
 <p>An arbitrator initiates withdrawal by broadcasting a signed exit declaration. A mandatory 90-day hold begins from the close of the arbitrator’s most recent case, and covers the entry bond and every case unit still held. During the hold: they remain encumbered and subject to forfeiture; new case assignments cease immediately; if retroactive review opens against any case, the hold extends for the duration of that review; multiple reviews stack — the bond releases only after all resolve. An arbitrator with a clean history exits at day 90 with full bond returned. The hold is on the entry bond, not on each case’s unit: a unit is released case by case once its case is closed, passed over by the review draw and clear of any dispute or review (<a href="#s10-2">§10.2</a>), so the hold never grows with the number of cases served. Complaints catch most wrong rulings while the case is still open, raised by the parties, who each defend what is owed to them; a ninety-day window per case would let them be lazy at it, and would lock capital in proportion to workload, so that a busy arbitrator’s fees would have to pay for it. What surfaces later — a flag, a cascade from a confirmed fraud — is answered from the entry bond through the seizure it pre-signed when it joined (B.1): what the released unit would have paid before the excess, and the whole bond with expulsion on a second confirmed overturn. An arbitrator who participated in corrupt verdicts faces forfeiture on each confirmed case before any remainder releases.</p>
@@ -1328,7 +1331,7 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 <h3 id="arbitration-mechanism">Arbitration mechanism</h3>
 <p>The ⅔ labor-qualified invariant is the core Sybil defence at the panel level: it guarantees that no panel can be majority-Sybil regardless of how many fake identities enter the pool. The 80% coherence threshold is the eligibility floor; with recurrence-weighted penalties, serving pays only above about 97% coherence. Configurable quality settings (coherence threshold, open seat fraction, bond minimum) create a tiered premium service market for adjudication quality. The bond minimum decays at ×0.70 per 144-block interval to prevent deadlock when high settings cannot fill a panel.</p>
 <h3 id="fee-market">Fee Market</h3>
-<p>The dual-trigger mechanism adapts EIP-1559 with a time-based congestion trigger that fires even when no cases are closing. Fees rise from both case closes and time during congestion; once the queue empties they fall with every case cleared and with idle time, down to the reference fee (the median of the last 100 cleared cases), below which only cleared cases move them. By a week of continuous congestion the time trigger alone multiplies the fee by about 4× (1.025^56); with ten closes in that week the fee is about 13× its starting level. A spike that has passed decays back to what cases were actually paying instead of taxing every case after it; below that, the market clears wherever supply and demand meet. The 36-block price-out grace window ensures queue depth signals are clean: every case in the queue at block H is fundable at fee(H).</p>
+<p>The mechanism adapts EIP-1559: the fee follows the funded backlog against a target of one day of capacity, once every 18 blocks, by at most 2.5% a step, with the upward step halving for each further week of unbroken congestion, so a long shortage cannot lift it past about 16× where it started. Falling, it stops at the reference fee (the median of the last 100 cleared cases) unless the active queue is empty. Cases posted below the prevailing fee wait in a standby queue as standing bids and are heard when the fee comes down to them, before their refund height. The 36-block price-out grace window ensures the active queue is a clean demand signal: every case in it at block H is fundable at fee(H) (simulations: Appendix B.11).</p>
 <h3 id="forfeiture-flows">Forfeiture Flows</h3>
 <p>All forfeiture events pay out in the order of <a href="#s12">§12</a>: restitution, vindicated dissenters, review premium, panel fees at the normal case rate, then type-specific remainder destinations. No forfeiture event enriches the ruling panel beyond their standard per-case fee — this closes the captured-panel attack where a majority might falsely condemn honest participants to extract seized bonds.</p>
 <h3 id="network-routing">Network &amp; Routing</h3>
@@ -1768,18 +1771,18 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 <td></td>
 </tr>
 <tr class="odd">
-<td>Fee event adjustment</td>
-<td>±12.5%</td>
-<td>per case close</td>
-<td>§10.6</td>
-<td>+12.5% if queue &gt; 0 after close; −12.5% if queue = 0 after close</td>
-</tr>
-<tr class="even">
-<td>Fee time adjustment</td>
-<td>+2.5% / −2.5%</td>
+<td>Fee step</td>
+<td>up to ±2.5%</td>
 <td>every 18 blocks (~3h)</td>
 <td>§10.6</td>
-<td>+2.5% while queue &gt; 0; −2.5% while queue = 0, never below the reference fee</td>
+<td>2.5% × clamp((B − T)/T, −1, 1): B the active queue’s weighted backlog, T one day of capacity</td>
+</tr>
+<tr class="even">
+<td>Long-shortage halving</td>
+<td>÷2</td>
+<td>per further 1,008 blocks with B &gt; T</td>
+<td>§10.6</td>
+<td>The upward step halves each week the backlog stays above target; resets below it; caps any shortage at about 16×</td>
 </tr>
 <tr class="odd">
 <td>Slot-open queue trigger</td>
@@ -1793,7 +1796,7 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 <td>median of the last 100 cleared cases</td>
 <td>sats</td>
 <td>§10.6</td>
-<td>Idle-time decay stops here; only cases cleared at an empty queue take the fee lower</td>
+<td>The fall stops here unless the active queue is empty</td>
 </tr>
 <tr class="even">
 <td>Fresh-entry opening</td>
@@ -1807,7 +1810,7 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 <td>36</td>
 <td>blocks (~6h)</td>
 <td>§10.7</td>
-<td>Top up deposit or case removed; deposit returned minus incurred costs</td>
+<td>Top up or the case moves to the standby queue as a standing bid; heard when the fee falls to it, before its refund height</td>
 </tr>
 <tr class="odd">
 <td>Genesis starting fee</td>
@@ -2677,6 +2680,46 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 </tbody>
 </table>
 <p>Not simulated: the governance signal weight (<a href="#s15">§15</a>), which uses the same merit function as the attending vote but moves no money, and the off-chain recourse between insurers and their clients, which is priced outside the protocol.</p>
+<h3 id="b-11">B.11 Fee Market Simulations</h3>
+<p>Simulations e9 and e10 (prototype repository, <code>sim/</code>) run 26 weeks of a pool of 200 arbitrators with escalations arriving at random at 80% of its capacity, a supply that adds work as the fee rises (two elasticities), and three demand paths: steady, a two-week spike at 3×, and a lasting doubling. Fees are per seat in dollars; a tier-1 panel is three seats.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Starting seat fee $100</th>
+<th>Earlier rule (per-close ±12.5%, +6.25% per 18 blocks)</th>
+<th>Backlog rule (§10.6)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Steady demand, panel median</td>
+<td>$1,800–5,600</td>
+<td>$230–280</td>
+</tr>
+<tr class="even">
+<td>Two-week spike, panel median (worst)</td>
+<td>$2.7–15 million</td>
+<td>$380 ($2,600)</td>
+</tr>
+<tr class="odd">
+<td>Lasting doubling, panel median (worst)</td>
+<td>$0.7–16 billion</td>
+<td>$760–1,500 ($4,400)</td>
+</tr>
+<tr class="even">
+<td>Wait, median (slowest 5%)</td>
+<td>under a day</td>
+<td>1–2 days (9–21 days)</td>
+</tr>
+</tbody>
+</table>
+<p>With a third of parties bidding below the prevailing fee, the standby queue raised the share of escalations reaching a ruling from 57–63% to 83–92% and lowered the fee’s average daily move from about 10% to 6–7%, at the price of month-long waits for the patient bids. Against case pots around $500, a $30 seat fee makes a panel cost more than a tenth of the pots in about two cases in three and more than the pots in one in eleven; at $100 a seat, in nine in ten and one in three. The fee level is the market’s; the rule only keeps it from running away.</p>
+
 <h2 id="app-c">Appendix C — Threat Vector Map</h2>
 <p>Protocol-layer outcomes. Failed commercial abuse typically forfeits bonds to honest participants and raises local acceptance thresholds. This is not chain re-org or rule change. Tail risk: insurer mispricing (off-protocol).</p>
 <p><strong>Adversary Model</strong></p>
@@ -2916,7 +2959,7 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
 <h4 id="c7.4-10.6-10.7-fee-market-queue-manipulation">C7.4 · §10.6, §10.7 — Fee market queue manipulation</h4>
 <ul>
 <li><strong>Attack:</strong> Attacker manufactures dispute queue utilisation to force per-case fee up or down, pricing out honest arbitrators or suppressing fees unfairly.</li>
-<li><strong>Primary defence — Exponential fee burn + merit-gated slots:</strong> Dual-trigger compounding: +12.5%/close, +2.5%/18 blocks (~3h). Compounding cost curve: one week at about 4× base fee (time trigger alone). Price-out ejection removes underfunded cases. Slashed bonds repay the harmed, then pay honest arbitrators’ fees and the case’s evidence retention.</li>
+<li><strong>Primary defence — Exponential fee burn + merit-gated slots:</strong> Backlog-driven fee: up to +2.5% every 18 blocks while the funded backlog exceeds a day of capacity, about 4× in a week. Price-out moves underfunded cases to standby, where they add no pressure. Slashed bonds repay the harmed, then pay honest arbitrators’ fees and the case’s evidence retention.</li>
 <li><strong>Secondary defence — Slot opening requires earned history:</strong> 1,008-block trigger fires only after price-out proves genuine funded demand. New accounts with zero labor score can enter only by winning a Track A competition — fee, bond and exam per applicant — since Track B needs an invitation from a 50-case/90% arbitrator; Track C is dormant under the planned launch.</li>
 <li><strong>Residual / limit — Three parallel cost channels (<a href="#s2-2">§2.2</a>):</strong> Fee escalation + per-node stake thresholds + bond seizure pipeline. Attacker faces three simultaneous capital drains; honest participant with labor history faces only the fee escalation. Channels are independent.</li>
 </ul>
@@ -3032,7 +3075,7 @@ Slot-open trigger: 1,008 consecutive blocks with queue &gt; 0 → 0.06% of the p
     {id:"asym",label:"Asymmetric Penalty",layer:"economic",r:16,sec:"Spec §10.4",desc:"Incoherent minority arbitrators forfeit 2×–4× the per-case fee, compounding up to 32× for a pattern of errors. The penalty is the fee multiplier, not bond percentage. Creates direct financial incentive for accurate voting."},
     {id:"forf",label:"Bond Forfeiture → BCAEN",layer:"economic",r:14,sec:"Spec §12, §8",desc:"Seized bonds repay harmed parties to the case first, then fund evidence infrastructure. Forfeiture pays panel fees next, then feeds the BCAEN redundancy subsidy pool. The system is anti-fragile to fraud."},
     {id:"pool",label:"Review Premium",layer:"economic",r:14,sec:"Spec §10.3",desc:"3× arbitration fee for retroactive review panels, funded exclusively from seized bonds. Confirmed fraud produces capital that funds stronger detection of future fraud."},
-    {id:"fee",label:"Fee Market (EIP-1559)",layer:"economic",r:15,sec:"Spec §10.6",desc:"Dual-trigger adjustment: event trigger (×1.125/×0.875 per case) + time trigger (×1.025 every 3h while congested, ×0.975 while idle down to the reference fee). Self-tuning to congestion without administrative adjustment."},
+    {id:"fee",label:"Fee Market (EIP-1559)",layer:"economic",r:15,sec:"Spec §10.6",desc:"Backlog-driven adjustment: up to ±2.5% every 3h against a day of capacity, upward steps halving each week of unbroken congestion, falling to the reference fee; a standby queue holds bids below the fee. Self-tuning to congestion without administrative adjustment."},
     {id:"eject",label:"Price-Out Ejection",layer:"economic",r:13,sec:"Spec §10.7",desc:"Cases whose deposit cannot cover current fee × min_panel_size enter 36-block grace, then eject. Prevents underfunded cases from inflating queue depth."},
     {id:"insure",label:"Insurance Buffer / Flywheel",layer:"economic",r:15,sec:"Spec §4; Foundations §3.2",desc:"Insurer-backed buffers serve two functions: (1) payment backing — buffer UTXOs cover bounty and outcome reward obligations in incident escrows, de-risking caller payment commitments; (2) threshold signalling — buffers stacked on the personal bond amplify visible skin-in-the-game to clear discriminatory relay/acceptance filters. Stackable as Insurance Buffer Stack (IBS): multiple slots consumed in creation order; payment-default cascades through the full stack; forfeiture events cap at layer 0 only, ring-fencing deeper slots; a draw on payment default is not a penalty. Zero protocol weight in scoring."},
     {id:"appeal",label:"Appeal Subsidy",layer:"economic",r:12,sec:"Spec §10.4",desc:"Penalty pool locks into appeal escrow. Incoherent arbitrators subsidise the reconsideration of their own error. Subsidy is zero when prior tier was unanimous."},
