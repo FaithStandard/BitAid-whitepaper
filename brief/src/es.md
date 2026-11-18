@@ -18,7 +18,7 @@ Mil personas pagando dos dólares al mes pueden, cada una, pedir ayuda con una o
 
 Y entonces manda el propio interés de la aseguradora. Con suficiente capital comprometido, le compensa mantener sus propios vigilantes y patrullas cerca de sus clientes: disuaden las emergencias que sus ofertas tendrían que pagar y, cuando ocurre una, son los primeros en llegar y recuperan la recompensa que ella misma depositó. Menos siniestros permiten primas más bajas, que atraen más clientes, cuyas primas financian más patrullas. Ese círculo virtuoso convierte a las aseguradoras en proveedoras de seguridad que compiten en precio y en rapidez, pagadas por resultados y no por horas muertas.
 
-Bitaid no decreta un derecho a la seguridad ni convence a nadie de pagarla; sube el precio que se paga por salvar vidas y bienes, y deja que el mercado responda.
+Bitaid no decreta un derecho a la seguridad ni pide que todos se pongan de acuerdo en él; abarata tener refuerzos de guardia y, aun así, sube el precio que se paga por salvar vidas y bienes, y deja que el mercado responda.
 
 ## Cómo se resuelve un caso
 
