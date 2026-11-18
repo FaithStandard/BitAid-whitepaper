@@ -18,7 +18,7 @@ A thousand people paying two dollars a month can each summon help with an offer 
 
 Then the insurer's own interest takes over. With enough capital committed, it pays to keep its own guards and patrols near its clients: they deter the emergencies its offers would otherwise pay for, and when one happens they are first on the scene, earning back the bounty it escrowed. Fewer claims mean lower premiums, which bring more clients, whose premiums fund more patrols. That flywheel turns insurers into security providers that compete on price and on how fast they arrive, paid for results rather than idle hours.
 
-Bitaid does not declare a right to security or persuade anyone to pay for it; it raises the price paid for saving life and property, and lets the market answer.
+Bitaid does not declare a right to security or persuade anyone to pay for it; it lowers what it costs to stand ready, yet raises the price paid for saving life and property, and lets the market answer.
 
 ## How a case runs
 
