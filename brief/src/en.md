@@ -43,8 +43,16 @@ Bitaid does not declare a right to security or ask everyone to agree on one; it 
 
 A working prototype in Rust runs every role: callers, responders, archivists, the threshold-signing oracle pool and arbitrators. Each check below is a script that passes or fails on a real chain, with the logs published.
 
+Measured on the public signet, over Tor, phone to tablet ([all figures](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/MEASURED.md)):
+
+- **2 to 6 seconds** from the alert to the first responder accepting, bond checked on chain; three within 44 seconds.
+- **About a second** for an accepted responder to hold the exact location, sealed to it alone.
+- **Seconds** to sign every payout the case can end in, across three machines; **within the hour** the incident is funded and co-signed by the pool, while help is already on its way.
+
 | Date | Where | What ran | Result |
 | --- | --- | --- | --- |
+| Nov 20, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | Every arbitrator staked before being paid; the exact location sealed to each accepted responder; an outsider's forged records ignored; fines paid to the arbitrator who dissented and was proved right | [61 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/public_signet_stake_location_2026-11-20.txt) |
+| Nov 19, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | A disputed case through two tiers with every deadline anchored on chain; a node that saw nothing rebuilt the same record from the chain and the archive alone | [61 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/public_signet_anchored_audit_2026-11-19.txt) |
 | Nov 9, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | Every deadline counted in blocks. A captured panel's verdict stood unappealed; three fresh review panels overturned it, and the two arbitrators who backed it lost their whole stakes to the wronged | [81 passed, 1 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_blocks_2026-11-09.txt) |
 | Nov 8, 2026 | Liquid testnet | The escrows: funding, a pool-co-signed incident, pre-signed payouts, a wrong attestation refused by the network, a bond forfeiture, the timelocked fallback | [15 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | Nov 7, 2026 | Bitcoin public signet, over Tor, PC + phone + tablet | The staged review: three fresh panels overturn a verdict; the wrong arbitrators lose their stakes, which repay the wronged responder and the dissenter who was right | [74 passed, 0 failed](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
