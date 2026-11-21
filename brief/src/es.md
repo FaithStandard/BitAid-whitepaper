@@ -43,8 +43,16 @@ Bitaid no decreta un derecho a la seguridad ni pide que todos se pongan de acuer
 
 Un prototipo en Rust ejecuta todos los roles: quienes llaman, respondedores, archivistas, el grupo oráculo de firma por umbral y los árbitros. Cada comprobación de abajo es un script que pasa o falla en una cadena real, con los registros publicados.
 
+Medido en la signet pública, por Tor, del móvil a la tableta ([todas las cifras](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/MEASURED.md)):
+
+- **De 2 a 6 segundos** desde la alerta hasta que acepta el primer respondedor, con su fianza comprobada en la cadena; tres en menos de 44 segundos.
+- **Alrededor de un segundo** para que un respondedor aceptado tenga la ubicación exacta, sellada solo para él.
+- **Segundos** para firmar todos los pagos en que puede acabar el caso, entre tres máquinas; **antes de una hora** el incidente queda financiado y cofirmado por el grupo, con la ayuda ya en camino.
+
 | Fecha | Dónde | Qué se probó | Resultado |
 | --- | --- | --- | --- |
+| 20 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | Cada árbitro depositó su fianza antes de cobrar; la ubicación exacta, sellada para cada respondedor aceptado; los registros falsos de un intruso, ignorados; las multas, pagadas al árbitro que disintió y tuvo razón | [61 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/public_signet_stake_location_2026-11-20.txt) |
+| 19 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | Un caso disputado en dos instancias, con cada plazo anclado en la cadena; un nodo que no vio nada reconstruyó el mismo registro solo con la cadena y el archivo | [61 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/public_signet_anchored_audit_2026-11-19.txt) |
 | 9 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | Todos los plazos contados en bloques. El veredicto de un panel capturado quedó sin apelar; tres paneles de revisión nuevos lo revocaron, y los dos árbitros que lo respaldaron perdieron toda su fianza a favor de los perjudicados | [81 superadas, 1 fallida](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_blocks_2026-11-09.txt) |
 | 8 nov. 2026 | Liquid testnet | Los depósitos: financiación, un incidente cofirmado por el grupo, los pagos prefirmados, una atestación equivocada rechazada por la red, la pérdida de una fianza, la salida por bloqueo temporal | [15 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_liquid_testnet_2026-11-08.txt) |
 | 7 nov. 2026 | Signet pública de Bitcoin, por Tor, PC + móvil + tableta | La revisión escalonada: tres paneles nuevos revocan un veredicto; los árbitros equivocados pierden su fianza, que indemniza al respondedor perjudicado y al disidente que acertó | [74 superadas, 0 fallidas](https://github.com/FaithStandard/Bitaid-prototype/blob/main/results/m3_public_signet_review_2026-11-07.txt) |
