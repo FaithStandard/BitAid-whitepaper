@@ -1342,6 +1342,12 @@ Slot-open trigger: 1,008 consecutive blocks with B &gt; T → 0.06% of the pool 
 <td>One case kept waiting, or one too valuable to take, opened a seat a week at no cost and moved no fee. The trigger now counts a week of funded backlog above a day of capacity (§10.3, §10.6)</td>
 <td>Simulation: <code>sim/e3b_slot_rule.py</code>, 52 seats a year to none for the trickle; a flood still opens them, paying about 5.7 BTC a year to honest arbitrators</td>
 </tr>
+<tr class="even">
+<td>23</td>
+<td>A bloc that defects only when it holds every seat</td>
+<td>Its verdicts are unanimous, drawn for review less often, and an appeal against a unanimous verdict was at the loser’s own cost, so the bloc profited whenever losers did not appeal (<code>sim/e2g_smart_bloc.py</code>). An appeal that overturns a unanimous verdict is now refunded in full from that panel’s forfeitures (§10.5)</td>
+<td>Regtest: a unanimous captured tier 1 appealed by the wronged party, overturned 7 of 7, the seizure paid to the appellant; the archivists refuse a forged distribution (all checks pass)</td>
+</tr>
 </tbody>
 </table>
 <p>Items 1, 2 and 5 of earlier versions are A, B and C above.</p>
