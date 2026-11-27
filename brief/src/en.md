@@ -6,7 +6,9 @@ Bitaid lets a person in danger summon capable people nearby and pay them, with n
 
 ## The problem
 
-Violence is decided in the minutes between an attack and the response to it. Self-defence is always there, but one person against several is outmatched; what turns the outcome is a second and third capable person arriving within minutes.
+Violence is decided twice: first in the attacker's calculation, of what he stands to gain against the chance of being stopped, hurt or identified, and then, if he goes ahead, in the minutes between the attack and the response to it. Self-defence is always there, but one person against several is outmatched; what turns the outcome is a second and third capable person arriving within minutes.
+
+And because the attacker prices the response before he acts, changing the minutes changes the calculation: an attack that reliably draws capable help, filmed from several angles, risks more, costs more and pays less, so fewer are attempted. Nor can he tell who carries Bitaid, so the risk he weighs rises around its users, not only for them.
 
 Today insurance pays after the harm is done. Rescue in the moment is almost nowhere for sale, and nothing lets you pay whoever capable can get there first. Private security bills hours, not results, so it guards places for those who can afford idle time. The police are a monopoly: no prices, no rival, no customer who can leave, so they cannot learn what protection is worth or to whom. Bitaid pays for the problem solved, not for the hours spent waiting for one.
 

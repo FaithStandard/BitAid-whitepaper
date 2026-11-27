@@ -6,7 +6,9 @@ Bitaid permite que una persona en peligro llame a gente capaz que está cerca y 
 
 ## El problema
 
-La violencia se decide en los minutos entre el ataque y la respuesta. La defensa propia siempre está, pero una persona contra varias está en desventaja; lo que cambia el desenlace es que lleguen una segunda y una tercera persona capaces en cuestión de minutos.
+La violencia se decide dos veces: primero en el cálculo del agresor, entre lo que puede ganar y la probabilidad de que lo detengan, lo hieran o lo identifiquen, y después, si sigue adelante, en los minutos entre el ataque y la respuesta. La defensa propia siempre está, pero una persona contra varias está en desventaja; lo que cambia el desenlace es que lleguen una segunda y una tercera persona capaces en cuestión de minutos.
+
+Y como el agresor pone precio a la respuesta antes de actuar, cambiar esos minutos cambia el cálculo: un ataque que atrae ayuda capaz casi con seguridad, grabado desde varios ángulos, arriesga más, cuesta más y rinde menos, así que se intentan menos. Tampoco puede saber quién lleva Bitaid, así que el riesgo que calcula sube alrededor de sus usuarios, no solo para ellos.
 
 Hoy el seguro paga después del daño. El rescate en el momento casi no se vende en ningún sitio, y nada permite pagar a quien, siendo capaz, pueda llegar primero. La seguridad privada factura horas, no resultados, así que protege lugares de quien puede pagar horas muertas. La policía es un monopolio: sin precios, sin rivales y sin clientes que puedan irse, no puede saber cuánto vale la protección ni para quién. Bitaid paga el problema resuelto, no las horas que se pasan esperándolo.
 
